@@ -1,0 +1,88 @@
+.catalogue-container {
+    max-width: 1300px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    font-family: 'Open Sans', sans-serif;
+    color: #3f3027;
+}
+
+.catalogue-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.catalogue-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 5rem;
+    align-items: flex-start;
+}
+
+.catalogue-section.layout-left .catalogue-featured {
+    order: 0;
+}
+
+.catalogue-section.layout-right .catalogue-featured {
+    order: 1;
+}
+
+.catalogue-featured {
+    flex: 1 1 40%;
+}
+
+.catalogue-featured img {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.catalogue-grid {
+    flex: 1 1 55%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-thumb {
+    text-align: center;
+}
+
+.product-thumb img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease;
+}
+
+.product-thumb img:hover {
+    transform: scale(1.03);
+}
+
+.product-thumb p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.95rem;
+    margin: 0.3rem 0 0.7rem;
+}
+
+.add-cart {
+    padding: 0.5rem 1rem;
+    background-color: #3f3027;
+    color: white;
+    border: none;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.add-cart:hover {
+    background-color: #7a4032;
+}

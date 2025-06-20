@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Supprimer marges/blocs par défaut */
+html, body {
+    margin: 0;
+    padding-top: 15px;
+
+    /* ajuste si le bandeau est plus grand */
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+
+
+
+/* Nouvelle section hero */
+.hero {
+    position: relative;
+    top: -55px;
+    /* ou -40px si tu veux la coller plus près du header */
+
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero-text h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4rem;
+    font-weight: normal;
+    text-align: center;
+    color: #ffffff;
+    /* à adapter selon ta DA */
+    margin-bottom: 1rem;
+}
+
+
+/* Wrapper pour les deux images côte à côte */
+.hero-img-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Chaque image prend 50% de largeur, 100% hauteur */
+.hero-img {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Texte par-dessus, centré */
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2;
+}
+
+.hero-text h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.hero-btn {
+    cursor: pointer;
+    position: relative;
+    padding: 10px 20px;
+    background: white;
+    font-size: 1.2rem;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    transition: all 1s;
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+}
+
+.hero-btn::after,
+.hero-btn::before {
+    content: " ";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    border: 0px solid #fff;
+    transition: all 1s;
+}
+
+.hero-btn::after {
+    top: -1px;
+    left: -1px;
+    border-top: 5px solid black;
+    border-left: 5px solid black;
+}
+
+.hero-btn::before {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 5px solid black;
+    border-right: 5px solid black;
+}
+
+.hero-btn:hover {
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.hero-btn:hover::after,
+.hero-btn:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel {
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* évite la barre verticale */
+    scroll-snap-type: x mandatory;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari */
+}
+
+.carousel-track {
+    display: flex;
+    gap: 2rem;
+}
+
+.carousel-track img {
+    height: 400px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.carousel-track img:hover {
+    transform: scale(1.05);
+}
+
+.bandeau-livraison {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    background-color: #000;
+    overflow: hidden;
+    z-index: 1000;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.bandeau-slider {
+    display: flex;
+    width: 400%;
+    /* 4 messages → 4 * 100% */
+    animation: sliderAnim 24s infinite;
+}
+
+.slide {
+    width: 100vw;
+    flex-shrink: 0;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: white;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+
+
+@keyframes sliderAnim {
+    0% {
+        transform: translateX(0%);
+    }
+
+    20% {
+        transform: translateX(0%);
+    }
+
+    25% {
+        transform: translateX(-100vw);
+    }
+
+    45% {
+        transform: translateX(-100vw);
+    }
+
+    50% {
+        transform: translateX(-200vw);
+    }
+
+    70% {
+        transform: translateX(-200vw);
+    }
+
+    75% {
+        transform: translateX(-300vw);
+    }
+
+    95% {
+        transform: translateX(-300vw);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}

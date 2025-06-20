@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="img/logo2.png" rel="icon" type="image/jpeg" />
+    <title>Contact</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&amp;family=Quicksand:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link href="style/contact.css" rel="stylesheet" />
+    <link href="style/style.css" rel="stylesheet" />
+    <link href="style/header.css" rel="stylesheet" />
+    <link href="style/footer.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">Livraison à domicile dans toute la France 🇫🇷</div>
+        <div class="slide">Livraison gratuite dès 80 € d'achat</div>
+        <div class="slide">Paiement 100% sécurisé 💳</div>
+        <div class="slide">Nouveautés chaque semaine ✨</div>
+      </div>
+    </div>
+    <div id="header"></div>
+    <main class="contact-wrapper">
+      <div class="contact-container">
+        <div class="contact-left">
+          <section class="contact-card">
+            <h1>Nous contacter</h1>
+            <p class="intro">
+              Une question ? Nous sommes là pour vous répondre !
+            </p>
+            <form class="contact-form">
+              <div class="form-group">
+                <label for="nom">Nom</label>
+                <input id="nom" name="nom" required="" type="text" />
+              </div>
+              <div class="form-group">
+                <label for="email">Adresse e-mail</label>
+                <input id="email" name="email" required="" type="email" />
+              </div>
+              <div class="form-group">
+                <label for="message">Votre message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required=""
+                  rows="6"
+                ></textarea>
+              </div>
+              <button type="submit">Envoyer le message</button>
+            </form>
+          </section>
+        </div>
+        <div class="contact-right">
+          <h2>Nos coordonnées</h2>
+          <p>
+            <strong>📧 Email :</strong>
+            <a href="mailto:contact@malou.fr">contact@malou.fr</a>
+          </p>
+          <p>
+            <strong>📞 Téléphone :</strong>
+            <a href="tel:+33123456789">01 23 45 67 89</a>
+          </p>
+          <p>
+            <strong>📷 Instagram :</strong>
+            <a
+              href="https://www.instagram.com/malou.collections/"
+              target="_blank"
+            >
+              <img
+                alt="Instagram"
+                src="img/icon3.png"
+                style="height: 24px; vertical-align: middle"
+              />
+              @malou.collections
+            </a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <div id="footer"></div>
+    <script src="script/script.js"></script>
+  </body>
+</html>

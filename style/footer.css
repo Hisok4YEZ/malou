@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
+
+.main-footer {
+    background-color: #f3e9dc;
+    /* même que header */
+    color: #4e3a2d;
+    font-family: 'Inter', serif;
+    padding: 3rem 1rem 2rem;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    user-select: none;
+}
+
+/* Conteneur global en flex, 3 colonnes côte à côte */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* Section logo + réseaux sociaux */
+.footer-logo-socials {
+    flex: 1 1 250px;
+    /* taille flexible, min 250px */
+    text-align: center;
+}
+
+.footer-logo {
+    margin-bottom: 1.5rem;
+}
+
+.logo-footer {
+    height: 60px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease;
+}
+
+.logo-footer:hover {
+    transform: scale(1.05);
+}
+
+.footer-socials {
+    margin-bottom: 0;
+}
+
+.footer-socials a {
+    display: inline-block;
+    margin: 0 12px;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.footer-socials a img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.footer-socials a:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+}
+
+/* Sections Informations et Navigation */
+.footer-section {
+    flex: 1 1 220px;
+    /* taille flexible, min 220px */
+    text-align: left;
+}
+
+.footer-section h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-section ul li a {
+    position: relative;
+    color: #4e3a2d;
+    /* marron foncé */
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    font-family: 'Inter', serif;
+}
+
+.footer-section ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    /* espace sous le texte */
+    width: 0;
+    height: 3px;
+    background-color: #7f0e30;
+    /* bordeaux foncé */
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+
+
+.footer-section ul li a:hover::after {
+    width: 100%;
+}
+
+/* Responsive : empiler en dessous sur petits écrans */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .footer-logo-socials,
+    .footer-section {
+        flex: unset;
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+    }
+
+    .footer-section ul li a {
+        font-size: 16px;
+    }
+}
