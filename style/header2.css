@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
+.main-header {
+    position: relative;
+    background-color: transparent;
+    color: white;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    z-index: 20;
+    /* beige/crème chaud */
+    color: #4e3a2d;
+    /* marron foncé */
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 2px;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-header:hover {
+    background-color: #e8dbcd;
+    /* fond clair */
+}
+
+
+.navbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+/* Chaque zone est un flex container */
+.nav-left,
+.nav-right,
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Logo centré avec margin auto pour centrer */
+.nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    z-index: 100;
+    /* au-dessus */
+}
+
+
+/* Taille du logo */
+.logo {
+    height: 48px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Par défaut → blanc sur fond transparent */
+.navbar a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    font-family: 'Inter', serif;
+}
+
+/* Soulignement animé */
+.navbar a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 3px;
+    background-color: #7f0e30;
+    /* bordeaux */
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Quand on survole un lien → bordeaux + soulignement */
+.navbar a:hover {
+    color: #7f0e30;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+/* Quand on survole le header → couleur marron */
+.main-header:hover .navbar a {
+    color: #4e3a2d;
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="img/logo2.png" type="image/png" />
+
+    <title>Catalogue – Boutique</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/shop.css" />
+    <link rel="stylesheet" href="style/header.css" />
+    <link rel="stylesheet" href="style/footer.css" />
+    <style>
+      .product-thumb p {
+        font-family: "Quicksand", sans-serif;
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin: 0.3rem 0 0.7rem;
+        color: #3f3027;
+      }
+      .add-cart {
+        background-color: #f3e9dc;
+        color: #3f3027;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        font-family: "Quicksand", sans-serif;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .add-cart:hover {
+        background-color: #e6d5c5;
+      }
+      .catalogue-section h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        padding-left: 1rem;
+        color: #3f3027;
+      }
+      .product-thumb img {
+        border-radius: 0;
+        width: 100%;
+        display: block;
+      }
+      .catalogue-section {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-bottom: 5rem;
+      }
+      .catalogue-featured {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .catalogue-grid {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+      .product-thumb {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">Livraison à domicile dans toute la France 🇫🇷</div>
+        <div class="slide">Livraison gratuite dès 80 € d'achat</div>
+        <div class="slide">Paiement 100% sécurisé 💳</div>
+        <div class="slide">Nouveautés chaque semaine ✨</div>
+      </div>
+    </div>
+
+    <div id="header"></div>
+
+    <main class="catalogue-container">
+      <h2>Bas</h2>
+      <section class="catalogue-section layout-left">
+        <div class="catalogue-featured">
+          <div class="product-thumb">
+            <img src="img/pantalon-devant.jpg" alt="Pantalon mis en avant" />
+            <p>Pantalon Classique – 75 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+        <div class="catalogue-grid">
+          <div class="product-thumb">
+            <img src="img/jupe-devant.jpg" alt="Jupe" />
+            <p>Jupe Plissée – 55 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/short.jpg" alt="Short" />
+            <p>Short Taille Haute – 49 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/jean.jpg" alt="Jean" />
+            <p>Jean Droit – 69 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/jogging.jpg" alt="Jogging" />
+            <p>Jogging Coton – 39 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+      </section>
+
+      <h2>Hauts</h2>
+      <section class="catalogue-section layout-right">
+        <div class="catalogue-grid">
+          <div class="product-thumb">
+            <img src="img/t-shirt-devant.jpg" alt="T-shirt" />
+            <p>T-shirt Basique – 25 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/chemise-devant.jpg" alt="Chemise" />
+            <p>Chemise Blanche – 60 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/sweat-devant.jpg" alt="Sweat" />
+            <p>Sweat à Capuche – 45 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/top.jpg" alt="Top" />
+            <p>Top Côtelé – 35 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+        <div class="catalogue-featured">
+          <div class="product-thumb">
+            <img src="img/haut-vedette.jpg" alt="Haut en vedette" />
+            <p>Blouse Satinée – 79 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+      </section>
+
+      <h2>Vestes</h2>
+      <section class="catalogue-section layout-left">
+        <div class="catalogue-featured">
+          <div class="product-thumb">
+            <img src="img/veste-devant.jpg" alt="Veste" />
+            <p>Veste Cuir – 120 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+        <div class="catalogue-grid">
+          <div class="product-thumb">
+            <img src="img/cardigan.jpg" alt="Cardigan" />
+            <p>Cardigan Épais – 65 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/blazer.jpg" alt="Blazer" />
+            <p>Blazer Tailleur – 85 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/cape.jpg" alt="Cape" />
+            <p>Cape Laine – 90 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/gilet.jpg" alt="Gilet" />
+            <p>Gilet Tricoté – 52 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+      </section>
+
+      <h2>Manteaux</h2>
+      <section class="catalogue-section layout-right">
+        <div class="catalogue-grid">
+          <div class="product-thumb">
+            <img src="img/manteau-devant.jpg" alt="Manteau" />
+            <p>Manteau Long – 150 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/doudoune.jpg" alt="Doudoune" />
+            <p>Doudoune Chaude – 140 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/pea-coat.jpg" alt="Pea Coat" />
+            <p>Pea Coat Marine – 130 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+          <div class="product-thumb">
+            <img src="img/caban.jpg" alt="Caban" />
+            <p>Caban Court – 125 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+        <div class="catalogue-featured">
+          <div class="product-thumb">
+            <img src="img/manteau-star.jpg" alt="Manteau vedette" />
+            <p>Manteau Vedette – 165 €</p>
+            <button class="add-cart">Ajouter</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Plus tard : filtres JS dynamiques -->
+    </main>
+
+    <div id="footer"></div>
+    <script src="script/script.js"></script>
+  </body>
+</html>

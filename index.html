@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="img/logo2.png" type="image/jpeg" />
+
+    <title>Ma lou</title>
+
+    <!-- Lien vers la feuille de style principale -->
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/header2.css" />
+    <link rel="stylesheet" href="style/footer.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #e8dbcd;
+        color: #3f3027;
+        font-family: "Quicksand", sans-serif;
+      }
+      .section-texte-images {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 4rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .section-texte {
+        flex: 1 1 40%;
+      }
+      .section-texte h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        color: #a32747;
+        margin-bottom: 1.5rem;
+      }
+      .section-texte p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+      }
+      .section-images {
+        flex: 1 1 25%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+      }
+      .section-images img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .section-texte-images.right-shift .section-images:first-child {
+        margin-right: 4rem;
+      }
+      .carousel-section {
+        background-color: #d8c7b3;
+        padding: 4rem 2rem;
+        overflow-x: hidden;
+      }
+      .carousel-section h2 {
+        text-align: center;
+        color: #4e3a2d;
+        font-size: 2.5rem;
+        font-family: "Cormorant Garamond", serif;
+        margin-bottom: 2rem;
+      }
+      .carousel-track {
+        display: flex;
+        gap: 2rem;
+        animation: scrollLeft 25s linear infinite;
+      }
+      .carousel-track a {
+        flex: 0 0 auto;
+      }
+      .carousel-track img {
+        height: 300px;
+        width: auto;
+        border-radius: 0;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      .carousel-track img:hover {
+        transform: scale(1.05);
+      }
+      @keyframes scrollLeft {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">Livraison à domicile dans toute la France 🇫🇷</div>
+        <div class="slide">Livraison gratuite dès 80 € d'achat</div>
+        <div class="slide">Paiement 100% sécurisé 💳</div>
+        <div class="slide">Nouveautés chaque semaine ✨</div>
+      </div>
+    </div>
+
+    <!-- Inclusion du header via JS -->
+    <div id="header"></div>
+
+    <!-- Section HÉRO avec image pleine largeur/hauteur -->
+    <section class="hero reveal">
+      <div class="hero-img-wrapper">
+        <img src="img/hero1.jpg" alt="Image 1" class="hero-img" />
+        <img src="img/hero2.jpg" alt="Image 2" class="hero-img" />
+      </div>
+
+      <div class="hero-text">
+        <h1>Nouvelle Collection 2025</h1>
+        <a href="nouvelle-collection.html" class="hero-btn"
+          >Voir les produits</a
+        >
+      </div>
+    </section>
+
+    <section class="section-texte-images">
+      <div class="section-images">
+        <img src="img/IMG_5966.JPG" alt="Portrait gauche" />
+      </div>
+      <div class="section-texte">
+        <h2>L'univers de la marque</h2>
+        <p>
+          Colorée, joyeuse, libre. MA LOU, c’est la mode comme une déclaration
+          d’été permanente.
+        </p>
+        <p>Notre slogan : “comme un éclat de soleil qui ne s’excuse jamais”.</p>
+        <p>
+          Nos collections s’inspirent du Sud, des plages, des souvenirs de
+          vacances, de la lumière du matin et des soirées entre amies.
+        </p>
+      </div>
+      <div class="section-images">
+        <img src="img/IMG_5967.JPG" alt="Penderie colorée droite" />
+      </div>
+    </section>
+
+    <section class="section-texte-images right-shift">
+      <div class="section-images">
+        <img src="img/grandmere.jpg" alt="Grand-mère et fondatrice" />
+      </div>
+      <div class="section-texte">
+        <h2>À propos de MA LOU</h2>
+        <p>
+          MA LOU est une marque de prêt-à-porter féminin née d’un rêve
+          intergénérationnel.
+        </p>
+        <p>
+          Pensée comme un hommage à ma grand-mère, couturière passionnée, je
+          propose des pièces lumineuses, colorées et audacieuses.
+        </p>
+        <p>MA LOU incarne une féminité libre, solaire et assumée.</p>
+        <p>
+          Disponible en ligne, la marque s’invite également dans des lieux de
+          vie inspirants à travers une stratégie de pop-ups chaleureux et
+          fédérateurs.
+        </p>
+      </div>
+    </section>
+
+    <section class="carousel-section">
+      <h2>Nouvelle Collection</h2>
+      <div class="carousel-track">
+        <a href="nouvelle-collection.html"
+          ><img src="img/c1.jpg" alt="Collection 1"
+        /></a>
+        <a href="nouvelle-collection.html"
+          ><img src="img/c2.jpg" alt="Collection 2"
+        /></a>
+        <a href="nouvelle-collection.html"
+          ><img src="img/c3.jpg" alt="Collection 3"
+        /></a>
+        <a href="nouvelle-collection.html"
+          ><img src="img/c4.jpg" alt="Collection 4"
+        /></a>
+        <a href="nouvelle-collection.html"
+          ><img src="img/c1.jpg" alt="Collection 1 bis"
+        /></a>
+        <a href="nouvelle-collection.html"
+          ><img src="img/c2.jpg" alt="Collection 2 bis"
+        /></a>
+      </div>
+    </section>
+
+    <!-- Inclusion du footer via JS -->
+    <div id="footer"></div>
+
+    <!-- Script qui charge header/footer -->
+    <script>
+      console.log("Page chargée !");
+      function includeHTML(id, file) {
+        fetch(file)
+          .then((response) => response.text())
+          .then((data) => {
+            document.getElementById(id).innerHTML = data;
+          });
+      }
+
+      includeHTML("header", "header.html");
+      includeHTML("footer", "footer.html");
+
+      // Scroll animation pour le header
+      function setupScrollHeader() {
+        const header = document.querySelector(".main-header");
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+          } else {
+            header.classList.remove("scrolled");
+          }
+        });
+      }
+
+      // Révélation des sections au scroll
+      document.addEventListener("DOMContentLoaded", () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              } else {
+                entry.target.classList.remove("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        document.querySelectorAll(".reveal").forEach((section) => {
+          observer.observe(section);
+        });
+      });
+    </script>
+    <script src="script/script.js"></script>
+  </body>
+</html>
