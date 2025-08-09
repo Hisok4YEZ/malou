@@ -27,3 +27,5 @@ includeHTML("header", "header.html").then(() => {
 });
 
 console.log("Page chargée !");
+
+

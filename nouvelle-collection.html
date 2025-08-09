@@ -29,573 +29,176 @@
     <div id="header"></div>
 
     <main class="collection-container">
-      <div class="products-grid">
-        <!-- Article 1 -->
-        <div id="product-component-1750356828594"></div>
-        <script type="text/javascript">
-          /*<![CDATA[*/
-          (function () {
-            var scriptURL =
-              "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
-            if (window.ShopifyBuy) {
-              if (window.ShopifyBuy.UI) {
-                ShopifyBuyInit();
-              } else {
-                loadScript();
-              }
-            } else {
-              loadScript();
-            }
-            function loadScript() {
-              var script = document.createElement("script");
-              script.async = true;
-              script.src = scriptURL;
-              (
-                document.getElementsByTagName("head")[0] ||
-                document.getElementsByTagName("body")[0]
-              ).appendChild(script);
-              script.onload = ShopifyBuyInit;
-            }
-            function ShopifyBuyInit() {
-              var client = ShopifyBuy.buildClient({
-                domain: "eb1iv0-n1.myshopify.com",
-                storefrontAccessToken: "5de76971549ee7a5dcb338aaad5e9784",
-              });
-              ShopifyBuy.UI.onReady(client).then(function (ui) {
-                ui.createComponent("product", {
-                  id: "15223379526006",
-                  node: document.getElementById(
-                    "product-component-1750356828594"
-                  ),
-                  moneyFormat:
-                    "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
-                  options: {
-                    product: {
-                      styles: {
-                        product: {
-                          "@media (min-width: 601px)": {
-                            "max-width": "calc(25% - 20px)",
-                            "margin-left": "20px",
-                            "margin-bottom": "50px",
-                          },
-                        },
-                      },
-                      text: {
-                        button: "Add to cart",
-                      },
-                    },
-                    productSet: {
-                      styles: {
-                        products: {
-                          "@media (min-width: 601px)": {
-                            "margin-left": "-20px",
-                          },
-                        },
-                      },
-                    },
-                    modalProduct: {
-                      contents: {
-                        img: false,
-                        imgWithCarousel: true,
-                        button: false,
-                        buttonWithQuantity: true,
-                      },
-                      styles: {
-                        product: {
-                          "@media (min-width: 601px)": {
-                            "max-width": "100%",
-                            "margin-left": "0px",
-                            "margin-bottom": "0px",
-                          },
-                        },
-                      },
-                      text: {
-                        button: "Add to cart",
-                      },
-                    },
-                    option: {},
-                    cart: {
-                      text: {
-                        total: "Subtotal",
-                        button: "Checkout",
-                      },
-                    },
-                    toggle: {},
-                  },
-                });
-              });
-            }
-          })();
-          /*]]>*/
-        </script>
-
-        <!-- Article 2 -->
-        <div id="product-component-1750357492177"></div>
-        <script type="text/javascript">
-          /*<![CDATA[*/
-          (function () {
-            var scriptURL =
-              "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
-            if (window.ShopifyBuy) {
-              if (window.ShopifyBuy.UI) {
-                ShopifyBuyInit();
-              } else {
-                loadScript();
-              }
-            } else {
-              loadScript();
-            }
-            function loadScript() {
-              var script = document.createElement("script");
-              script.async = true;
-              script.src = scriptURL;
-              (
-                document.getElementsByTagName("head")[0] ||
-                document.getElementsByTagName("body")[0]
-              ).appendChild(script);
-              script.onload = ShopifyBuyInit;
-            }
-            function ShopifyBuyInit() {
-              var client = ShopifyBuy.buildClient({
-                domain: "eb1iv0-n1.myshopify.com",
-                storefrontAccessToken: "5de76971549ee7a5dcb338aaad5e9784",
-              });
-              ShopifyBuy.UI.onReady(client).then(function (ui) {
-                ui.createComponent("product", {
-                  id: "15134413095286",
-                  node: document.getElementById(
-                    "product-component-1750357492177"
-                  ),
-                  moneyFormat:
-                    "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
-                  options: {
-                    product: {
-                      styles: {
-                        product: {
-                          "@media (min-width: 601px)": {
-                            "max-width": "calc(25% - 20px)",
-                            "margin-left": "20px",
-                            "margin-bottom": "50px",
-                          },
-                        },
-                        title: {
-                          "font-family": "Montserrat, sans-serif",
-                        },
-                        price: {
-                          "font-family": "Droid Sans, sans-serif",
-                        },
-                        compareAt: {
-                          "font-family": "Droid Sans, sans-serif",
-                        },
-                        unitPrice: {
-                          "font-family": "Droid Sans, sans-serif",
-                        },
-                      },
-                      text: {
-                        button: "Ajouter au panier",
-                      },
-                      googleFonts: ["Montserrat", "Droid Sans"],
-                    },
-                    productSet: {
-                      styles: {
-                        products: {
-                          "@media (min-width: 601px)": {
-                            "margin-left": "-20px",
-                          },
-                        },
-                      },
-                    },
-                    modalProduct: {
-                      contents: {
-                        img: false,
-                        imgWithCarousel: true,
-                        button: false,
-                        buttonWithQuantity: true,
-                      },
-                      styles: {
-                        product: {
-                          "@media (min-width: 601px)": {
-                            "max-width": "100%",
-                            "margin-left": "0px",
-                            "margin-bottom": "0px",
-                          },
-                        },
-                        title: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "bold",
-                          "font-size": "26px",
-                          color: "#4c4c4c",
-                        },
-                        price: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "normal",
-                          "font-size": "18px",
-                          color: "#4c4c4c",
-                        },
-                        compareAt: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "normal",
-                          "font-size": "15.299999999999999px",
-                          color: "#4c4c4c",
-                        },
-                        unitPrice: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "normal",
-                          "font-size": "15.299999999999999px",
-                          color: "#4c4c4c",
-                        },
-                      },
-                      text: {
-                        button: "Add to cart",
-                      },
-                    },
-                    option: {},
-                    cart: {
-                      text: {
-                        total: "Subtotal",
-                        button: "Checkout",
-                      },
-                    },
-                    toggle: {},
-                  },
-                });
-              });
-            }
-          })();
-          /*]]>*/
-        </script>
-        <!-- Article 3 -->
-        <div id="product-component-1750388018774"></div>
-        <script type="text/javascript">
-          /*<![CDATA[*/
-          (function () {
-            var scriptURL =
-              "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
-            if (window.ShopifyBuy) {
-              if (window.ShopifyBuy.UI) {
-                ShopifyBuyInit();
-              } else {
-                loadScript();
-              }
-            } else {
-              loadScript();
-            }
-            function loadScript() {
-              var script = document.createElement("script");
-              script.async = true;
-              script.src = scriptURL;
-              (
-                document.getElementsByTagName("head")[0] ||
-                document.getElementsByTagName("body")[0]
-              ).appendChild(script);
-              script.onload = ShopifyBuyInit;
-            }
-            function ShopifyBuyInit() {
-              var client = ShopifyBuy.buildClient({
-                domain: "eb1iv0-n1.myshopify.com",
-                storefrontAccessToken: "5de76971549ee7a5dcb338aaad5e9784",
-              });
-              ShopifyBuy.UI.onReady(client).then(function (ui) {
-                ui.createComponent("product", {
-                  id: "15134413095286",
-                  node: document.getElementById(
-                    "product-component-1750388018774"
-                  ),
-                  moneyFormat:
-                    "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
-                  options: {
-                    product: {
-                      styles: {
-                        product: {
-                          "@media (min-width: 601px)": {
-                            "max-width": "calc(25% - 20px)",
-                            "margin-left": "20px",
-                            "margin-bottom": "50px",
-                          },
-                          "text-align": "left",
-                        },
-                        title: {
-                          "font-family": "Source Sans Pro, sans-serif",
-                          "font-weight": "normal",
-                          "font-size": "16px",
-                        },
-                        button: {
-                          ":hover": {
-                            "background-color": "#000000",
-                          },
-                          "background-color": "#000000",
-                          ":focus": {
-                            "background-color": "#000000",
-                          },
-                          "border-radius": "20px",
-                          "padding-left": "26px",
-                          "padding-right": "26px",
-                        },
-                        price: {
-                          "font-family": "Montserrat, sans-serif",
-                          "font-weight": "bold",
-                        },
-                        compareAt: {
-                          "font-family": "Montserrat, sans-serif",
-                          "font-weight": "bold",
-                        },
-                        unitPrice: {
-                          "font-family": "Montserrat, sans-serif",
-                          "font-weight": "bold",
-                        },
-                      },
-                      text: {
-                        button: "Ajouter",
-                      },
-                      googleFonts: ["Source Sans Pro", "Montserrat"],
-                    },
-                    productSet: {
-                      styles: {
-                        products: {
-                          "@media (min-width: 601px)": {
-                            "margin-left": "-20px",
-                          },
-                        },
-                      },
-                    },
-                    modalProduct: {
-                      contents: {
-                        img: false,
-                        imgWithCarousel: true,
-                        button: false,
-                        buttonWithQuantity: true,
-                      },
-                      styles: {
-                        product: {
-                          "@media (min-width: 601px)": {
-                            "max-width": "100%",
-                            "margin-left": "0px",
-                            "margin-bottom": "0px",
-                          },
-                        },
-                        button: {
-                          ":hover": {
-                            "background-color": "#000000",
-                          },
-                          "background-color": "#000000",
-                          ":focus": {
-                            "background-color": "#000000",
-                          },
-                          "border-radius": "20px",
-                          "padding-left": "26px",
-                          "padding-right": "26px",
-                        },
-                        title: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "bold",
-                          "font-size": "26px",
-                          color: "#4c4c4c",
-                        },
-                        price: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "normal",
-                          "font-size": "18px",
-                          color: "#4c4c4c",
-                        },
-                        compareAt: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "normal",
-                          "font-size": "15.299999999999999px",
-                          color: "#4c4c4c",
-                        },
-                        unitPrice: {
-                          "font-family": "Helvetica Neue, sans-serif",
-                          "font-weight": "normal",
-                          "font-size": "15.299999999999999px",
-                          color: "#4c4c4c",
-                        },
-                      },
-                      text: {
-                        button: "Add to cart",
-                      },
-                    },
-                    option: {
-                      styles: {
-                        label: {
-                          "font-family": "PT Sans, sans-serif",
-                        },
-                        select: {
-                          "font-family": "PT Sans, sans-serif",
-                        },
-                      },
-                      googleFonts: ["PT Sans"],
-                    },
-                    cart: {
-                      styles: {
-                        button: {
-                          ":hover": {
-                            "background-color": "#000000",
-                          },
-                          "background-color": "#000000",
-                          ":focus": {
-                            "background-color": "#000000",
-                          },
-                          "border-radius": "20px",
-                        },
-                      },
-                      text: {
-                        total: "Subtotal",
-                        button: "Checkout",
-                      },
-                      popup: false,
-                    },
-                    toggle: {
-                      styles: {
-                        toggle: {
-                          "background-color": "#000000",
-                          ":hover": {
-                            "background-color": "#000000",
-                          },
-                          ":focus": {
-                            "background-color": "#000000",
-                          },
-                        },
-                      },
-                    },
-                  },
-                });
-              });
-            }
-          })();
-          /*]]>*/
-        </script>
-
-        <!-- Article 4 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/jupe-devant.jpg" alt="Jupe devant" class="front" />
-            <img src="img/jupe-dos.jpg" alt="Jupe dos" class="back" />
-            <button class="preview-btn">Aperçu</button>
-          </div>
-          <h2>Jupe Plissée</h2>
-          <p class="price">55 €</p>
-          <button class="add-cart">Ajouter au panier</button>
-
-          <div class="preview-overlay">
-            <div class="preview-content">
-              <h3>Jupe Plissée</h3>
-              <p>
-                Jupe élégante plissée, longueur genou, en tissu léger pour un
-                tombé parfait.
-              </p>
-              <p><strong>Prix :</strong> 55 €</p>
-              <button class="close-preview">Fermer</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Article 5 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/veste-devant.jpg" alt="Veste devant" class="front" />
-            <img src="img/veste-dos.jpg" alt="Veste dos" class="back" />
-            <button class="preview-btn">Aperçu</button>
-          </div>
-          <h2>Veste Cuir</h2>
-          <p class="price">120 €</p>
-          <button class="add-cart">Ajouter au panier</button>
-
-          <div class="preview-overlay">
-            <div class="preview-content">
-              <h3>Veste Cuir</h3>
-              <p>
-                Veste en cuir véritable avec une coupe ajustée et des détails
-                élégants.
-              </p>
-              <p><strong>Prix :</strong> 120 €</p>
-              <button class="close-preview">Fermer</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Article 6 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img
-              src="img/t-shirt-devant.jpg"
-              alt="T-shirt devant"
-              class="front"
-            />
-            <img src="img/t-shirt-dos.jpg" alt="T-shirt dos" class="back" />
-            <button class="preview-btn">Aperçu</button>
-          </div>
-          <h2>T-shirt Basique</h2>
-          <p class="price">25 €</p>
-          <button class="add-cart">Ajouter au panier</button>
-
-          <div class="preview-overlay">
-            <div class="preview-content">
-              <h3>T-shirt Basique</h3>
-              <p>
-                T-shirt en coton bio, col rond, coupe confortable, parfait pour
-                un usage quotidien.
-              </p>
-              <p><strong>Prix :</strong> 25 €</p>
-              <button class="close-preview">Fermer</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Article 7 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/sweat-devant.jpg" alt="Sweat devant" class="front" />
-            <img src="img/sweat-dos.jpg" alt="Sweat dos" class="back" />
-            <button class="preview-btn">Aperçu</button>
-          </div>
-          <h2>Sweat à Capuche</h2>
-          <p class="price">45 €</p>
-          <button class="add-cart">Ajouter au panier</button>
-
-          <div class="preview-overlay">
-            <div class="preview-content">
-              <h3>Sweat à Capuche</h3>
-              <p>
-                Sweat doux et chaud, parfait pour les soirées fraîches. Capuche
-                ajustable.
-              </p>
-              <p><strong>Prix :</strong> 45 €</p>
-              <button class="close-preview">Fermer</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Article 8 -->
-        <div class="product-card">
-          <div class="product-image">
-            <img
-              src="img/manteau-devant.jpg"
-              alt="Manteau devant"
-              class="front"
-            />
-            <img src="img/manteau-dos.jpg" alt="Manteau dos" class="back" />
-            <button class="preview-btn">Aperçu</button>
-          </div>
-          <h2>Manteau Long</h2>
-          <p class="price">150 €</p>
-          <button class="add-cart">Ajouter au panier</button>
-
-          <div class="preview-overlay">
-            <div class="preview-content">
-              <h3>Manteau Long</h3>
-              <p>
-                Manteau élégant et chaud, idéal pour l’hiver. Coupe longue avec
-                col large.
-              </p>
-              <p><strong>Prix :</strong> 150 €</p>
-              <button class="close-preview">Fermer</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h1 class="page-title">Nouvelle collection</h1>
+      <div id="collection-node" class="shopify-collection-node"></div>
     </main>
+
     <div id="footer"></div>
 
+    <script>
+      (function () {
+        var scriptURL =
+          "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+        if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+          ShopifyBuyInit();
+        } else {
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = scriptURL;
+          s.onload = ShopifyBuyInit;
+          (document.head || document.body).appendChild(s);
+        }
+
+        function ShopifyBuyInit() {
+          var client = ShopifyBuy.buildClient({
+            domain: "eb1iv0-n1.myshopify.com",
+            storefrontAccessToken: "5de76971549ee7a5dcb338aaad5e9784",
+          });
+
+          ShopifyBuy.UI.onReady(client).then(function (ui) {
+            ui.createComponent("collection", {
+              id: "677036884342",
+              node: document.getElementById("collection-node"),
+              moneyFormat: "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
+              options: {
+                product: {
+                  buttonDestination: "modal",
+                  contents: {
+                    img: true,
+                    title: true,
+                    price: true,
+                    options: false,
+                    quantity: false,
+                    button: true,
+                    buttonWithQuantity: false,
+                  },
+                  text: { button: "Voir" },
+                  styles: {
+                    product: {
+                      "text-align": "left",
+                      /* force ratio côté composant */
+                      imgWrapper: {
+                        position: "relative",
+                        width: "100%",
+                        height: "auto",
+                        "aspect-ratio": "4 / 5",
+                      },
+                      img: {
+                        position: "absolute",
+                        inset: "0",
+                        width: "100%",
+                        height: "100%",
+                        "object-fit": "cover",
+                      },
+                    },
+                    title: { color: "#1f1f1f", "font-weight": "600" },
+                    price: { color: "#333" },
+                    button: {
+                      "background-color": "#e96878",
+                      "border-radius": "0",
+                    },
+                  },
+                },
+                productSet: {
+                  styles: { products: { "align-items": "stretch" } },
+                },
+                modalProduct: {
+                  contents: {
+                    img: false,
+                    imgWithCarousel: true,
+                    button: false,
+                    buttonWithQuantity: true,
+                  },
+                  text: { button: "Ajouter au panier" },
+                  styles: {
+                    button: {
+                      "background-color": "#e96878",
+                      "border-radius": "0",
+                    },
+                  },
+                },
+                cart: {
+                  popup: false,
+                  styles: {
+                    button: {
+                      "background-color": "#e96878",
+                      "border-radius": "0",
+                    },
+                    cart: { "background-color": "#e8dbcd" },
+                    footer: { "background-color": "#e8dbcd" },
+                  },
+                  text: {
+                    title: "Panier",
+                    total: "Total",
+                    empty: "Votre panier est vide 🥲",
+                    notice:
+                      "Les codes d'expédition et de réduction sont ajoutés lors du paiement.",
+                    button: "Payer",
+                  },
+                },
+                toggle: {
+                  styles: { toggle: { "background-color": "#e96878" } },
+                },
+              },
+            });
+
+            // === Hover: swap vers 2e image si disponible ===
+            client.collection
+              .fetchWithProducts("REPLACE_COLLECTION_ID", {
+                productsFirst: 250,
+              })
+              .then(function (col) {
+                const map = new Map();
+                col.products.forEach((p) => {
+                  const imgs = p.images || [];
+                  if (imgs.length > 1)
+                    map.set(String(p.id), {
+                      first: imgs[0].src,
+                      second: imgs[1].src,
+                    });
+                });
+
+                // MutationObserver pour attendre le rendu des cartes
+                const grid = document.querySelector("#collection-node");
+                const hook = () => {
+                  document
+                    .querySelectorAll(".shopify-buy__product")
+                    .forEach((card) => {
+                      const pid =
+                        card.getAttribute("data-product-id") ||
+                        card.dataset.productId;
+                      if (!pid || !map.has(pid) || card.__hoverBound) return;
+                      const imgEl = card.querySelector(
+                        ".shopify-buy__product__image img, .shopify-buy__product__image, img"
+                      );
+                      if (!imgEl) return;
+                      const { first, second } = map.get(pid);
+                      let original = imgEl.getAttribute("src") || first;
+                      card.__hoverBound = true;
+
+                      card.addEventListener("mouseenter", () => {
+                        if (second) imgEl.setAttribute("src", second);
+                      });
+                      card.addEventListener("mouseleave", () => {
+                        imgEl.setAttribute("src", original);
+                      });
+                      // also on focus/blur for keyboard users
+                      card.addEventListener("focusin", () => {
+                        if (second) imgEl.setAttribute("src", second);
+                      });
+                      card.addEventListener("focusout", () => {
+                        imgEl.setAttribute("src", original);
+                      });
+                    });
+                };
+                const mo = new MutationObserver(hook);
+                mo.observe(grid, { childList: true, subtree: true });
+                hook(); // première passe
+              });
+          });
+        }
+      })();
+    </script>
     <script src="script/script.js"></script>
   </body>
 </html>

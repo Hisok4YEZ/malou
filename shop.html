@@ -75,7 +75,7 @@
       }
     </style>
   </head>
-  <body>
+  <body class="catalogue-bg">
     <div class="bandeau-livraison">
       <div class="bandeau-slider">
         <div class="slide">Livraison à domicile dans toute la France 🇫🇷</div>
@@ -87,141 +87,263 @@
 
     <div id="header"></div>
 
-    <main class="catalogue-container">
-      <h2>Bas</h2>
-      <section class="catalogue-section layout-left">
-        <div class="catalogue-featured">
-          <div class="product-thumb">
-            <img src="img/pantalon-devant.jpg" alt="Pantalon mis en avant" />
-            <p>Pantalon Classique – 75 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
-        <div class="catalogue-grid">
-          <div class="product-thumb">
-            <img src="img/jupe-devant.jpg" alt="Jupe" />
-            <p>Jupe Plissée – 55 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/short.jpg" alt="Short" />
-            <p>Short Taille Haute – 49 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/jean.jpg" alt="Jean" />
-            <p>Jean Droit – 69 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/jogging.jpg" alt="Jogging" />
-            <p>Jogging Coton – 39 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
+    <main class="collection-container">
+      <!-- Sous-nav sticky pour sauter aux sections -->
+      <nav class="catalogue-subnav" aria-label="Catégories">
+        <a href="#c-robe">Robes</a>
+        <a href="#c-Bas">Bas</a>
+        <a href="#c-top">Tops</a>
+      </nav>
+
+      <!-- Sections de collections (placeholders) -->
+      <section id="c-robe" class="catalogue-section">
+        <h2>Robes</h2>
+        <div id="node-robe" class="shopify-collection-node"></div>
       </section>
 
-      <h2>Hauts</h2>
-      <section class="catalogue-section layout-right">
-        <div class="catalogue-grid">
-          <div class="product-thumb">
-            <img src="img/t-shirt-devant.jpg" alt="T-shirt" />
-            <p>T-shirt Basique – 25 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/chemise-devant.jpg" alt="Chemise" />
-            <p>Chemise Blanche – 60 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/sweat-devant.jpg" alt="Sweat" />
-            <p>Sweat à Capuche – 45 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/top.jpg" alt="Top" />
-            <p>Top Côtelé – 35 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
-        <div class="catalogue-featured">
-          <div class="product-thumb">
-            <img src="img/haut-vedette.jpg" alt="Haut en vedette" />
-            <p>Blouse Satinée – 79 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
+      <section id="c-Bas" class="catalogue-section">
+        <h2>Bas</h2>
+        <div id="node-Bas" class="shopify-collection-node"></div>
       </section>
 
-      <h2>Vestes</h2>
-      <section class="catalogue-section layout-left">
-        <div class="catalogue-featured">
-          <div class="product-thumb">
-            <img src="img/veste-devant.jpg" alt="Veste" />
-            <p>Veste Cuir – 120 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
-        <div class="catalogue-grid">
-          <div class="product-thumb">
-            <img src="img/cardigan.jpg" alt="Cardigan" />
-            <p>Cardigan Épais – 65 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/blazer.jpg" alt="Blazer" />
-            <p>Blazer Tailleur – 85 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/cape.jpg" alt="Cape" />
-            <p>Cape Laine – 90 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/gilet.jpg" alt="Gilet" />
-            <p>Gilet Tricoté – 52 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
+      <section id="c-top" class="catalogue-section">
+        <h2>Tops</h2>
+        <div id="node-top" class="shopify-collection-node"></div>
       </section>
-
-      <h2>Manteaux</h2>
-      <section class="catalogue-section layout-right">
-        <div class="catalogue-grid">
-          <div class="product-thumb">
-            <img src="img/manteau-devant.jpg" alt="Manteau" />
-            <p>Manteau Long – 150 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/doudoune.jpg" alt="Doudoune" />
-            <p>Doudoune Chaude – 140 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/pea-coat.jpg" alt="Pea Coat" />
-            <p>Pea Coat Marine – 130 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-          <div class="product-thumb">
-            <img src="img/caban.jpg" alt="Caban" />
-            <p>Caban Court – 125 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
-        <div class="catalogue-featured">
-          <div class="product-thumb">
-            <img src="img/manteau-star.jpg" alt="Manteau vedette" />
-            <p>Manteau Vedette – 165 €</p>
-            <button class="add-cart">Ajouter</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Plus tard : filtres JS dynamiques -->
     </main>
+
+    <!-- Script unique pour charger et afficher TOUTES les collections -->
+    <script>
+      /**
+       * Page Catalogue — plusieurs collections empilées
+       * - Charge le SDK Buy Button une seule fois
+       * - Rend chaque collection par son ID Shopify
+       * - Lazy render au scroll (perf)
+       */
+
+      (function () {
+        var scriptURL =
+          "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+
+        // → Remplace les IDs ci-dessous par TES IDs de collections Shopify
+        //    (Shopify > Buy Button > Créer un bouton pour une Collection → copie l'ID)
+        var COLLECTIONS = [
+          {
+            key: "robe",
+            title: "Robes",
+            id: "677037146486",
+            node: "node-robe",
+          },
+          {
+            key: "Bas",
+            title: "Bas",
+            id: "677037244790",
+            node: "node-Bas",
+          },
+          {
+            key: "top",
+            title: "Tops",
+            id: "677037343094",
+            node: "node-top",
+          },
+        ];
+
+        // 1) Charger le SDK si nécessaire
+        if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+          ShopifyBuyInit();
+        } else {
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = scriptURL;
+          s.onload = ShopifyBuyInit;
+          (document.head || document.body).appendChild(s);
+        }
+
+        // 2) Initialisation Shopify + rendu lazy des collections
+        function ShopifyBuyInit() {
+          var client = ShopifyBuy.buildClient({
+            domain: "eb1iv0-n1.myshopify.com",
+            storefrontAccessToken: "5de76971549ee7a5dcb338aaad5e9784",
+          });
+
+          ShopifyBuy.UI.onReady(client).then(function (ui) {
+            // Observateur pour "lazy render" : on ne crée la collection que quand la section entre en vue
+            var io = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  if (!entry.isIntersecting) return;
+
+                  var node = entry.target; // div.shopify-collection-node*
+                  var key = node.id.replace("node-", "");
+                  var conf = COLLECTIONS.find((c) => c.key === key);
+                  if (!conf || node.dataset.rendered === "1") return;
+
+                  node.dataset.rendered = "1"; // éviter double rendu
+
+                  ui.createComponent("collection", {
+                    id: conf.id,
+                    node: node,
+                    moneyFormat:
+                      "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
+                    options: {
+                      product: {
+                        // Ouvre la modale → pas d’ajout direct depuis la carte
+                        buttonDestination: "modal",
+                        contents: {
+                          img: true,
+                          title: true,
+                          price: true,
+                          options: false, // masque tailles/couleurs sur la carte
+                          quantity: false,
+                          button: true, // un SEUL bouton sur la carte = "Voir"
+                          buttonWithQuantity: false,
+                        },
+                        text: { button: "Voir" },
+
+                        styles: {
+                          product: {
+                            "text-align": "left",
+
+                            /* >>> FORCE RATIO 4:5 CÔTÉ COMPOSANT <<< */
+                            imgWrapper: {
+                              position: "relative",
+                              width: "100%",
+                              height: "auto",
+                              "aspect-ratio": "4 / 5",
+                              /* Fallback vieux navigateurs :
+                                si aspect-ratio pas supporté, on bascule via CSS plus bas */
+                            },
+                            button: {
+                              "background-color": "#e96878",
+                              "border-radius": "0",
+                            },
+                            img: {
+                              position: "absolute",
+                              inset: "0",
+                              width: "100%",
+                              height: "100%",
+                              "object-fit": "cover",
+                            },
+                          },
+                          /* ... title/price/button inchangés ... */
+                        },
+                      },
+                      productSet: {
+                        styles: { products: { "align-items": "stretch" } },
+                      },
+                      modalProduct: {
+                        contents: {
+                          img: false,
+                          imgWithCarousel: true,
+                          button: false,
+                          buttonWithQuantity: true, // le SEUL bouton d’achat est ici
+                        },
+                        text: { button: "Ajouter au panier" },
+                        styles: {
+                          button: {
+                            "background-color": "#000",
+                            "border-radius": "0",
+                          },
+                        },
+                      },
+                      cart: {
+                        popup: false,
+                        styles: {
+                          cart: { "background-color": "#e8dbcd" },
+                          footer: { "background-color": "#e8dbcd" },
+                          button: {
+                            "background-color": "#000",
+                            "border-radius": "0",
+                          },
+                        },
+                        text: {
+                          title: "Panier",
+                          total: "Total",
+                          empty: "Votre panier est vide 🥲",
+                          notice:
+                            "Les codes d'expédition et de réduction sont ajoutés lors du paiement.",
+                          button: "Payer",
+                        },
+                      },
+                      toggle: {
+                        styles: { toggle: { "background-color": "#000" } },
+                      },
+                    },
+                  });
+
+                  io.unobserve(node);
+                });
+              },
+              { root: null, rootMargin: "120px 0px", threshold: 0.01 }
+            );
+
+            // Activer l’observer sur chaque placeholder
+            document
+              .querySelectorAll(".shopify-collection-node")
+              .forEach(function (n) {
+                io.observe(n);
+              });
+          });
+        }
+      })();
+    </script>
+    <script>
+      /* ===== Onglets Robes/Bas/Tops avec anim up/down ===== */
+      document.addEventListener("DOMContentLoaded", () => {
+        const order = ["robe", "Bas", "top"]; // l’ordre visuel de tes onglets
+        const tabs = [...document.querySelectorAll(".catalogue-subnav a")];
+        const sections = (key) => document.querySelector(`#c-${key}`);
+
+        // état initial : activer la 1ère section
+        function activate(key, dir) {
+          // nav active
+          tabs.forEach((a) =>
+            a.classList.toggle("active", a.getAttribute("href") === `#c-${key}`)
+          );
+          // sections
+          ["robe", "Bas", "top"].forEach((k) => {
+            const s = sections(k);
+            if (!s) return;
+            s.classList.remove("is-active", "anim-down", "anim-up");
+          });
+          const act = sections(key);
+          if (act) {
+            act.classList.add(
+              "is-active",
+              dir === "down" ? "anim-down" : "anim-up"
+            );
+            // si la collection n'a pas encore été rendue par l'observer, on scrolle quand même au bloc
+            act.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+
+        // click handling + direction
+        tabs.forEach((a) => {
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetKey = a.getAttribute("href").replace("#c-", "");
+            const current = document.querySelector(
+              ".catalogue-subnav a.active"
+            );
+            const currentKey = current
+              ? current.getAttribute("href").replace("#c-", "")
+              : order[0];
+            const dir =
+              order.indexOf(targetKey) > order.indexOf(currentKey)
+                ? "down"
+                : "up";
+            activate(targetKey, dir);
+          });
+        });
+
+        // activer par défaut (1er onglet) ou par hash si présent
+        const initial =
+          location.hash && location.hash.startsWith("#c-")
+            ? location.hash.replace("#c-", "")
+            : order[0];
+        activate(initial, "down");
+      });
+    </script>
 
     <div id="footer"></div>
     <script src="script/script.js"></script>
