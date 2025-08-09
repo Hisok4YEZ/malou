@@ -61,7 +61,6 @@
     height: 48px;
     object-fit: contain;
     border-radius: 6px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.12);
 }
 
 /* Liens nav */
@@ -118,4 +117,124 @@
     display: flex;
     align-items: center;
     gap: 24px;
+}
+
+.Logo-pc {
+    display: none;
+}
+
+
+
+@media screen and (max-width: 768px) {
+
+
+
+
+
+    .navbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.3rem 1.2rem;
+        gap: 0;
+    }
+
+    .nav-center {
+        position: static;
+        transform: none;
+        order: 0;
+        margin: 0;
+    }
+
+    .logo {
+        height: 42px;
+    }
+
+    .nav-left,
+    .nav-right {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    .navbar a {
+        font-size: 11px;
+        padding: 4px;
+        white-space: nowrap;
+    }
+
+    .navbar a::after {
+        display: none;
+    }
+}
+
+/* ----- Dropdown menu ----- */
+.has-dropdown {
+    position: relative;
+}
+
+.nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #000;
+    transition: transform 0.2s ease;
+}
+
+/* Sous-menu */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: #e8dbcd;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.dropdown a {
+    display: block;
+    padding: 10px 14px;
+    color: #000;
+    text-decoration: none;
+}
+
+.dropdown a:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Ouverture au survol (desktop) */
+.has-dropdown:hover .dropdown,
+.has-dropdown:focus-within .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.has-dropdown:hover .caret,
+.has-dropdown:focus-within .caret {
+    transform: rotate(180deg);
+}
+
+/* Mobile : on force l'affichage en clic via JS */
+.has-dropdown.open .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
