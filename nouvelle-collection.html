@@ -3,52 +3,184 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="img/logo2.png" type="image/jpeg" />
+    <link rel="icon" href="img/logo2.png" type="image/png" />
+    <title>Nouvelle collection – MA LOU</title>
 
-    <title>Nouvelle Collection</title>
+    <!-- Typos DA -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
 
+    <!-- Tes feuilles existantes -->
     <link rel="stylesheet" href="style/style.css" />
-
-    <link rel="stylesheet" href="style/nouvelle-collection.css" />
     <link rel="stylesheet" href="style/header.css" />
     <link rel="stylesheet" href="style/footer.css" />
+
+    <style>
+      /* Fond + motif identiques au site */
+      :root {
+        --rose: #e96878;
+        --beige: #e8dbcd;
+        --brun: #3f3027;
+      }
+      body {
+        background: #e8dbcd;
+        color: #3f3027;
+        font-family: "Quicksand", sans-serif;
+        margin: 0;
+      }
+      body.catalogue-bg::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background: radial-gradient(
+            1200px 800px at 10% -10%,
+            rgba(232, 219, 205, 0.55) 0%,
+            rgba(232, 219, 205, 0) 60%
+          ),
+          radial-gradient(
+            1200px 800px at 110% 10%,
+            rgba(232, 219, 205, 0.45) 0%,
+            rgba(232, 219, 205, 0) 60%
+          ),
+          url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='rgba(233,104,120,0.18)' stroke-width='1.2'><circle cx='110' cy='110' r='72'/><path d='M50 90c10-12 30-12 40 0 9 12 9 28 0 40-10 12-30 12-40 0-9-12-9-28 0-40z'/><path d='M130 80c12-10 32-10 44 0 10 10 10 26 0 36-12 10-32 10-44 0-10-10-10-26 0-36z'/></g></svg>");
+        background-repeat: repeat;
+        background-size: 260px 260px;
+        opacity: 0.18;
+      }
+
+      /* Bandeau livraison (même composant que tes autres pages) */
+      .bandeau-livraison {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        height: 32px;
+        background: var(--beige);
+        overflow: hidden;
+      }
+      .bandeau-slider {
+        display: flex;
+        width: 400%;
+        animation: sliderAnim 24s infinite;
+      }
+      .slide {
+        width: 100vw;
+        flex-shrink: 0;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        color: #fff;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      @keyframes sliderAnim {
+        0%,
+        20% {
+          transform: translateX(0);
+        }
+        25%,
+        45% {
+          transform: translateX(-100vw);
+        }
+        50%,
+        70% {
+          transform: translateX(-200vw);
+        }
+        75%,
+        95% {
+          transform: translateX(-300vw);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      /* Container */
+      .collection-container {
+        max-width: 1240px;
+        margin: 24px auto 80px;
+        padding: 0 18px;
+      }
+      .collection-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 6px 0 22px;
+        border-left: 6px solid rgba(0, 0, 0, 0.06);
+        padding-left: 12px;
+      }
+      .collection-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        line-height: 1.1;
+        color: var(--brun);
+        margin: 0;
+      }
+      .collection-count {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+    </style>
   </head>
-  <body>
+
+  <body class="catalogue-bg">
+    <!-- Bandeau livraison -->
     <div class="bandeau-livraison">
       <div class="bandeau-slider">
         <div class="slide">Livraison à domicile dans toute la France 🇫🇷</div>
-        <div class="slide">Livraison gratuite dès 80 € d'achat</div>
+        <div class="slide">Livraison gratuite dès 80 € d'achat</div>
         <div class="slide">Paiement 100% sécurisé 💳</div>
         <div class="slide">Nouveautés chaque semaine ✨</div>
       </div>
     </div>
+
+    <!-- Header injecté par ton script -->
     <div id="header"></div>
 
     <main class="collection-container">
-      <h1 class="page-title">Nouvelle collection</h1>
-      <div id="collection-node" class="shopify-collection-node"></div>
+      <div class="collection-header">
+        <h1 class="collection-title">Collection capsule</h1>
+        <div class="collection-count" id="collectionCount">—</div>
+      </div>
+
+      <!-- NOEUD Shopify Buy Button (collection) -->
+      <div id="collection-component-1754753704786"></div>
     </main>
 
+    <!-- Footer injecté par ton script -->
     <div id="footer"></div>
 
+    <!-- ===== Buy Button SDK + composant collection (100% fonctionnel) ===== -->
+    <!-- ===== Buy Button SDK + composant collection (carrousel HD + grid mobile 2x2) ===== -->
     <script>
       (function () {
+        // URL officielle du SDK Buy Button Shopify
         var scriptURL =
           "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
-        if (window.ShopifyBuy && window.ShopifyBuy.UI) {
-          ShopifyBuyInit();
+
+        // 1) Charger le SDK puis init
+        if (window.ShopifyBuy) {
+          window.ShopifyBuy.UI ? ShopifyBuyInit() : loadScript();
         } else {
+          loadScript();
+        }
+
+        function loadScript() {
           var s = document.createElement("script");
           s.async = true;
           s.src = scriptURL;
-          s.onload = ShopifyBuyInit;
           (document.head || document.body).appendChild(s);
+          s.onload = ShopifyBuyInit;
         }
 
+        // 2) Initialisation du client + création du composant collection
         function ShopifyBuyInit() {
           var client = ShopifyBuy.buildClient({
             domain: "eb1iv0-n1.myshopify.com",
@@ -57,75 +189,153 @@
 
           ShopifyBuy.UI.onReady(client).then(function (ui) {
             ui.createComponent("collection", {
+              // ⚠️ Remplace par l'ID de TA collection si besoin
               id: "677036884342",
-              node: document.getElementById("collection-node"),
+              node: document.getElementById(
+                "collection-component-1754753704786"
+              ),
+              // Format € avec virgule
               moneyFormat: "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
+
+              // =======================
+              // OPTIONS D'APPARENCE
+              // =======================
               options: {
+                // Cartes produit dans la grille de la collection
                 product: {
-                  buttonDestination: "modal",
+                  styles: {
+                    product: {
+                      // Desktop : 4 par ligne
+                      "@media (min-width: 1201px)": {
+                        "max-width": "calc(25% - 24px)",
+                        width: "calc(25% - 24px)",
+                        "margin-left": "24px",
+                        "margin-bottom": "28px",
+                      },
+                      // Tablette : 3 par ligne
+                      "@media (max-width: 1200px)": {
+                        "max-width": "calc(33.333% - 20px)",
+                        width: "calc(33.333% - 20px)",
+                        "margin-left": "20px",
+                      },
+                      // Petit tablette / mobile large : 2 par ligne
+                      "@media (max-width: 768px)": {
+                        "max-width": "calc(50% - 16px)",
+                        width: "calc(50% - 16px)",
+                        "margin-left": "16px",
+                      },
+                      // Mobile étroit : 2 par ligne (ton besoin)
+                      "@media (max-width: 600px)": {
+                        "max-width": "calc(50% - 12px)",
+                        width: "calc(50% - 12px)",
+                        "margin-left": "12px",
+                      },
+
+                      "text-align": "left",
+                      border: "1px solid #eee",
+                      "border-radius": "12px",
+                      overflow: "hidden",
+                      "box-shadow": "0 6px 18px rgba(0,0,0,.04)",
+                    },
+                    imgWrapper: {
+                      position: "relative",
+                      height: "0",
+                      "padding-top": "125%", // ratio 4:5 approx
+                      overflow: "hidden",
+                      background: "#f7f5f2",
+                    },
+                    img: {
+                      position: "absolute",
+                      inset: "0",
+                      width: "100%",
+                      height: "100%",
+                      "object-fit": "cover",
+                    },
+                    title: {
+                      "font-family": "Cormorant Garamond, serif",
+                      "font-weight": "600",
+                      color: "#1f1f1f",
+                      "font-size": "18px",
+                      margin: "14px 16px 6px",
+                    },
+                    price: {
+                      "font-family": "Quicksand, sans-serif",
+                      "font-weight": "700",
+                      color: "#333",
+                      "font-size": "15px",
+                      margin: "0 16px 12px",
+                    },
+                    button: {
+                      "font-family": "Quicksand, sans-serif",
+                      "background-color": "#e96878",
+                      "border-radius": "0",
+                      color: "#fff",
+                      margin: "0",
+                      width: "100%",
+                      border: "none",
+                      ":hover": { "background-color": "#000 !important" },
+                      ":focus": { "background-color": "#000 !important" },
+                    },
+                  },
+                  buttonDestination: "modal", // Le bouton "Voir" ouvre la modale
+                  contents: { options: false }, // Pas d'options variants sur la carte
+                  text: { button: "Voir" },
+                  googleFonts: ["Cormorant Garamond", "Quicksand"],
+                },
+
+                // Conteneur de la liste (marges négatives pour équilibrer les gaps)
+                productSet: {
+                  contents: { pagination: true },
+                  text: { next: "Afficher tout" },
+                  styles: {
+                    products: {
+                      "@media (min-width: 1201px)": { "margin-left": "-24px" },
+                      "@media (max-width: 1200px)": { "margin-left": "-20px" },
+                      "@media (max-width: 768px)": { "margin-left": "-16px" },
+                      "@media (max-width: 600px)": { "margin-left": "-12px" },
+                    },
+                  },
+                },
+
+                // Modale produit (carrousel conservé, images passées en HD)
+                modalProduct: {
                   contents: {
-                    img: true,
-                    title: true,
-                    price: true,
-                    options: false,
-                    quantity: false,
+                    img: true, // On utilise le carrousel
+                    imgWithCarousel: false, // ✅ Carrousel activé
                     button: true,
                     buttonWithQuantity: false,
                   },
-                  text: { button: "Voir" },
-                  styles: {
-                    product: {
-                      "text-align": "left",
-                      /* force ratio côté composant */
-                      imgWrapper: {
-                        position: "relative",
-                        width: "100%",
-                        height: "auto",
-                        "aspect-ratio": "4 / 5",
-                      },
-                      img: {
-                        position: "absolute",
-                        inset: "0",
-                        width: "100%",
-                        height: "100%",
-                        "object-fit": "cover",
-                      },
-                    },
-                    title: { color: "#1f1f1f", "font-weight": "600" },
-                    price: { color: "#333" },
-                    button: {
-                      "background-color": "#e96878",
-                      "border-radius": "0",
-                    },
-                  },
-                },
-                productSet: {
-                  styles: { products: { "align-items": "stretch" } },
-                },
-                modalProduct: {
-                  contents: {
-                    img: false,
-                    imgWithCarousel: true,
-                    button: false,
-                    buttonWithQuantity: true,
-                  },
                   text: { button: "Ajouter au panier" },
                   styles: {
-                    button: {
-                      "background-color": "#e96878",
-                      "border-radius": "0",
+                    product: { "max-width": "900px" },
+                    imgWrapper: { "max-width": "100%" },
+                    img: {
+                      width: "100%",
+                      height: "auto",
+                      "object-fit": "contain",
                     },
                   },
                 },
+
+                // Toggle du mini-panier
+                toggle: {
+                  styles: {
+                    toggle: {
+                      "background-color": "#000",
+                      ":hover": { "background-color": "#000" },
+                      ":focus": { "background-color": "#000" },
+                    },
+                  },
+                },
+
+                // Panier
                 cart: {
-                  popup: false,
                   styles: {
                     button: {
-                      "background-color": "#e96878",
-                      "border-radius": "0",
+                      "background-color": "#000",
+                      ":hover": { "background-color": "#000" },
+                      ":focus": { "background-color": "#000" },
                     },
-                    cart: { "background-color": "#e8dbcd" },
-                    footer: { "background-color": "#e8dbcd" },
                   },
                   text: {
                     title: "Panier",
@@ -136,69 +346,171 @@
                     button: "Payer",
                   },
                 },
-                toggle: {
-                  styles: { toggle: { "background-color": "#e96878" } },
-                },
               },
-            });
+            })
+              // 3) Une fois le composant rendu, on injecte le "forcer HD" dans l'iframe
+              .then(function () {
+                // Petit délai pour être sûr que l'iframe et la modale existent si ouvertes
+                setTimeout(() => {
+                  try {
+                    // 1) Récupère l’iframe Buy Button (le HTML du composant vit dedans)
+                    const iframe = document.querySelector(
+                      "#collection-component-1754753704786 iframe"
+                    );
+                    if (!iframe || !iframe.contentDocument) return;
+                    const doc = iframe.contentDocument;
 
-            // === Hover: swap vers 2e image si disponible ===
-            client.collection
-              .fetchWithProducts("REPLACE_COLLECTION_ID", {
-                productsFirst: 250,
-              })
-              .then(function (col) {
-                const map = new Map();
-                col.products.forEach((p) => {
-                  const imgs = p.images || [];
-                  if (imgs.length > 1)
-                    map.set(String(p.id), {
-                      first: imgs[0].src,
-                      second: imgs[1].src,
+                    // ==============================
+                    // UTILITAIRES DE MISE EN HD
+                    // ==============================
+
+                    // ➜ Force une URL Shopify en {width}x (ex: 2048x).
+                    function toSize(url, width) {
+                      try {
+                        if (!url) return url;
+                        // Parfois Shopify met des params (?v=...) → on les conserve
+                        const u = new URL(url, window.location.origin);
+                        const base = u.origin + u.pathname;
+                        const hi = base
+                          // remplace suffixes _NNNx (ou _small/_medium/etc.) par _{width}x
+                          .replace(
+                            /_(pico|icon|thumb|small|compact|medium|large|grande|\d+x\d+)(@2x)?\.(jpg|jpeg|png|webp)$/i,
+                            `_${width}x.$3`
+                          )
+                          // si aucun suffixe taille n’était présent, on l’ajoute avant l’extension
+                          .replace(/\.(jpg|jpeg|png|webp)$/i, `_${width}x.$1`);
+                        return hi + (u.search || "");
+                      } catch {
+                        return url;
+                      }
+                    }
+
+                    // ➜ Débarrasse une balise <img> de ses contraintes de taille responsive
+                    //    et remplace la source par une version 2048px.
+                    function upgradeImg(img, targetW = 2048) {
+                      if (!img) return;
+
+                      // Conserver la source d’origine pour éviter les remplacements en boucle
+                      const original =
+                        img.getAttribute("data-original-src") ||
+                        img.currentSrc ||
+                        img.src ||
+                        "";
+                      if (!original) return;
+
+                      // Neutralise le responsive qui re-choisit des miniatures
+                      img.removeAttribute("srcset");
+                      img.removeAttribute("sizes");
+                      img.loading = "eager";
+                      img.decoding = "sync";
+
+                      // Applique une source bien large
+                      const hi = toSize(original, targetW);
+                      if (hi && img.src !== hi) img.src = hi;
+
+                      // Style de rendu sain (évite le flou “étiré”)
+                      img.style.width = "100%";
+                      img.style.height = "auto";
+                      img.style.objectFit = "contain";
+                      img.style.imageRendering = "auto";
+
+                      img.setAttribute("data-original-src", original);
+                    }
+
+                    // ➜ Si Shopify utilise <picture><source srcset="...">, on vire les srcset/sizes
+                    //    et on laisse <img> principal gérer la HD.
+                    function neutralizePicture(pictureEl) {
+                      if (!pictureEl) return;
+                      pictureEl.querySelectorAll("source").forEach((s) => {
+                        s.removeAttribute("srcset");
+                        s.removeAttribute("sizes");
+                      });
+                    }
+
+                    // ➜ Applique la HD à toutes les images du **carrousel de la modale**
+                    function upgradeModalImages() {
+                      // Images principales
+                      doc
+                        .querySelectorAll(
+                          ".shopify-buy__modal .shopify-buy__product__carousel-item img, .shopify-buy__modal .shopify-buy__carousel-image img"
+                        )
+                        .forEach((img) => {
+                          const picture = img.closest("picture");
+                          if (picture) neutralizePicture(picture);
+                          upgradeImg(img, 2048);
+                        });
+
+                      // Vignettes (selon versions du SDK)
+                      doc
+                        .querySelectorAll(
+                          ".shopify-buy__modal .shopify-buy__carousel-thumbnail img, .shopify-buy__modal .shopify-buy__product__thumbnails img"
+                        )
+                        .forEach((img) => upgradeImg(img, 600));
+                    }
+
+                    // Un petit style pour s’assurer du bon rendu dans la modale
+                    const style = doc.createElement("style");
+                    style.textContent = `
+      .shopify-buy__modal img {
+        width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
+        image-rendering: auto !important;
+      }
+    `;
+                    doc.head.appendChild(style);
+
+                    // 2) Première passe (si la modale est déjà ouverte)
+                    upgradeModalImages();
+
+                    // 3) Observer TOUT changement dans la modale (ouverture, changement de slide,
+                    //    lazyload, pagination, etc.) et réappliquer la HD à chaque fois.
+                    const obs = new MutationObserver((muts) => {
+                      let shouldUpgrade = false;
+                      for (const m of muts) {
+                        if (m.type === "childList" && m.addedNodes.length) {
+                          shouldUpgrade = true;
+                          break;
+                        }
+                        if (
+                          m.type === "attributes" &&
+                          m.target &&
+                          m.target.tagName === "IMG"
+                        ) {
+                          shouldUpgrade = true;
+                          break;
+                        }
+                      }
+                      if (shouldUpgrade) upgradeModalImages();
                     });
-                });
 
-                // MutationObserver pour attendre le rendu des cartes
-                const grid = document.querySelector("#collection-node");
-                const hook = () => {
-                  document
-                    .querySelectorAll(".shopify-buy__product")
-                    .forEach((card) => {
-                      const pid =
-                        card.getAttribute("data-product-id") ||
-                        card.dataset.productId;
-                      if (!pid || !map.has(pid) || card.__hoverBound) return;
-                      const imgEl = card.querySelector(
-                        ".shopify-buy__product__image img, .shopify-buy__product__image, img"
-                      );
-                      if (!imgEl) return;
-                      const { first, second } = map.get(pid);
-                      let original = imgEl.getAttribute("src") || first;
-                      card.__hoverBound = true;
-
-                      card.addEventListener("mouseenter", () => {
-                        if (second) imgEl.setAttribute("src", second);
-                      });
-                      card.addEventListener("mouseleave", () => {
-                        imgEl.setAttribute("src", original);
-                      });
-                      // also on focus/blur for keyboard users
-                      card.addEventListener("focusin", () => {
-                        if (second) imgEl.setAttribute("src", second);
-                      });
-                      card.addEventListener("focusout", () => {
-                        imgEl.setAttribute("src", original);
-                      });
+                    const modalRoot =
+                      doc.querySelector(".shopify-buy__modal") || doc.body;
+                    obs.observe(modalRoot, {
+                      subtree: true,
+                      childList: true,
+                      attributes: true,
+                      attributeFilter: ["src", "srcset", "sizes", "class"],
                     });
-                };
-                const mo = new MutationObserver(hook);
-                mo.observe(grid, { childList: true, subtree: true });
-                hook(); // première passe
+
+                    // 4) Sécurité : certaines implémentations du carousel re-swappent les images
+                    //    quelques centaines de ms après. On force une ré-upgrade périodique pendant 5s.
+                    let ticks = 0;
+                    const hardKick = setInterval(() => {
+                      upgradeModalImages();
+                      if (++ticks > 10) clearInterval(hardKick); // ~5s (10 * 500ms)
+                    }, 500);
+                  } catch (e) {
+                    console.warn("Injection HD (carrousel) échouée :", e);
+                  }
+                }, 800);
               });
           });
         }
       })();
     </script>
+
+    <!-- Ton script global (injection header/footer, etc.) -->
     <script src="script/script.js"></script>
   </body>
 </html>
