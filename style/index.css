@@ -1,0 +1,92 @@
+/* ===== MOBILE: texte en 1re ligne, puis images (2 côte à côte si présentes) ===== */
+@media (max-width: 768px) {
+
+    /* On écrase le flex précédent et on force une grille */
+    .section-texte-images {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "texte texte"
+            "img1  img2";
+        gap: 1rem;
+        padding: 2rem 1rem;
+        align-items: start;
+        text-align: center;
+    }
+
+    /* Mappe des zones (ordre DOM ignoré) */
+    .section-texte-images>.section-texte {
+        grid-area: texte;
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .section-texte-images>.section-images:first-of-type {
+        grid-area: img1;
+        display: flex;
+        justify-content: center;
+    }
+
+    .section-texte-images>.section-images:last-of-type {
+        grid-area: img2;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Cas où il n'y a QU’UNE image dans la section (ex: “À propos”) :
+     on la met seule sous le texte, sur toute la largeur */
+    .section-texte-images>.section-images:only-of-type {
+        grid-area: img1 !important;
+        /* on utilise la zone img1 */
+        grid-column: 1 / -1 !important;
+        /* pleine largeur */
+    }
+
+    /* Images contenues proprement (évite la “GROSSE IMAGE”) */
+    .section-texte-images>.section-images img {
+        width: 100%;
+        max-width: 340px;
+        height: auto;
+        object-fit: cover;
+    }
+
+    /* On annule le décalage desktop qui fout le bazar */
+    .section-texte-images.right-shift>.section-images:first-child {
+        margin-right: 0 !important;
+    }
+}
+
+/* ===== Apparition animée pour tous les éléments ===== */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== Correction bandeau livraison sur mobile ===== */
+@media (max-width: 768px) {
+    .bandeau-livraison {
+        height: 26px;
+        /* plus fin (au lieu de 32px) */
+        line-height: 26px;
+        /* verticalement centré */
+    }
+
+    .bandeau-slider .slide {
+        font-size: 12px;
+        /* texte un peu plus petit pour tenir */
+    }
+
+    /* Le hero descend un peu moins */
+    .hero {
+        margin-top: -26px;
+        /* compense exactement la nouvelle hauteur */
+    }
+}

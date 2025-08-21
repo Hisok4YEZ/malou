@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/header2.css" />
     <link rel="stylesheet" href="style/footer.css" />
+    <link rel="stylesheet" href="style/index.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -423,6 +424,45 @@
 
         document.querySelectorAll(".reveal").forEach((section) => {
           observer.observe(section);
+        });
+      });
+    </script>
+
+    <script>
+      // === Révélation UNIQUEMENT des sections après le hero et avant le footer ===
+      // Cible : .carousel-section et .section-texte-images
+      document.addEventListener("DOMContentLoaded", () => {
+        const sections = [
+          ...document.querySelectorAll(
+            ".carousel-section, .section-texte-images"
+          ),
+        ];
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("visible");
+              io.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        // Ajoute .reveal sur chaque section + ses enfants immédiats (stagger léger)
+        sections.forEach((section) => {
+          // La section elle-même
+          section.classList.add("reveal");
+          section.style.transitionDelay = "0ms";
+          io.observe(section);
+
+          // Ses enfants directs (cartes, images, textes) avec un décalage subtil
+          const kids = [...section.children];
+          kids.forEach((el, i) => {
+            el.classList.add("reveal");
+            el.style.transitionDelay = `${Math.min(i * 80, 400)}ms`;
+            io.observe(el);
+          });
         });
       });
     </script>
