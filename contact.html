@@ -83,6 +83,117 @@
       </div>
     </main>
     <div id="footer"></div>
+    <script>
+      /* =========================================================
+   CONTACT – Enhancements non-invasifs
+   - Révélation au scroll des cartes (form + coordonnées)
+   - Validation légère du formulaire (HTML5 + messages)
+   - Auto-resize du textarea
+   - Loader sur le bouton d’envoi
+   IMPORTANT : ne modifie pas header/footer/bandeau.
+   ========================================================= */
+
+      /* Helper: observer d’apparition */
+      (function revealOnScroll() {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting)
+                entry.target.classList.add("is-visible");
+            });
+          },
+          { threshold: 0.12 }
+        );
+
+        document
+          .querySelectorAll(".contact-card, .contact-right")
+          .forEach((el) => io.observe(el));
+      })();
+
+      /* Auto-resize du textarea pour éviter la double scrollbar */
+      (function autosizeTextarea() {
+        const ta = document.querySelector(".contact-form textarea");
+        if (!ta) return;
+        const fit = () => {
+          ta.style.height = "auto";
+          ta.style.height = ta.scrollHeight + "px";
+        };
+        ["input", "change"].forEach((evt) => ta.addEventListener(evt, fit));
+        // 1er ajustement
+        fit();
+      })();
+
+      /* Validation + états visuels + loader */
+      (function formEnhance() {
+        const form = document.querySelector(".contact-form");
+        if (!form) return;
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Crée (si besoin) des <small class="error-msg"> sous chaque champ
+        form.querySelectorAll(".form-group").forEach((group) => {
+          if (!group.querySelector(".error-msg")) {
+            const small = document.createElement("small");
+            small.className = "error-msg";
+            small.textContent = "Ce champ est requis.";
+            group.appendChild(small);
+          }
+        });
+
+        // Utilise l’API Constraint Validation native + styles .is-error
+        form.addEventListener("submit", (e) => {
+          // Laisse le HTML5 bosser d’abord
+          if (!form.checkValidity()) {
+            e.preventDefault();
+
+            // Marque les champs invalides visuellement
+            form.querySelectorAll(".form-group").forEach((group) => {
+              const input = group.querySelector("input, textarea");
+              if (!input) return;
+              const valid = input.checkValidity();
+              group.classList.toggle("is-error", !valid);
+
+              // Message précis si email invalide
+              const msg = group.querySelector(".error-msg");
+              if (msg && input.type === "email") {
+                msg.textContent = input.validity.valueMissing
+                  ? "Veuillez renseigner votre email."
+                  : input.validity.typeMismatch
+                  ? "Adresse e-mail invalide."
+                  : "Ce champ est requis.";
+              }
+            });
+
+            // Scroll au 1er champ en erreur
+            const firstError = form.querySelector(".form-group.is-error");
+            if (firstError)
+              firstError.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            return;
+          }
+
+          // Si tu n’as pas encore d’endpoint, tu peux
+          // - laisser l’envoi normal (action/method côté HTML)
+          // - ou empêcher l’envoi et simuler un succès (démo)
+          // Ici : on montre un loader visuel puis on laisse soumettre normalement
+          submitBtn.classList.add("is-loading");
+          submitBtn.textContent = "Envoi…";
+          // Si tu utilises un service type FormSubmit/Netlify, ne change rien :
+          // le submit continuera. Pour un envoi AJAX, empêche le défaut et fais ton fetch().
+        });
+
+        // Retire l’état erreur en live quand l’utilisateur corrige
+        form.querySelectorAll("input, textarea").forEach((input) => {
+          input.addEventListener("input", () => {
+            const group = input.closest(".form-group");
+            if (group && input.checkValidity())
+              group.classList.remove("is-error");
+          });
+        });
+      })();
+    </script>
+
     <script src="script/script.js"></script>
   </body>
 </html>

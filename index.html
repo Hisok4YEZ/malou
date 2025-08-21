@@ -175,29 +175,207 @@
       </div>
     </section>
 
+    <!-- ===== Carousel Nouvelle Collection (sans scrollbar) ===== -->
     <section class="carousel-section">
-      <h2>Nouvelle Collection</h2>
-      <div class="carousel-track">
-        <a href="nouvelle-collection.html"
-          ><img src="img/c1.jpg" alt="Collection 1"
-        /></a>
-        <a href="nouvelle-collection.html"
-          ><img src="img/c2.jpg" alt="Collection 2"
-        /></a>
-        <a href="nouvelle-collection.html"
-          ><img src="img/c3.jpg" alt="Collection 3"
-        /></a>
-        <a href="nouvelle-collection.html"
-          ><img src="img/c4.jpg" alt="Collection 4"
-        /></a>
-        <a href="nouvelle-collection.html"
-          ><img src="img/c1.jpg" alt="Collection 1 bis"
-        /></a>
-        <a href="nouvelle-collection.html"
-          ><img src="img/c2.jpg" alt="Collection 2 bis"
-        /></a>
+      <h2 class="carousel-title">Nouvelle collection</h2>
+
+      <div class="carousel2" aria-label="Carrousel nouvelle collection">
+        <button class="car2-btn car2-prev" aria-label="Voir les précédentes">
+          ‹
+        </button>
+
+        <!-- Piste (masquée, on translate en JS) -->
+        <div class="car2-viewport">
+          <div class="car2-track" id="car2Track">
+            <!-- Duplique/ajoute librement : chaque item est un lien -->
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c1.jpg" alt="Look 1" loading="lazy"
+            /></a>
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c2.jpg" alt="Look 2" loading="lazy"
+            /></a>
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c3.jpg" alt="Look 3" loading="lazy"
+            /></a>
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c4.jpg" alt="Look 4" loading="lazy"
+            /></a>
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c2.jpg" alt="Look 5" loading="lazy"
+            /></a>
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c3.jpg" alt="Look 6" loading="lazy"
+            /></a>
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c1.jpg" alt="Look 7" loading="lazy"
+            /></a>
+            <a class="car2-item" href="nouvelle-collection.html"
+              ><img src="img/c4.jpg" alt="Look 8" loading="lazy"
+            /></a>
+          </div>
+        </div>
+
+        <button class="car2-btn car2-next" aria-label="Voir les suivantes">
+          ›
+        </button>
       </div>
     </section>
+
+    <style>
+      /* ===== DA site ===== */
+      .carousel-section {
+        background: #f3e9dc;
+        padding: 3rem 1rem;
+      }
+      .carousel-title {
+        font: 700 1.8rem/1 "Inter", sans-serif;
+        color: #4e3a2d;
+        text-align: center;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 0 0 1.2rem;
+      }
+      .carousel2 {
+        position: relative;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 3.5rem;
+      }
+      .car2-viewport {
+        overflow: hidden;
+        border-radius: 20px;
+      }
+      .car2-track {
+        display: flex;
+        gap: 1.2rem;
+        padding: 0 0 0.4rem; /* pas de scroll: on translate en JS */
+        will-change: transform;
+        transition: transform 0.45s ease;
+      }
+      /* Carte */
+      .car2-item {
+        flex: 0 0 clamp(200px, 25vw, 280px);
+        aspect-ratio: 3/4;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #efe6d9;
+        box-shadow: 0 6px 16px rgba(78, 58, 45, 0.14),
+          inset 0 0 0 1px rgba(78, 58, 45, 0.06);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .car2-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1.02);
+        transition: transform 0.35s ease, filter 0.35s ease;
+      }
+      .car2-item:hover {
+        transform: translateY(-4px) scale(1.03);
+        box-shadow: 0 12px 28px rgba(78, 58, 45, 0.18),
+          0 2px 0 rgba(127, 14, 48, 0.15);
+      }
+      .car2-item:hover img {
+        transform: scale(1.07);
+        filter: saturate(1.05) contrast(1.05);
+      }
+
+      /* Flèches */
+      .car2-btn {
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        border: 1px solid rgba(78, 58, 45, 0.25);
+        background: #fff7f0;
+        color: #4e3a2d;
+        font-size: 22px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        box-shadow: 0 6px 14px rgba(78, 58, 45, 0.12);
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+      .car2-btn:hover {
+        background: #f7efe5;
+        transform: scale(1.06);
+      }
+      .car2-prev {
+        left: 0.5rem;
+      }
+      .car2-next {
+        right: 0.5rem;
+      }
+      @media (max-width: 768px) {
+        .carousel2 {
+          padding: 0 2.2rem;
+        }
+        .car2-btn {
+          width: 34px;
+          height: 34px;
+          font-size: 18px;
+        }
+      }
+      /* Focus acces */
+      .car2-item:focus-visible,
+      .car2-btn:focus-visible {
+        outline: 3px solid #7f0e30;
+        outline-offset: 2px;
+      }
+    </style>
+
+    <script>
+      /* ===== JS: slide by translateX, pas de scrollbar ===== */
+      (() => {
+        const track = document.getElementById("car2Track");
+        const prev = document.querySelector(".car2-prev");
+        const next = document.querySelector(".car2-next");
+
+        let index = 0; // premier item visible
+        let perView = 4; // items visibles (calculé)
+        let step = 0; // distance en px pour 1 item (calculé)
+
+        function computeLayout() {
+          // largeur d'un item + gap
+          const first = track.querySelector(".car2-item");
+          if (!first) return;
+          const style = getComputedStyle(track);
+          const gap = parseFloat(style.columnGap || style.gap || 0);
+          step = first.getBoundingClientRect().width + gap;
+
+          // combien d'items rentrent dans le viewport ?
+          const viewportWidth =
+            track.parentElement.getBoundingClientRect().width;
+          perView = Math.max(1, Math.floor((viewportWidth + gap) / step));
+          clampIndex();
+          applyTransform();
+        }
+
+        function clampIndex() {
+          const maxIndex = Math.max(0, track.children.length - perView);
+          if (index > maxIndex) index = maxIndex;
+          if (index < 0) index = 0;
+        }
+
+        function applyTransform() {
+          track.style.transform = `translateX(${-index * step}px)`;
+        }
+
+        function go(dir) {
+          index += dir;
+          clampIndex();
+          applyTransform();
+        }
+
+        prev.addEventListener("click", () => go(-1));
+        next.addEventListener("click", () => go(1));
+        window.addEventListener("resize", computeLayout);
+        computeLayout();
+      })();
+    </script>
 
     <!-- Inclusion du footer via JS -->
     <div id="footer"></div>
