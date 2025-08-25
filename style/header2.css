@@ -645,3 +645,240 @@
         /* ajuste la valeur : 2px, 4px, 6px selon l'alignement que tu veux */
     }
 }
+
+/* === Toujours au-dessus + dropdown visibles sur desktop === */
+.main-header, .navbar {
+    position: relative;
+    z-index: 99999;
+    overflow: visible;
+}
+
+.nav-item .dropdown {
+    position: absolute;
+    z-index: 100000;
+    overflow: visible;
+}
+
+/* === Burger caché par défaut (desktop) === */
+.mp-burger {
+    display: none;
+}
+
+/* ====== MOBILE ====== */
+@media (max-width: 768px) {
+
+    /* Layout top: burger à gauche, logo à droite */
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+    }
+
+    /* Burger minimal (3 traits, sans fond) */
+    .mp-burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        position: relative;
+        z-index: 1000000;
+    }
+
+    .mp-burger span {
+        width: 26px;
+        height: 2.5px;
+        background: #4e3a2d;
+        border-radius: 2px;
+        transition: transform .35s ease, opacity .25s ease;
+    }
+
+    /* Logo mobile à droite, légèrement descendu si besoin */
+    .nav-center {
+        order: 1;
+        margin-left: auto;
+    }
+
+    .nav-center a {
+        display: flex;
+        align-items: center;
+    }
+
+    .Logo-pc {
+        display: none;
+    }
+
+    .Logo-mobile {
+        display: block;
+        height: 32px;
+        margin-top: 4px;
+    }
+
+    /* Masquer les navs desktop en mobile (on utilise le tiroir) */
+    .nav-left, .nav-right {
+        display: none !important;
+    }
+
+    /* Overlay flou */
+    .mp-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .35);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        opacity: 0;
+        transition: opacity .3s ease;
+        z-index: 99980;
+        pointer-events: none;
+    }
+
+    /* Tiroir mobile */
+    .mp-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 82vw;
+        max-width: 380px;
+        background: #fff;
+        box-shadow: -12px 0 30px rgba(0, 0, 0, .2);
+        transform: translateX(100%);
+        transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 99990;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-top: 60px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .mp-drawer-nav {
+        padding: 20px 16px 40px;
+        font-family: Inter, system-ui, sans-serif;
+    }
+
+    .mp-drawer-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mp-drawer-nav>ul>li {
+        margin-bottom: 8px;
+    }
+
+    .mp-drawer-nav a {
+        display: block;
+        padding: 14px 16px;
+        text-decoration: none;
+        color: #4e3a2d;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 15px;
+        border-radius: 12px;
+        transition: background .2s ease, transform .2s ease;
+    }
+
+    .mp-drawer-nav a:hover {
+        background: rgba(127, 14, 48, 0.08);
+        transform: translateX(4px);
+    }
+
+    /* Accordéons (CSS-only) */
+    .mp-group-toggle {
+        display: block;
+        padding: 14px 16px;
+        cursor: pointer;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 15px;
+        color: #4e3a2d;
+        border-radius: 12px;
+        transition: background .25s ease;
+    }
+
+    .mp-group-toggle:hover {
+        background: rgba(127, 14, 48, 0.08);
+    }
+
+    .mp-sublist {
+        display: none;
+        padding-left: 20px;
+        margin: 0;
+        list-style: none;
+    }
+
+    .mp-sublist li a {
+        font-size: 14px;
+        font-weight: 500;
+        padding: 10px 14px;
+        border-radius: 8px;
+    }
+
+    .mp-sublist li a:hover {
+        background: rgba(127, 14, 48, 0.08);
+    }
+
+    /* Ouverture du tiroir via le checkbox principal */
+    .mp-toggle:checked~.mp-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .mp-toggle:checked~.mp-drawer {
+        transform: translateX(0);
+    }
+
+    /* Animation burger -> croix */
+    .mp-toggle:checked+.navbar .mp-burger span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .mp-toggle:checked+.navbar .mp-burger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mp-toggle:checked+.navbar .mp-burger span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Ouvrir les sous-menus au clic (checkbox locaux) */
+    #sub-collections:checked~.mp-sublist,
+    #sub-catalogue:checked~.mp-sublist {
+        display: block;
+    }
+}
+
+/* Anti-clipping des menus par des sections en dessous */
+.hero, .carousel-section, .section-texte-images {
+    z-index: auto;
+    overflow: visible;
+}
+
+/* --- Burger : traits plus rapprochés --- */
+@media (max-width: 768px) {
+    .mp-burger {
+        gap: 3px;
+        /* avant 5px */
+    }
+
+    .mp-burger span {
+        margin: 2px 0;
+        /* réduit l’espacement vertical */
+    }
+}
+
+/* --- Séparateur avant "Contact" dans le menu mobile --- */
+@media (max-width: 768px) {
+    .mp-drawer-nav>ul>li:last-child {
+        border-top: 1px solid rgba(78, 58, 45, 0.12);
+        /* fine ligne marron clair */
+        margin-top: 6px;
+        padding-top: 6px;
+    }
+}
