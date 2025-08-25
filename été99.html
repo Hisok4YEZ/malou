@@ -517,6 +517,67 @@
         }
       })();
     </script>
+    <script>
+      /*
+  Fixe les chemins ABSOLUS du header ("/...") quand le site est servi sur GitHub Pages
+  dans un sous-dossier (username.github.io/mon-repo/).
+  → Préfixe automatiquement "/..." en "/mon-repo/...".
+  → Ne fait rien sur un domaine perso (ex: ma-lou.fr) ou en local avec un serveur à la racine.
+*/
+      (function fixHeaderPathsForGithubPages() {
+        // On n'agit QUE si on est sur username.github.io
+        if (!location.hostname.endsWith("github.io")) return;
+
+        // Récupère le nom du repo à partir de /<repo>/... dans l'URL
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var REPO = "/" + parts[0]; // ex: "/mon-repo"
+
+        // Fonction utilitaire: préfixe les attributs commençant par "/"
+        function prefixAttr(el, attr) {
+          if (!el.hasAttribute(attr)) return;
+          var val = el.getAttribute(attr);
+          if (!val || val[0] !== "/" || val.startsWith(REPO + "/")) return;
+          el.setAttribute(attr, REPO + val); // ex: "/img/logo.jpg" -> "/mon-repo/img/logo.jpg"
+        }
+
+        // Applique le correctif une fois que le header est injecté
+        function applyFix() {
+          var root = document.getElementById("header") || document;
+          // Liens et images principaux du header
+          root
+            .querySelectorAll(
+              "header a, header img, header source, header link"
+            )
+            .forEach(function (el) {
+              prefixAttr(el, "href");
+              prefixAttr(el, "src");
+            });
+          // (optionnel) corrige aussi les boutons du menu mobile dans le tiroir
+          root.querySelectorAll("#mp-drawer a").forEach(function (el) {
+            prefixAttr(el, "href");
+          });
+        }
+
+        // Si le header est injecté en AJAX, on attend son arrivée
+        var obs = new MutationObserver(function () {
+          if (document.querySelector("#header header")) {
+            applyFix();
+            obs.disconnect();
+          }
+        });
+        obs.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
+
+        // Sécurité: si le header est déjà là au moment du chargement du script
+        if (document.querySelector("#header header")) {
+          applyFix();
+          obs.disconnect();
+        }
+      })();
+    </script>
 
     <!-- Ton script global (injection header/footer, etc.) -->
     <script src="script/script.js"></script>
