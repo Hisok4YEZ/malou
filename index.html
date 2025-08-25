@@ -134,53 +134,9 @@
       </div>
     </section>
 
-    <section class="section-texte-images">
-      <div class="section-images">
-        <img src="img/IMG_5966.JPG" alt="Portrait gauche" />
-      </div>
-      <div class="section-texte">
-        <h2>L'univers de la marque</h2>
-        <p>
-          Colorée, joyeuse, libre. MA LOU, c’est la mode comme une déclaration
-          d’été permanente.
-        </p>
-        <p>Notre slogan : “comme un éclat de soleil qui ne s’excuse jamais”.</p>
-        <p>
-          Nos collections s’inspirent du Sud, des plages, des souvenirs de
-          vacances, de la lumière du matin et des soirées entre amies.
-        </p>
-      </div>
-      <div class="section-images">
-        <img src="img/IMG_5967.JPG" alt="Penderie colorée droite" />
-      </div>
-    </section>
-
-    <section class="section-texte-images right-shift">
-      <div class="section-images">
-        <img src="img/grandmere.jpg" alt="Grand-mère et fondatrice" />
-      </div>
-      <div class="section-texte">
-        <h2>À propos de MA LOU</h2>
-        <p>
-          MA LOU est une marque de prêt-à-porter féminin née d’un rêve
-          intergénérationnel.
-        </p>
-        <p>
-          Pensée comme un hommage à ma grand-mère, couturière passionnée, je
-          propose des pièces lumineuses, colorées et audacieuses.
-        </p>
-        <p>MA LOU incarne une féminité libre, solaire et assumée.</p>
-        <p>
-          Disponible en ligne, la marque s’invite également dans des lieux de
-          vie inspirants à travers une stratégie de pop-ups chaleureux et
-          fédérateurs.
-        </p>
-      </div>
-    </section>
-
     <!-- ===== Carousel Nouvelle Collection (sans scrollbar) ===== -->
     <section class="carousel-section">
-      <h2 class="carousel-title">Nouvelle collection</h2>
+      <h2 class="carousel-title">été 99</h2>
 
       <div class="carousel2" aria-label="Carrousel nouvelle collection">
         <button class="car2-btn car2-prev" aria-label="Voir les précédentes">
@@ -191,28 +147,73 @@
         <div class="car2-viewport">
           <div class="car2-track" id="car2Track">
             <!-- Duplique/ajoute librement : chaque item est un lien -->
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
               ><img src="img/c1.jpg" alt="Look 1" loading="lazy"
             /></a>
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
               ><img src="img/c2.jpg" alt="Look 2" loading="lazy"
             /></a>
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
               ><img src="img/c3.jpg" alt="Look 3" loading="lazy"
             /></a>
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
               ><img src="img/c4.jpg" alt="Look 4" loading="lazy"
             /></a>
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
               ><img src="img/c2.jpg" alt="Look 5" loading="lazy"
             /></a>
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
               ><img src="img/c3.jpg" alt="Look 6" loading="lazy"
             /></a>
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
               ><img src="img/c1.jpg" alt="Look 7" loading="lazy"
             /></a>
-            <a class="car2-item" href="nouvelle-collection.html"
+            <a class="car2-item" href="été99.html"
+              ><img src="img/c4.jpg" alt="Look 8" loading="lazy"
+            /></a>
+          </div>
+        </div>
+
+        <button class="car2-btn car2-next" aria-label="Voir les suivantes">
+          ›
+        </button>
+      </div>
+    </section>
+
+    <section class="carousel-section">
+      <h2 class="carousel-title">La rentrée</h2>
+
+      <div class="carousel2" aria-label="Carrousel nouvelle collection">
+        <button class="car2-btn car2-prev" aria-label="Voir les précédentes">
+          ‹
+        </button>
+
+        <!-- Piste (masquée, on translate en JS) -->
+        <div class="car2-viewport">
+          <div class="car2-track" id="car2Track">
+            <!-- Duplique/ajoute librement : chaque item est un lien -->
+            <a class="car2-item" href="larentré.html"
+              ><img src="img/c1.jpg" alt="Look 1" loading="lazy"
+            /></a>
+            <a class="car2-item" href="larentré.html"
+              ><img src="img/c2.jpg" alt="Look 2" loading="lazy"
+            /></a>
+            <a class="car2-item" href="larentré.html"
+              ><img src="img/c3.jpg" alt="Look 3" loading="lazy"
+            /></a>
+            <a class="car2-item" href="larentré.html"
+              ><img src="img/c4.jpg" alt="Look 4" loading="lazy"
+            /></a>
+            <a class="car2-item" href="larentré.html"
+              ><img src="img/c2.jpg" alt="Look 5" loading="lazy"
+            /></a>
+            <a class="car2-item" href="larentré.html"
+              ><img src="img/c3.jpg" alt="Look 6" loading="lazy"
+            /></a>
+            <a class="car2-item" href="larentré.html"
+              ><img src="img/c1.jpg" alt="Look 7" loading="lazy"
+            /></a>
+            <a class="car2-item" href="larentré.html"
               ><img src="img/c4.jpg" alt="Look 8" loading="lazy"
             /></a>
           </div>
@@ -516,6 +517,67 @@
           });
         });
       });
+    </script>
+    <script>
+      /*
+  Fixe les chemins ABSOLUS du header ("/...") quand le site est servi sur GitHub Pages
+  dans un sous-dossier (username.github.io/mon-repo/).
+  → Préfixe automatiquement "/..." en "/mon-repo/...".
+  → Ne fait rien sur un domaine perso (ex: ma-lou.fr) ou en local avec un serveur à la racine.
+*/
+      (function fixHeaderPathsForGithubPages() {
+        // On n'agit QUE si on est sur username.github.io
+        if (!location.hostname.endsWith("github.io")) return;
+
+        // Récupère le nom du repo à partir de /<repo>/... dans l'URL
+        var parts = location.pathname.split("/").filter(Boolean);
+        if (!parts.length) return;
+        var REPO = "/" + parts[0]; // ex: "/mon-repo"
+
+        // Fonction utilitaire: préfixe les attributs commençant par "/"
+        function prefixAttr(el, attr) {
+          if (!el.hasAttribute(attr)) return;
+          var val = el.getAttribute(attr);
+          if (!val || val[0] !== "/" || val.startsWith(REPO + "/")) return;
+          el.setAttribute(attr, REPO + val); // ex: "/img/logo.jpg" -> "/mon-repo/img/logo.jpg"
+        }
+
+        // Applique le correctif une fois que le header est injecté
+        function applyFix() {
+          var root = document.getElementById("header") || document;
+          // Liens et images principaux du header
+          root
+            .querySelectorAll(
+              "header a, header img, header source, header link"
+            )
+            .forEach(function (el) {
+              prefixAttr(el, "href");
+              prefixAttr(el, "src");
+            });
+          // (optionnel) corrige aussi les boutons du menu mobile dans le tiroir
+          root.querySelectorAll("#mp-drawer a").forEach(function (el) {
+            prefixAttr(el, "href");
+          });
+        }
+
+        // Si le header est injecté en AJAX, on attend son arrivée
+        var obs = new MutationObserver(function () {
+          if (document.querySelector("#header header")) {
+            applyFix();
+            obs.disconnect();
+          }
+        });
+        obs.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
+
+        // Sécurité: si le header est déjà là au moment du chargement du script
+        if (document.querySelector("#header header")) {
+          applyFix();
+          obs.disconnect();
+        }
+      })();
     </script>
 
     <script src="script/script.js"></script>
