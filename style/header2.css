@@ -215,3 +215,79 @@
     visibility: visible;
     transform: translateY(0);
 }
+
+/* Style de base */
+.nav-item {
+    position: relative;
+}
+
+.nav-item .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff7ef;
+    /* beige clair */
+    border: 1px solid rgba(78, 58, 45, 0.15);
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    min-width: 220px;
+    z-index: 999;
+}
+
+.nav-item .dropdown a {
+    display: block;
+    padding: 8px 15px;
+    color: #4e3a2d;
+    /* marron */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: background 0.2s ease;
+}
+
+.nav-item .dropdown a:hover {
+    background: rgba(127, 14, 48, 0.08);
+    /* hover bordeaux léger */
+}
+
+/* Apparition au survol */
+.nav-item:hover .dropdown {
+    display: block;
+}
+
+/* Mobile : affichage vertical sans hover */
+@media (max-width: 768px) {
+    .nav-item .dropdown {
+        position: static;
+        display: none;
+        /* fermé par défaut */
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+    }
+
+    .nav-item.open .dropdown {
+        display: block;
+    }
+}
+
+/* Supprime les puces et les marges sur les items avec dropdown */
+.nav-item.has-dropdown {
+    list-style: none;
+    /* enlève le gros point */
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.nav-item.has-dropdown>a {
+    display: inline-block;
+    padding: 8px 12px;
+    /* ajuste pour avoir la même hauteur que les autres liens */
+    vertical-align: middle;
+}
