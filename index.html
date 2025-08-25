@@ -135,93 +135,49 @@
     </section>
 
     <!-- ===== Carousel Nouvelle Collection (sans scrollbar) ===== -->
-    <section class="carousel-section">
-      <h2 class="carousel-title">été 99</h2>
-
-      <div class="carousel2" aria-label="Carrousel nouvelle collection">
-        <button class="car2-btn car2-prev" aria-label="Voir les précédentes">
-          ‹
-        </button>
-
-        <!-- Piste (masquée, on translate en JS) -->
-        <div class="car2-viewport">
-          <div class="car2-track" id="car2Track">
-            <!-- Duplique/ajoute librement : chaque item est un lien -->
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c1.jpg" alt="Look 1" loading="lazy"
-            /></a>
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c2.jpg" alt="Look 2" loading="lazy"
-            /></a>
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c3.jpg" alt="Look 3" loading="lazy"
-            /></a>
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c4.jpg" alt="Look 4" loading="lazy"
-            /></a>
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c2.jpg" alt="Look 5" loading="lazy"
-            /></a>
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c3.jpg" alt="Look 6" loading="lazy"
-            /></a>
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c1.jpg" alt="Look 7" loading="lazy"
-            /></a>
-            <a class="car2-item" href="été99.html"
-              ><img src="img/c4.jpg" alt="Look 8" loading="lazy"
-            /></a>
-          </div>
-        </div>
-
-        <button class="car2-btn car2-next" aria-label="Voir les suivantes">
-          ›
-        </button>
+    <!-- ===== SECTION ÉTÉ 99 ===== -->
+    <!-- ===== SECTION ÉTÉ 99 (pattern A) ===== -->
+    <section
+      class="collection-grid pattern-a reveal-grid"
+      aria-labelledby="t-ete99"
+    >
+      <h2 id="t-ete99">Été 99</h2>
+      <div class="grid">
+        <!-- Chaque carte = lien + image -->
+        <a href="été99.html" class="card"
+          ><img src="img/c1.jpg" alt="Été 99 - Look 1" loading="lazy"
+        /></a>
+        <a href="été99.html" class="card"
+          ><img src="img/c2.jpg" alt="Été 99 - Look 2" loading="lazy"
+        /></a>
+        <a href="été99.html" class="card"
+          ><img src="img/c3.jpg" alt="Été 99 - Look 3" loading="lazy"
+        /></a>
+        <a href="été99.html" class="card"
+          ><img src="img/c4.jpg" alt="Été 99 - Look 4" loading="lazy"
+        /></a>
       </div>
     </section>
 
-    <section class="carousel-section">
-      <h2 class="carousel-title">La rentrée</h2>
-
-      <div class="carousel2" aria-label="Carrousel nouvelle collection">
-        <button class="car2-btn car2-prev" aria-label="Voir les précédentes">
-          ‹
-        </button>
-
-        <!-- Piste (masquée, on translate en JS) -->
-        <div class="car2-viewport">
-          <div class="car2-track" id="car2Track">
-            <!-- Duplique/ajoute librement : chaque item est un lien -->
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c1.jpg" alt="Look 1" loading="lazy"
-            /></a>
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c2.jpg" alt="Look 2" loading="lazy"
-            /></a>
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c3.jpg" alt="Look 3" loading="lazy"
-            /></a>
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c4.jpg" alt="Look 4" loading="lazy"
-            /></a>
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c2.jpg" alt="Look 5" loading="lazy"
-            /></a>
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c3.jpg" alt="Look 6" loading="lazy"
-            /></a>
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c1.jpg" alt="Look 7" loading="lazy"
-            /></a>
-            <a class="car2-item" href="larentré.html"
-              ><img src="img/c4.jpg" alt="Look 8" loading="lazy"
-            /></a>
-          </div>
-        </div>
-
-        <button class="car2-btn car2-next" aria-label="Voir les suivantes">
-          ›
-        </button>
+    <!-- ===== SECTION LA RENTRÉE (pattern B = inverse) ===== -->
+    <section
+      class="collection-grid pattern-b reveal-grid"
+      aria-labelledby="t-rentree"
+    >
+      <h2 id="t-rentree">La rentrée</h2>
+      <div class="grid">
+        <a href="larentré.html" class="card"
+          ><img src="img/d1.jpg" alt="La rentrée - Look 1" loading="lazy"
+        /></a>
+        <a href="larentré.html" class="card"
+          ><img src="img/d2.jpg" alt="La rentrée - Look 2" loading="lazy"
+        /></a>
+        <a href="larentré.html" class="card"
+          ><img src="img/d3.jpg" alt="La rentrée - Look 3" loading="lazy"
+        /></a>
+        <a href="larentré.html" class="card"
+          ><img src="img/d4.jpg" alt="La rentrée - Look 4" loading="lazy"
+        /></a>
       </div>
     </section>
 
@@ -577,6 +533,31 @@
           applyFix();
           obs.disconnect();
         }
+      })();
+    </script>
+
+    <script>
+      /* =========================================================
+   IntersectionObserver : ajoute .in-view pour déclencher l’anim
+   - cible : toute section .reveal-grid (et ses cartes)
+   - une fois visible, on n’observe plus pour éviter de rejouer
+   ========================================================= */
+      (function setupGridReveal() {
+        const sections = document.querySelectorAll(".reveal-grid");
+        if (!("IntersectionObserver" in window) || !sections.length) return;
+
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("in-view");
+              io.unobserve(entry.target);
+            });
+          },
+          { root: null, rootMargin: "0px 0px -10% 0px", threshold: 0.1 }
+        );
+
+        sections.forEach((sec) => io.observe(sec));
       })();
     </script>
 
