@@ -291,3 +291,357 @@
     /* ajuste pour avoir la même hauteur que les autres liens */
     vertical-align: middle;
 }
+
+//* ====== MOBILE NAV (CSS-only) ====== */
+
+/* Le header doit rester au-dessus */
+@media (max-width: 768px) {
+    .main-header {
+        position: sticky;
+        top: 0;
+        z-index: 99990;
+    }
+}
+
+/* Bouton burger (3 traits) */
+.mp-burger {
+    display: none;
+    /* visible seulement en mobile */
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    position: fixed;
+    /* détaché des parents (anti-stacking context) */
+    top: 12px;
+    left: 12px;
+    z-index: 1000000;
+    /* au-dessus de tout */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .15);
+}
+
+.mp-burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #4e3a2d;
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: transform .25s ease, opacity .2s ease;
+}
+
+/* Logo */
+.Logo-mobile {
+    display: none;
+}
+
+.Logo-pc {
+    display: block;
+}
+
+/* Overlay flou */
+.mp-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .25);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity .25s ease;
+    z-index: 99980;
+    /* sous le tiroir, au-dessus du site */
+    pointer-events: none;
+    /* inactif tant que fermé */
+}
+
+.mp-overlay[aria-hidden="true"] {
+    pointer-events: none;
+}
+
+/* Tiroir */
+.mp-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 82vw;
+    max-width: 380px;
+    background: #fff7ef;
+    box-shadow: -12px 0 30px rgba(0, 0, 0, .2);
+    transform: translateX(100%);
+    transition: transform .3s ease;
+    z-index: 99990;
+    /* au-dessus de l’overlay */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Contenu du tiroir */
+.mp-drawer-nav {
+    padding: 20px 16px 40px;
+    font-family: 'Inter', sans-serif;
+}
+
+.mp-drawer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mp-drawer-nav>ul>li {
+    margin-bottom: 8px;
+}
+
+.mp-drawer-nav a {
+    display: block;
+    padding: 12px 10px;
+    text-decoration: none;
+    color: #4e3a2d;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.mp-drawer-nav a:hover {
+    background: rgba(127, 14, 48, 0.08);
+}
+
+.mp-group {
+    border-top: 1px solid rgba(78, 58, 45, .12);
+    padding-top: 8px;
+}
+
+.mp-group-title {
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    padding: 12px 10px 6px;
+    color: #4e3a2d;
+}
+
+.mp-sublist {
+    padding-left: 10px;
+}
+
+.mp-sublist a {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ===== Logique d’ouverture 100% CSS via le checkbox ===== */
+/* Quand #mp-toggle est CHECKED → on ouvre */
+.mp-toggle:checked~.mp-overlay {
+    opacity: 1;
+    pointer-events: auto;
+    /* overlay cliquable pour fermer (label for) */
+}
+
+.mp-toggle:checked~.mp-drawer {
+    transform: translateX(0);
+}
+
+/* Animation burger → croix quand c’est ouvert */
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(2) {
+    opacity: 0;
+}
+
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ===== Ciblage mobile ===== */
+@media (max-width: 768px) {
+    .mp-burger {
+        display: block;
+    }
+
+    /* On masque les navs desktop sur mobile */
+    .nav-left, .nav-right {
+        display: none !important;
+    }
+
+    /* Le logo mobile s’affiche, le logo desktop disparaît */
+    .Logo-pc {
+        display: none;
+    }
+
+    .Logo-mobile {
+        display: block;
+    }
+
+    .nav-center {
+        position: static !important;
+        transform: none !important;
+        margin: 0;
+        z-index: 1;
+    }
+}
+
+/* Sécurité: neutraliser certains stacking context agressifs */
+.hero, .hero * {
+    z-index: auto;
+}
+
+/* === Burger stylé === */
+.mp-burger {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: background 0.3s ease;
+}
+
+.mp-burger:hover {
+    background: #f5f1ea;
+}
+
+.mp-burger span {
+    width: 26px;
+    height: 2.5px;
+    background: #4e3a2d;
+    margin: 5px 0;
+    border-radius: 3px;
+    transition: transform .35s ease, opacity .25s ease;
+}
+
+/* === Overlay raffiné === */
+.mp-overlay {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: opacity 0.35s ease;
+}
+
+/* === Tiroir plus esthétique === */
+.mp-drawer {
+    background: #fff;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%) translateY(0);
+    transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+    padding-top: 60px;
+    /* espace pour ne pas coller au burger */
+}
+
+.mp-drawer-nav a {
+    font-size: 15px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.mp-drawer-nav a:hover {
+    background: rgba(127, 14, 48, 0.08);
+    transform: translateX(4px);
+}
+
+/* Groupes du tiroir */
+.mp-group-title {
+    font-size: 14px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-top: 8px;
+    padding: 10px 16px 6px;
+}
+
+/* Animation burger → croix (plus smooth) */
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(2) {
+    opacity: 0;
+}
+
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ===== BURGER caché par défaut ===== */
+.mp-burger {
+    display: none;
+    /* desktop = invisible */
+}
+
+/* ===== Affichage uniquement sur mobile ===== */
+@media (max-width: 768px) {
+    .mp-burger {
+        display: block;
+        /* visible sur mobile */
+        border: none;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+        position: relative;
+        z-index: 1000000;
+    }
+
+    .mp-burger span {
+        display: block;
+        width: 26px;
+        height: 2.5px;
+        background: #4e3a2d;
+        margin: 5px 0;
+        border-radius: 2px;
+        transition: transform .35s ease, opacity .25s ease;
+    }
+
+    /* Logo à droite sur mobile */
+    .navbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+    }
+
+    .nav-center {
+        order: 1;
+        margin-left: auto;
+        /* pousse le logo à droite */
+    }
+
+    .Logo-pc {
+        display: none;
+    }
+
+    .Logo-mobile {
+        display: block;
+        height: 40px;
+    }
+
+    /* Masquer les menus desktop */
+    .nav-left, .nav-right {
+        display: none !important;
+    }
+}
+
+/* ===== Animation burger → croix ===== */
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(2) {
+    opacity: 0;
+}
+
+.mp-toggle:checked+.navbar .mp-burger span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+    .Logo-mobile {
+        display: block;
+        height: 32px;
+        margin-top: 20px;
+        /* ajuste la valeur : 2px, 4px, 6px selon l'alignement que tu veux */
+    }
+}
