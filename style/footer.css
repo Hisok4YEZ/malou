@@ -143,3 +143,82 @@
         font-size: 16px;
     }
 }
+
+
+/* Bande avantages – robuste et responsive */
+/* Bande avantages – au-dessus du footer maintenant */
+.footer-benefits-wrap {
+    display: block;
+    max-width: 1200px;
+    margin: 0 auto 1.5rem;
+    /* espace sous la bande */
+    padding: 1.5rem 1rem 0;
+    border-top: 1px solid rgba(78, 58, 45, 0.15);
+}
+
+/* Optionnel: un peu d'air en haut du footer */
+.main-footer {
+    padding-top: 2.5rem;
+    /* déjà présent chez toi ~ ok */
+}
+
+
+.footer-benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 1rem;
+}
+
+.footer-benefits .benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    flex: 1 1 240px;
+    /* 4 colonnes -> 2 -> 1 en mobile */
+    min-width: 220px;
+}
+
+.footer-benefits .ico {
+    width: 28px;
+    height: 28px;
+    fill: #4e3a2d;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.footer-benefits .txt strong {
+    display: block;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #4e3a2d;
+}
+
+.footer-benefits .txt em {
+    display: block;
+    font-style: normal;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: #4e3a2d;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .footer-benefits .benefit {
+        flex: 1 1 45%;
+    }
+}
+
+@media (max-width: 560px) {
+    .footer-benefits .benefit {
+        flex: 1 1 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}
