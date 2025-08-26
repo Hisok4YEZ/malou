@@ -165,30 +165,29 @@
     <!-- Footer injecté par ton script -->
     <div id="footer"></div>
 
-    <!-- ===== Buy Button SDK + composant collection (100% fonctionnel) ===== -->
-    <!-- ===== Buy Button SDK + composant collection (carrousel HD + grid mobile 2x2) ===== -->
-    <!-- ===== Buy Button SDK + Composant collection — GRID mobile-first 2x2, fix superposition, images compactes ===== -->
-    <!-- ===== Buy Button SDK + Composant collection — 2x2 mobile + images réduites ===== -->
+    <!-- ===== Shopify Buy Button — Portrait rétréci (images moitié hauteur) ===== -->
+    <!-- ===== Shopify Buy Button — fond unique #e8dbcd, plus de cartes (contours/ombres) ===== -->
     <script>
       (function () {
-        var scriptURL =
+        var SDK_URL =
           "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
 
+        // Charge le SDK puis initialise
         if (window.ShopifyBuy) {
-          window.ShopifyBuy.UI ? ShopifyBuyInit() : loadScript();
+          window.ShopifyBuy.UI ? init() : loadSDK();
         } else {
-          loadScript();
+          loadSDK();
         }
 
-        function loadScript() {
+        function loadSDK() {
           var s = document.createElement("script");
           s.async = true;
-          s.src = scriptURL;
+          s.src = SDK_URL;
           (document.head || document.body).appendChild(s);
-          s.onload = ShopifyBuyInit;
+          s.onload = init;
         }
 
-        function ShopifyBuyInit() {
+        function init() {
           var client = ShopifyBuy.buildClient({
             domain: "eb1iv0-n1.myshopify.com",
             storefrontAccessToken: "5de76971549ee7a5dcb338aaad5e9784",
@@ -196,32 +195,27 @@
 
           ShopifyBuy.UI.onReady(client).then(function (ui) {
             ui.createComponent("collection", {
-              id: "677036884342", // ⚠️ ton ID de collection
+              id: "677036884342", // ⚠️ ID de ta collection
               node: document.getElementById(
                 "collection-component-1754753704786"
               ),
               moneyFormat: "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
+
               options: {
-                /* === Grille produits === */
+                /* === 1) GRILLE: 2 colonnes mobile / 4 colonnes desktop === */
                 productSet: {
                   styles: {
                     products: {
                       display: "grid",
-                      "grid-template-columns": "repeat(2, minmax(0,1fr))", // 2 colonnes par défaut (mobile)
-                      gap: "10px",
+                      "grid-template-columns": "repeat(2, minmax(0,1fr))",
+                      gap: "14px",
                       width: "100% !important",
                       margin: "0 !important",
                       padding: "0 !important",
                       "box-sizing": "border-box",
-                      overflow: "visible",
-                      "grid-auto-rows": "auto",
                       "align-items": "start",
-
-                      "@media (min-width: 768px)": {
-                        "grid-template-columns":
-                          "repeat(3, minmax(0,1fr)) !important",
-                        gap: "14px",
-                      },
+                      "justify-items": "stretch",
+                      /* Desktop */
                       "@media (min-width: 1200px)": {
                         "grid-template-columns":
                           "repeat(4, minmax(0,1fr)) !important",
@@ -231,82 +225,89 @@
                   },
                 },
 
-                /* === Carte produit === */
+                /* === 2) PRODUIT: plus de carte → pas de bordure, pas d’ombre, fond = #e8dbcd === */
                 product: {
                   styles: {
                     product: {
+                      /* Pas de “carte” : on enlève contour, ombre et padding */
+                      border: "none !important",
+                      "border-radius": "0 !important",
+                      "box-shadow": "none !important",
+                      background: "#e8dbcd !important", // ✅ même fond que la page
+                      padding: "0 !important",
+                      margin: "0 !important",
+
+                      /* Mise en colonne classique, rien d’absolu/float */
+                      display: "flex",
+                      "flex-direction": "column",
                       position: "static !important",
                       float: "none !important",
                       clear: "none !important",
-                      display: "flex",
-                      "flex-direction": "column",
                       width: "100% !important",
-                      "max-width": "100% !important",
-                      margin: "0 !important",
                       "box-sizing": "border-box",
                       "text-align": "left",
-                      border: "1px solid #eee",
-                      "border-radius": "12px",
-                      overflow: "hidden",
-                      "box-shadow": "0 6px 18px rgba(0,0,0,.04)",
                     },
+
+                    /* L’IMAGE ne doit pas mettre une plaque blanche : même fond beige */
                     imgWrapper: {
                       width: "100%",
-                      "aspect-ratio": "3 / 4", // défaut (desktop/tablette)
+                      /* Choisis ici : 
+                   - soit tu gardes un ratio portrait élégant : */
+                      "aspect-ratio": "4 / 5",
+                      /* - sinon commente la ligne ci-dessus pour laisser l’image prendre sa taille naturelle */
+
                       overflow: "hidden",
-                      background: "#f7f5f2",
+                      background: "#e8dbcd !important", // ✅ même fond beige
                     },
                     img: {
                       width: "100%",
                       height: "100%",
-                      "object-fit": "cover",
+                      "object-fit": "cover", // remplit le cadre (coupe latéralement si besoin)
                       display: "block",
                     },
+
+                    /* Texte sur fond beige (pas de bloc blanc autour) */
                     title: {
                       "font-family": "Cormorant Garamond, serif",
                       "font-weight": "600",
+                      "font-size": "16px",
                       color: "#1f1f1f",
-                      "font-size": "18px",
-                      margin: "10px 12px 4px",
+                      margin: "10px 0 4px 0", // pas de padding latéral à gauche/droite
+                      padding: "0 0 0 0",
                     },
                     price: {
                       "font-family": "Quicksand, sans-serif",
                       "font-weight": "700",
+                      "font-size": "14px",
                       color: "#333",
-                      "font-size": "15px",
-                      margin: "0 12px 10px",
+                      margin: "0 0 12px 0",
+                      padding: "0 0 0 0",
                     },
+
+                    /* Bouton pilule, posé directement sur le fond beige */
                     button: {
                       "font-family": "Quicksand, sans-serif",
+                      "font-weight": "700",
+                      "letter-spacing": "0.3px",
                       "background-color": "#e96878",
-                      "border-radius": "0",
                       color: "#fff",
-                      margin: "0",
-                      width: "100%",
                       border: "none",
-                      padding: "10px 0",
+                      "border-radius": "999px",
+                      padding: "12px 0",
+                      width: "100%", // pleine largeur de la colonne
+                      margin: "0 0 6px 0",
                       ":hover": { "background-color": "#000 !important" },
                       ":focus": { "background-color": "#000 !important" },
                     },
-                    /* Breakpoints */
-                    "@media (max-width: 768px)": {
-                      imgWrapper: { "aspect-ratio": "4 / 3" }, // images moins hautes
-                      title: { "font-size": "16px", margin: "8px 10px 4px" },
-                      price: { "font-size": "14px", margin: "0 10px 8px" },
-                    },
-                    "@media (max-width: 480px)": {
-                      imgWrapper: { "aspect-ratio": "5 / 4" }, // encore moins haut sur très petit écran
-                      title: { "font-size": "15px" },
-                      price: { "font-size": "13px" },
-                    },
                   },
+
                   buttonDestination: "modal",
                   contents: { options: false },
-                  text: { button: "Voir" },
+                  text: { button: "Aperçu rapide" },
                   googleFonts: ["Cormorant Garamond", "Quicksand"],
                 },
 
-                /* === Modale produit === */
+                /* === 3) MODALE (inchangée) === */
                 modalProduct: {
                   contents: {
                     img: false,
@@ -326,7 +327,7 @@
                   },
                 },
 
-                /* === Panier === */
+                /* === 4) PANIER & TOGGLE (laisse comme avant) === */
                 toggle: {
                   styles: {
                     toggle: {
@@ -353,8 +354,9 @@
                     button: "Payer",
                   },
                 },
-              }, // fin options
+              },
             }).then(function () {
+              /* === 5) Après rendu : on force le fond beige DANS l’iframe aussi === */
               setTimeout(function () {
                 try {
                   var iframe = document.querySelector(
@@ -363,16 +365,26 @@
                   if (!iframe || !iframe.contentDocument) return;
                   var doc = iframe.contentDocument;
 
-                  /* Fix layout dans l'iframe (empêche superpositions) */
-                  var fixLayout = doc.createElement("style");
-                  fixLayout.textContent = `
+                  var forceBg = doc.createElement("style");
+                  forceBg.textContent = `
+              /* ✅ Fond beige partout dans l’iframe */
+              html, body,
+              .shopify-buy__collection,
+              .shopify-buy__product-set,
+              .shopify-buy__product-set .products {
+                background: #e8dbcd !important;
+              }
+
+              /* ✅ Plus de “carte” : pas de bordure/ombre nulle part */
               .shopify-buy__product,
               .shopify-buy__product-wrapper,
               .shopify-buy__product__content {
-                position: static !important;
-                float: none !important;
-                clear: none !important;
+                background: #e8dbcd !important;
+                border: none !important;
+                box-shadow: none !important;
               }
+
+              /* ✅ Pas de padding/overflow qui rogne la 2e/4e colonne */
               .shopify-buy__collection,
               .shopify-buy__product-set,
               .shopify-buy__product-set .products {
@@ -383,81 +395,40 @@
                 box-sizing: border-box !important;
                 overflow: visible !important;
               }
-              .shopify-buy__product img {
-                max-width: 100% !important;
-                height: auto !important;
-                display: block !important;
+
+              /* ✅ Rien en absolute/float qui casserait le flux */
+              .shopify-buy__product,
+              .shopify-buy__product-wrapper,
+              .shopify-buy__product__content,
+              .shopify-buy__btn-wrapper,
+              .shopify-buy__btn {
+                position: static !important;
+                float: none !important;
+                clear: none !important;
+                width: 100% !important;
+              }
+
+              /* ✅ Image sans plaque blanche derrière */
+              .shopify-buy__product .shopify-buy__product__image-wrapper {
+                background: #e8dbcd !important;
+              }
+
+              /* ✅ On désactive d’éventuels pseudo-séparateurs */
+              .shopify-buy__product::before,
+              .shopify-buy__product::after,
+              .shopify-buy__product__content::before,
+              .shopify-buy__product__content::after {
+                content: none !important;
+                display: none !important;
               }
             `;
-                  doc.head.appendChild(fixLayout);
+                  doc.head.appendChild(forceBg);
                 } catch (e) {
-                  console.warn("Injection iframe échouée :", e);
+                  console.warn("Injection iframe (fond beige) échouée :", e);
                 }
-              }, 700);
+              }, 400);
             });
           });
-        }
-      })();
-    </script>
-
-    <script>
-      /*
-  Fixe les chemins ABSOLUS du header ("/...") quand le site est servi sur GitHub Pages
-  dans un sous-dossier (username.github.io/mon-repo/).
-  → Préfixe automatiquement "/..." en "/mon-repo/...".
-  → Ne fait rien sur un domaine perso (ex: ma-lou.fr) ou en local avec un serveur à la racine.
-*/
-      (function fixHeaderPathsForGithubPages() {
-        // On n'agit QUE si on est sur username.github.io
-        if (!location.hostname.endsWith("github.io")) return;
-
-        // Récupère le nom du repo dès de /<repo>/... dans l'URL
-        var parts = location.pathname.split("/").filter(Boolean);
-        if (!parts.length) return;
-        var REPO = "/" + parts[0]; // ex: "/mon-repo"
-
-        // Fonction utilitaire: préfixe les attributs commençant par "/"
-        function prefixAttr(el, attr) {
-          if (!el.hasAttribute(attr)) return;
-          var val = el.getAttribute(attr);
-          if (!val || val[0] !== "/" || val.startsWith(REPO + "/")) return;
-          el.setAttribute(attr, REPO + val); // ex: "/img/logo.jpg" -> "/mon-repo/img/logo.jpg"
-        }
-
-        // Applique le correctif une fois que le header est injecté
-        function applyFix() {
-          var root = document.getElementById("header") || document;
-          // Liens et images principaux du header
-          root
-            .querySelectorAll(
-              "header a, header img, header source, header link"
-            )
-            .forEach(function (el) {
-              prefixAttr(el, "href");
-              prefixAttr(el, "src");
-            });
-          // (optionnel) corrige aussi les boutons du menu mobile dans le tiroir
-          root.querySelectorAll("#mp-drawer a").forEach(function (el) {
-            prefixAttr(el, "href");
-          });
-        }
-
-        // Si le header est injecté en AJAX, on attend son arrivée
-        var obs = new MutationObserver(function () {
-          if (document.querySelector("#header header")) {
-            applyFix();
-            obs.disconnect();
-          }
-        });
-        obs.observe(document.documentElement, {
-          childList: true,
-          subtree: true,
-        });
-
-        // Sécurité: si le header est déjà là au moment du chargement du script
-        if (document.querySelector("#header header")) {
-          applyFix();
-          obs.disconnect();
         }
       })();
     </script>
