@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="img/logo2.png" type="image/png" />
-    <title>été99 – MA LOU</title>
+    <title>La rentrée – MA LOU</title>
 
     <!-- Typos -->
     <link
@@ -193,6 +193,7 @@
       .modal-desc {
         font-size: 14px;
         margin: 0 0 12px;
+        white-space: pre-line; /* ✅ pour que \n s'affiche en retour à la ligne */
       }
 
       /* Uniformisation boutons Shopify */
@@ -233,7 +234,7 @@
 
     <main class="container">
       <div class="page-head">
-        <h1 class="title">été 99</h1>
+        <h1 class="title">La rentrée</h1>
         <div class="count" id="count">—</div>
       </div>
       <div id="grid" class="grid"></div>
@@ -267,13 +268,139 @@
       // ⚠️ Remplis cette liste avec tes produits
       const items = [
         {
-          key: "exemple",
-          title: "Nom produit",
-          priceText: "XX,XX €",
-          productId: "15288958910838",
-          image1: "img/collection/exemple-1.jpg",
-          image2: "img/collection/exemple-2.jpg",
-          desc: "Description du produit.",
+          key: "pantalon-london",
+          title: "Pantalon London",
+          priceText: "39,99 €",
+          productId: "15288947868022",
+          image1: "img/larentree/pantalon-london-1.jpg",
+          image2: "img/larentree/pantalon-london-2.jpg",
+          desc: "- Coupe fluide, jambe large, confort optimal\n- Motif à carreaux tons automnaux\n- Look décontracté-chic avec t-shirt noir ou chemise oversize\n- Lou porte une taille M et mesure 1m71",
+        },
+        {
+          key: "jean-bandana",
+          title: "Jean Bandana",
+          priceText: "42,00 €",
+          productId: "15288935252342", // (repris d'Été 99)
+          image1: "img/ete99/jean-bandana-1.jpg",
+          image2: "img/ete99/jean-bandana-2.jpg",
+          desc: "- Coupe droite légèrement large, esprit vintage\n- Délavage bleu\n- Imprimé patchwork façon bandana\n- À porter avec t-shirt blanc ou top coloré\n- Lou porte une taille 36 et mesure 1m71",
+        },
+        {
+          key: "ibiza-pantalon",
+          title: "Pantalon Ibiza",
+          priceText: "58,00 €",
+          productId: "15288688509302",
+          image1: "img/ete99/ibiza-pantalon-1.jpg",
+          image2: "img/ete99/ibiza-pantalon-2.jpg",
+          desc: "Taille unique L.\n- Maille à rayures multicolores, doublée, taille haute\n- Coupe large et fluide, confort absolu\n- Style rétro et joyeux\n- À porter en ville ou en bord de mer\n- Lou porte une M et mesure 1m71",
+        },
+        {
+          key: "ibiza-veste",
+          title: "Veste Ibiza",
+          priceText: "66,00 €",
+          productId: "15288702206326", // (repris d'Été 99)
+          image1: "img/ete99/ibiza-veste-1.jpg",
+          image2: "img/ete99/ibiza-veste-2.jpg",
+          desc: "Taille unique.\n- Veste zippée en maille multicolore à rayures\n- Coupe loose, doublure intérieure contrastée\n- À porter seule ou avec le pantalon coordonné\n- Lou porte une taille unique et mesure 1m71",
+        },
+        {
+          key: "trench-brooklyn",
+          title: "Trench Brooklyn",
+          priceText: "61,00 €",
+          productId: "15288944099702",
+          image1: "img/larentree/trench-brooklyn-1.jpg",
+          image2: "img/larentree/trench-brooklyn-2.jpg",
+          desc: "Taille unique.\n- Coupe oversize et légèrement courte\n- Denim léger à fines rayures verticales\n- Double boutonnage, larges revers\n- Lou porte une taille unique et mesure 1m71",
+        },
+        {
+          key: "top-candy",
+          title: "Top Candy",
+          priceText: "26,00 €",
+          productId: "15288856084854",
+          image1: "img/larentree/top-candy-1.jpg",
+          image2: "img/larentree/top-candy-2.jpg",
+          desc: "- Maille côtelée, manches courtes\n- Coupe près du corps\n- Confortable et facile à associer\n- Le basique coloré qui booste les tenues\n- Lou porte une taille S/M et mesure 1m71",
+        },
+        {
+          key: "chemise-safari-pop",
+          title: "Chemise Safari Pop",
+          priceText: "68,00 €",
+          productId: "15288842486134",
+          image1: "img/larentree/chemise-safari-pop-1.jpg",
+          image2: "img/larentree/chemise-safari-pop-2.jpg",
+          desc: "Taille unique.\n- Chemise oversize à imprimé\n- Couleurs vives, col contrasté\n- Manches courtes à revers graphiques\n- Pièce forte pour affirmer son style\n- Convient du 36 au 42\n- Lou porte une taille unique et mesure 1m71",
+        },
+        {
+          key: "gilet-perle",
+          title: "Gilet Perle",
+          priceText: "36,00 €",
+          productId: "15288838586742",
+          image1: "img/larentree/gilet-perle-1.jpg",
+          image2: "img/larentree/gilet-perle-2.jpg",
+          desc: "Taille unique M/L.\n- Maille écrue, manches courtes\n- Boutons dorés et poches plaquées\n- Col rond, coupe droite légèrement courte\n- Lou porte une taille M et mesure 1m71",
+        },
+        {
+          key: "polo-capri",
+          title: "Polo Capri",
+          priceText: "34,00 €",
+          productId: "15288828133750",
+          image1: "img/larentree/polo-capri-1.jpg",
+          image2: "img/larentree/polo-capri-2.jpg",
+          desc: "- Maille rayée rouge et blanc\n- Coupe droite, col avec ouverture en V\n- Détail ajouré\n- Lou porte une taille S/M et mesure 1m71",
+        },
+        {
+          key: "debardeur-mariniere",
+          title: "Débardeur Marinière",
+          priceText: "33,00 €",
+          productId: "15288823939446", // (repris d'Été 99)
+          image1: "img/ete99/debardeur-mariniere-1.jpg",
+          image2: "img/ete99/debardeur-mariniere-2.jpg",
+          desc: "- Rayé esprit marinière\n- Boutons dorés décoratifs sur l’épaule\n- Coupe droite légèrement raccourcie\n- Un basique revisité\n- Lou porte une taille S/M et mesure 1m71",
+        },
+        {
+          key: "pull-fluffy",
+          title: "Pull Fluffy",
+          priceText: "39,99 €",
+          productId: "15288808145270",
+          image1: "img/larentree/pull-fluffy-1.jpg",
+          image2: "img/larentree/pull-fluffy-2.jpg",
+          desc: "Taille unique.\n- Pull sans manches ultra doux (mohair)\n- Coupe légèrement raccourcie\n- À porter seul ou sur un t-shirt\n- Coloris : rose, vert pastel, jaune\n- Lou porte une taille unique et mesure 1m71",
+        },
+        {
+          key: "gilet-nomade",
+          title: "Gilet Nomade",
+          priceText: "35,00 €",
+          productId: "15288773443958",
+          image1: "img/larentree/gilet-nomade-1.jpg",
+          image2: "img/larentree/gilet-nomade-2.jpg",
+          desc: "- Gilet sans manches brodé\n- Détails et finitions contrastées\n- Facile sur t-shirt ou robe fluide\n- Existe en kaki et écru\n- Lou porte une taille M et mesure 1m71",
+        },
+        {
+          key: "blouse-jaipur",
+          title: "Blouse Jaïpur",
+          priceText: "41,00 €",
+          productId: "15288730747254",
+          image1: "img/larentree/blouse-jaipur-1.jpg",
+          image2: "img/larentree/blouse-jaipur-2.jpg",
+          desc: "- Blouse légère crème à broderies contrastées\n- Détails travaillés (manches, poignets, devant)\n- Fermeture boutonnée bordée de jaune\n- Style bohème chic (jean ou jupe fluide)\n- Lou porte une taille M (effet loose) et mesure 1m71",
+        },
+        {
+          key: "chemise-ciel",
+          title: "Chemise Ciel",
+          priceText: "41,00 €",
+          productId: "15288708366710",
+          image1: "img/larentree/chemise-ciel-1.jpg",
+          image2: "img/larentree/chemise-ciel-2.jpg",
+          desc: "Taille unique M.\n- Blouse fluide bleu clair\n- Détail froncé le long de la boutonnière\n- Intemporel, bureau comme week-end\n- Lou porte une taille S et mesure 1m71",
+        },
+        {
+          key: "gilet-riviera",
+          title: "Gilet Riviera",
+          priceText: "36,00 €",
+          productId: "15288653316470",
+          image1: "img/larentree/gilet-riviera-1.jpg",
+          image2: "img/larentree/gilet-riviera-2.jpg",
+          desc: "Taille unique M/L.\n- Gilet sans manches rayures jaune & blanc\n- Coupe droite, boutons dorés texturés\n- À porter seul ou sur chemise blanche\n- Lou porte une taille S et mesure 1m70",
         },
       ];
 
