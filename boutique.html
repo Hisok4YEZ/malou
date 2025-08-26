@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../img/logo2.png" type="image/png" />
+    <title>Été 99 – MA LOU</title>
+
+    <!-- Typos DA -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tes feuilles existantes -->
+    <link rel="stylesheet" href="../style/style.css" />
+    <link rel="stylesheet" href="../style/header.css" />
+    <link rel="stylesheet" href="../style/footer.css" />
+
+    <style>
+      /* Fond + motif identiques au site */
+      :root {
+        --rose: #e96878;
+        --beige: #e8dbcd;
+        --brun: #3f3027;
+      }
+      body {
+        background: #e8dbcd;
+        color: #3f3027;
+        font-family: "Quicksand", sans-serif;
+        margin: 0;
+      }
+      body.catalogue-bg::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background: radial-gradient(
+            1200px 800px at 10% -10%,
+            rgba(232, 219, 205, 0.55) 0%,
+            rgba(232, 219, 205, 0) 60%
+          ),
+          radial-gradient(
+            1200px 800px at 110% 10%,
+            rgba(232, 219, 205, 0.45) 0%,
+            rgba(232, 219, 205, 0) 60%
+          ),
+          url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='rgba(233,104,120,0.18)' stroke-width='1.2'><circle cx='110' cy='110' r='72'/><path d='M50 90c10-12 30-12 40 0 9 12 9 28 0 40-10 12-30 12-40 0-9-12-9-28 0-40z'/><path d='M130 80c12-10 32-10 44 0 10 10 10 26 0 36-12 10-32 10-44 0-10-10-10-26 0-36z'/></g></svg>");
+        background-repeat: repeat;
+        background-size: 260px 260px;
+        opacity: 0.18;
+      }
+
+      /* Bandeau livraison (même composant que tes autres pages) */
+      .bandeau-livraison {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        height: 32px;
+        background: var(--beige);
+        overflow: hidden;
+      }
+      .bandeau-slider {
+        display: flex;
+        width: 400%;
+        animation: sliderAnim 24s infinite;
+      }
+      .slide {
+        width: 100vw;
+        flex-shrink: 0;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        color: #fff;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      @keyframes sliderAnim {
+        0%,
+        20% {
+          transform: translateX(0);
+        }
+        25%,
+        45% {
+          transform: translateX(-100vw);
+        }
+        50%,
+        70% {
+          transform: translateX(-200vw);
+        }
+        75%,
+        95% {
+          transform: translateX(-300vw);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      /* Container */
+      .collection-container {
+        max-width: 1240px;
+        margin: 24px auto 80px;
+        padding: 0 18px;
+      }
+      .collection-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 6px 0 22px;
+        border-left: 6px solid rgba(0, 0, 0, 0.06);
+        padding-left: 12px;
+      }
+      .collection-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        line-height: 1.1;
+        color: var(--brun);
+        margin: 0;
+      }
+      .collection-count {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+
+  <body class="catalogue-bg">
+    <!-- Bandeau livraison -->
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">
+          livraison offerte en point relai dès de 80€ d’achat
+        </div>
+        <div class="slide">
+          Livraison offerte à domicile dès de 100€ d’achat
+        </div>
+        <div class="slide">
+          livraison offerte en point relai dès de 80€ d’achat
+        </div>
+        <div class="slide">
+          Livraison offerte à domicile dès de 100€ d’achat
+        </div>
+      </div>
+    </div>
+
+    <!-- Header injecté par ton script -->
+    <div id="header"></div>
+
+    <main class="collection-container">
+      <div class="collection-header">
+        <h1 class="collection-title">La boutique</h1>
+        <div class="collection-count" id="collectionCount">—</div>
+      </div>
+
+      <!-- NOEUD Shopify Buy Button (collection) -->
+      <div id="collection-component-1754753704786"></div>
+    </main>
+
+    <!-- Footer injecté par ton script -->
+    <div id="footer"></div>
+
+    <!-- ===== Shopify Buy Button — Portrait rétréci (images moitié hauteur) ===== -->
+    <!-- ===== Shopify Buy Button — fond unique #e8dbcd, plus de cartes (contours/ombres) ===== -->
+    <script>
+      (function () {
+        var SDK_URL =
+          "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+
+        // Charge le SDK puis initialise
+        if (window.ShopifyBuy) {
+          window.ShopifyBuy.UI ? init() : loadSDK();
+        } else {
+          loadSDK();
+        }
+
+        function loadSDK() {
+          var s = document.createElement("script");
+          s.async = true;
+          s.src = SDK_URL;
+          (document.head || document.body).appendChild(s);
+          s.onload = init;
+        }
+
+        function init() {
+          var client = ShopifyBuy.buildClient({
+            domain: "eb1iv0-n1.myshopify.com",
+            storefrontAccessToken: "5de76971549ee7a5dcb338aaad5e9784",
+          });
+
+          ShopifyBuy.UI.onReady(client).then(function (ui) {
+            ui.createComponent("collection", {
+              id: "677036884342", // ⚠️ ID de ta collection
+              node: document.getElementById(
+                "collection-component-1754753704786"
+              ),
+              moneyFormat: "%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D",
+
+              options: {
+                /* === 1) GRILLE: 2 colonnes mobile / 4 colonnes desktop === */
+                productSet: {
+                  styles: {
+                    products: {
+                      display: "grid",
+                      "grid-template-columns": "repeat(2, minmax(0,1fr))",
+                      gap: "14px",
+                      width: "100% !important",
+                      margin: "0 !important",
+                      padding: "0 !important",
+                      "box-sizing": "border-box",
+                      "align-items": "start",
+                      "justify-items": "stretch",
+                      /* Desktop */
+                      "@media (min-width: 1200px)": {
+                        "grid-template-columns":
+                          "repeat(4, minmax(0,1fr)) !important",
+                        gap: "20px",
+                      },
+                    },
+                  },
+                },
+
+                /* === 2) PRODUIT: plus de carte → pas de bordure, pas d’ombre, fond = #e8dbcd === */
+                product: {
+                  styles: {
+                    product: {
+                      /* Pas de “carte” : on enlève contour, ombre et padding */
+                      border: "none !important",
+                      "border-radius": "0 !important",
+                      "box-shadow": "none !important",
+                      background: "#e8dbcd !important", // ✅ même fond que la page
+                      padding: "0 !important",
+                      margin: "0 !important",
+
+                      /* Mise en colonne classique, rien d’absolu/float */
+                      display: "flex",
+                      "flex-direction": "column",
+                      position: "static !important",
+                      float: "none !important",
+                      clear: "none !important",
+                      width: "100% !important",
+                      "box-sizing": "border-box",
+                      "text-align": "left",
+                    },
+
+                    /* L’IMAGE ne doit pas mettre une plaque blanche : même fond beige */
+                    imgWrapper: {
+                      width: "100%",
+                      /* Choisis ici : 
+                   - soit tu gardes un ratio portrait élégant : */
+                      "aspect-ratio": "4 / 5",
+                      /* - sinon commente la ligne ci-dessus pour laisser l’image prendre sa taille naturelle */
+
+                      overflow: "hidden",
+                      background: "#e8dbcd !important", // ✅ même fond beige
+                    },
+                    img: {
+                      width: "100%",
+                      height: "100%",
+                      "object-fit": "cover", // remplit le cadre (coupe latéralement si besoin)
+                      display: "block",
+                    },
+
+                    /* Texte sur fond beige (pas de bloc blanc autour) */
+                    title: {
+                      "font-family": "Cormorant Garamond, serif",
+                      "font-weight": "600",
+                      "font-size": "16px",
+                      color: "#1f1f1f",
+                      margin: "10px 0 4px 0", // pas de padding latéral à gauche/droite
+                      padding: "0 0 0 0",
+                    },
+                    price: {
+                      "font-family": "Quicksand, sans-serif",
+                      "font-weight": "700",
+                      "font-size": "14px",
+                      color: "#333",
+                      margin: "0 0 12px 0",
+                      padding: "0 0 0 0",
+                    },
+
+                    /* Bouton pilule, posé directement sur le fond beige */
+                    button: {
+                      "font-family": "Quicksand, sans-serif",
+                      "font-weight": "700",
+                      "letter-spacing": "0.3px",
+                      "background-color": "#e96878",
+                      color: "#fff",
+                      border: "none",
+                      "border-radius": "999px",
+                      padding: "12px 0",
+                      width: "100%", // pleine largeur de la colonne
+                      margin: "0 0 6px 0",
+                      ":hover": { "background-color": "#000 !important" },
+                      ":focus": { "background-color": "#000 !important" },
+                    },
+                  },
+
+                  buttonDestination: "modal",
+                  contents: { options: false },
+                  text: { button: "Aperçu rapide" },
+                  googleFonts: ["Cormorant Garamond", "Quicksand"],
+                },
+
+                /* === 3) MODALE (inchangée) === */
+                modalProduct: {
+                  contents: {
+                    img: false,
+                    imgWithCarousel: true,
+                    button: true,
+                    buttonWithQuantity: false,
+                  },
+                  text: { button: "Ajouter au panier" },
+                  styles: {
+                    product: { "max-width": "900px" },
+                    imgWrapper: { "max-width": "100%" },
+                    img: {
+                      width: "100%",
+                      height: "auto",
+                      "object-fit": "contain",
+                    },
+                  },
+                },
+
+                /* === 4) PANIER & TOGGLE (laisse comme avant) === */
+                toggle: {
+                  styles: {
+                    toggle: {
+                      "background-color": "#000",
+                      ":hover": { "background-color": "#000" },
+                      ":focus": { "background-color": "#000" },
+                    },
+                  },
+                },
+                cart: {
+                  styles: {
+                    button: {
+                      "background-color": "#000",
+                      ":hover": { "background-color": "#000" },
+                      ":focus": { "background-color": "#000" },
+                    },
+                  },
+                  text: {
+                    title: "Panier",
+                    total: "Total",
+                    empty: "Votre panier est vide 🥲",
+                    notice:
+                      "Les codes d'expédition et de réduction sont ajoutés lors du paiement.",
+                    button: "Payer",
+                  },
+                },
+              },
+            }).then(function () {
+              /* === 5) Après rendu : on force le fond beige DANS l’iframe aussi === */
+              setTimeout(function () {
+                try {
+                  var iframe = document.querySelector(
+                    "#collection-component-1754753704786 iframe"
+                  );
+                  if (!iframe || !iframe.contentDocument) return;
+                  var doc = iframe.contentDocument;
+
+                  var forceBg = doc.createElement("style");
+                  forceBg.textContent = `
+              /* ✅ Fond beige partout dans l’iframe */
+              html, body,
+              .shopify-buy__collection,
+              .shopify-buy__product-set,
+              .shopify-buy__product-set .products {
+                background: #e8dbcd !important;
+              }
+
+              /* ✅ Plus de “carte” : pas de bordure/ombre nulle part */
+              .shopify-buy__product,
+              .shopify-buy__product-wrapper,
+              .shopify-buy__product__content {
+                background: #e8dbcd !important;
+                border: none !important;
+                box-shadow: none !important;
+              }
+
+              /* ✅ Pas de padding/overflow qui rogne la 2e/4e colonne */
+              .shopify-buy__collection,
+              .shopify-buy__product-set,
+              .shopify-buy__product-set .products {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+                overflow: visible !important;
+              }
+
+              /* ✅ Rien en absolute/float qui casserait le flux */
+              .shopify-buy__product,
+              .shopify-buy__product-wrapper,
+              .shopify-buy__product__content,
+              .shopify-buy__btn-wrapper,
+              .shopify-buy__btn {
+                position: static !important;
+                float: none !important;
+                clear: none !important;
+                width: 100% !important;
+              }
+
+              /* ✅ Image sans plaque blanche derrière */
+              .shopify-buy__product .shopify-buy__product__image-wrapper {
+                background: #e8dbcd !important;
+              }
+
+              /* ✅ On désactive d’éventuels pseudo-séparateurs */
+              .shopify-buy__product::before,
+              .shopify-buy__product::after,
+              .shopify-buy__product__content::before,
+              .shopify-buy__product__content::after {
+                content: none !important;
+                display: none !important;
+              }
+            `;
+                  doc.head.appendChild(forceBg);
+                } catch (e) {
+                  console.warn("Injection iframe (fond beige) échouée :", e);
+                }
+              }, 400);
+            });
+          });
+        }
+      })();
+    </script>
+    <script>
+      /*
+  Injection HEADER/FOOTER robuste (racine du site), avec correctifs d'URL.
+
+  ✅ Fonctionne :
+    - Sur domaine perso (ex: ma-lou.fr) → /header.html & /footer.html
+    - Sur GitHub Pages (ex: username.github.io/repo/) → /repo/header.html & /repo/footer.html
+    - Depuis n'importe quel sous-dossier (ex: /Catalogue/page.html)
+
+  ⚠️ header.html et footer.html doivent être à la RACINE du repo / site.
+  ⚠️ Si tu testes en file://, lance un petit serveur (CORS bloque fetch en file://).
+*/
+      (function injectHeaderFooter() {
+        // --- 1) Détecte si on est sur GitHub Pages pour préfixer par "/<repo>"
+        var isGitHubPages = location.hostname.endsWith("github.io");
+        var pathParts = location.pathname.split("/").filter(Boolean);
+        var repoPrefix =
+          isGitHubPages && pathParts.length ? "/" + pathParts[0] : "";
+
+        // --- 2) Construit les URLs racine pour header/footer
+        // Sur domaine perso → repoPrefix = "" → "/header.html"
+        // Sur GitHub Pages  → repoPrefix = "/mon-repo" → "/mon-repo/header.html"
+        var HEADER_URL = repoPrefix + "/header.html";
+        var FOOTER_URL = repoPrefix + "/footer.html";
+
+        // --- 3) Raccourci pour sélectionner les conteneurs (présents dans ta page)
+        var $headerHost = document.getElementById("header");
+        var $footerHost = document.getElementById("footer");
+
+        // --- 4) Patch des chemins ABSOLUS à l'intérieur du header/footer
+        // Sur GitHub Pages, un href="/img/..." doit devenir href="/<repo>/img/..."
+        function fixAbsolutePaths(root) {
+          if (!root || !isGitHubPages) return;
+          var prefix = repoPrefix + "/";
+
+          // Attrs à corriger : href, src, srcset (et variants)
+          var ATTRS = ["href", "src", "srcset"];
+
+          // Tous éléments qui peuvent porter ces attributs
+          root
+            .querySelectorAll("[href], [src], source[srcset]")
+            .forEach(function (el) {
+              ATTRS.forEach(function (attr) {
+                var val = el.getAttribute(attr);
+                if (!val) return;
+
+                // Cas 1 : commence par "/" → on préfixe si pas déjà "/<repo>/..."
+                if (val.charAt(0) === "/" && !val.startsWith(prefix)) {
+                  el.setAttribute(attr, prefix + val.slice(1));
+                  return;
+                }
+
+                // Cas 2 (srcset) : plusieurs URLs séparées par des virgules
+                if (attr === "srcset" && val.indexOf("/") !== -1) {
+                  var fixed = val
+                    .split(",")
+                    .map(function (part) {
+                      var p = part.trim();
+                      var segs = p.split(/\s+/); // "url 1x" / "url 320w"
+                      if (!segs.length) return p;
+                      var url = segs[0];
+                      if (url.charAt(0) === "/" && !url.startsWith(prefix)) {
+                        segs[0] = prefix + url.slice(1);
+                      }
+                      return segs.join(" ");
+                    })
+                    .join(", ");
+                  el.setAttribute(attr, fixed);
+                }
+              });
+            });
+        }
+
+        // --- 5) Charge un fragment HTML et l'injecte, puis corrige les chemins
+        function loadFragment(url, hostEl) {
+          if (!hostEl) return Promise.resolve();
+          return fetch(url, { credentials: "same-origin" })
+            .then(function (res) {
+              if (!res.ok)
+                throw new Error("HTTP " + res.status + " sur " + url);
+              return res.text();
+            })
+            .then(function (html) {
+              hostEl.innerHTML = html;
+              fixAbsolutePaths(hostEl);
+            })
+            .catch(function (err) {
+              console.error("[Header/Footer] Échec sur", url, ":", err);
+              hostEl.innerHTML = ""; // propre
+            });
+        }
+
+        // --- 6) Lance les deux chargements en parallèle
+        Promise.all([
+          loadFragment(HEADER_URL, $headerHost),
+          loadFragment(FOOTER_URL, $footerHost),
+        ]).then(function () {
+          // Optionnel : log propre
+          // console.log("Header/Footer injectés depuis", repoPrefix || "/");
+        });
+      })();
+    </script>
+
+    <!-- Ton script global (injection header/footer, etc.) -->
+  </body>
+</html>
