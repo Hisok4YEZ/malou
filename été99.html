@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="img/logo2.png" type="image/png" />
-    <title>été99 – MA LOU</title>
+    <title>été 99 – MA LOU</title>
 
     <!-- Typos -->
     <link
@@ -121,7 +121,7 @@
         color: #fff;
       }
 
-      /* modale */
+      /* ---- MODALE responsive ---- */
       .modal {
         position: fixed;
         inset: 0;
@@ -130,15 +130,60 @@
         align-items: center;
         justify-content: center;
         z-index: 2000;
+        padding: 16px;
       }
+      /* ✅ Modale Aperçu toujours au-dessus */
+      .modal {
+        z-index: 200000 !important;
+      }
+      /* ✅ Bouton croix bien gros et cliquable */
+      .close-x {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 36px; /* taille plus grande */
+        font-weight: bold;
+        line-height: 1;
+        color: #000; /* noir bien visible */
+        background: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* petit fond clair pour contraste */
+        border-radius: 50%; /* rond */
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 200001; /* encore plus haut que la modale */
+        border: none;
+        transition: background 0.2s ease;
+      }
+      .close-x:hover {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+      }
+      /* ✅ Drawer panier Shopify toujours au-dessus */
+      .shopify-buy-frame,
+      .shopify-buy-cart-wrapper,
+      .shopify-buy__cart {
+        z-index: 200000 !important;
+      }
+
       .modal.open {
         display: flex;
       }
       .modal-card {
         background: #fff;
         border-radius: 12px;
-        max-width: 900px;
+        max-width: min(900px, 96vw);
+        max-height: 92svh;
         width: 100%;
+        display: flex;
+        flex-direction: column;
         overflow: hidden;
         position: relative;
       }
@@ -156,6 +201,10 @@
         grid-template-columns: 1fr;
         gap: 16px;
         padding: 16px;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
       }
       @media (min-width: 900px) {
         .modal-body {
@@ -166,9 +215,9 @@
       }
       .modal-images img.big {
         width: 100%;
-        aspect-ratio: 1/1;
         object-fit: contain;
         background: #f6f3ef;
+        max-height: 48svh;
       }
       .thumbs {
         display: grid;
@@ -193,10 +242,21 @@
       .modal-desc {
         font-size: 14px;
         margin: 0 0 12px;
-        white-space: pre-line; /* ✅ pour que \n s'affiche en retour à la ligne */
+        white-space: pre-line;
+      }
+      #modalBuyTarget {
+        max-height: 40svh;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
-      /* Uniformisation boutons Shopify */
+      /* Bloque le scroll du fond quand la modale est ouverte */
+      body.modal-open {
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      /* Boutons Shopify unify */
       .shopify-buy__btn {
         background-color: var(--noir) !important;
         border-radius: 999px !important;
@@ -215,9 +275,22 @@
       .shopify-buy__cart__footer .shopify-buy__btn:focus {
         background-color: var(--noir) !important;
       }
+
+      /* ---- PANIER SHOPIFY : iframe pleine hauteur ---- */
+      .shopify-buy-frame--cart {
+        height: 100svh !important;
+        max-height: 100svh !important;
+      }
+      @supports not (height: 100svh) {
+        .shopify-buy-frame--cart {
+          height: 100vh !important;
+          max-height: 100vh !important;
+        }
+      }
     </style>
   </head>
   <body>
+    <!-- Bandeau livraison -->
     <div class="bandeau-livraison">
       <div class="bandeau-slider">
         <div class="slide">
@@ -230,6 +303,7 @@
         <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
       </div>
     </div>
+
     <div id="header"></div>
 
     <main class="container">
@@ -241,9 +315,14 @@
     </main>
 
     <!-- Modale Aperçu -->
-    <div id="quickModal" class="modal">
-      <div class="modal-card">
-        <button id="modalClose" class="close-x">×</button>
+    <div id="quickModal" class="modal" aria-hidden="true">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button id="modalClose" class="close-x" aria-label="Fermer">×</button>
         <div class="modal-body">
           <div class="modal-images">
             <img id="modalBig" class="big" alt="" />
@@ -265,7 +344,6 @@
       const SHOP_DOMAIN = "eb1iv0-n1.myshopify.com";
       const STOREFRONT_TOKEN = "5de76971549ee7a5dcb338aaad5e9784";
 
-      // ⚠️ Remplis cette liste avec tes produits
       const items = [
         {
           key: "bermuda-sparkly-blue",
@@ -380,21 +458,7 @@
       const grid = document.getElementById("grid");
       document.getElementById("count").textContent = `${items.length} articles`;
 
-      items.forEach((p, i) => {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = `
-          <div class="img-wrap">
-            <img src="${p.image1}" alt="${p.title}">
-            <img src="${p.image2}" alt="${p.title}">
-          </div>
-          <h3>${p.title}</h3>
-          <div class="price">${p.priceText}</div>
-          <button class="btn preview" data-index="${i}">Aperçu</button>`;
-        grid.appendChild(card);
-      });
-
-      // Panier global
+      // Cart global + toggle
       let shopifyUI = null;
       function initUI() {
         return new Promise((res) => {
@@ -413,51 +477,62 @@
           }
         });
       }
+
+      // Grille produits
+      items.forEach((p, i) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="img-wrap">
+            <img src="${p.image1}" alt="${escapeHtml(p.title)}">
+            <img src="${p.image2}" alt="${escapeHtml(p.title)}">
+          </div>
+          <h3>${escapeHtml(p.title)}</h3>
+          <div class="price">${p.priceText}</div>
+          <button class="btn preview" data-index="${i}">Aperçu</button>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Init cart/toggle
       initUI().then((ui) => {
         shopifyUI = ui;
+
         ui.createComponent("cart", {
           node: document.body.appendChild(document.createElement("div")),
           moneyFormat: "€{{amount_with_comma_separator}}",
           options: {
             cart: {
-              /* ✅ Texte en français */
               text: {
                 title: "Panier",
                 total: "Total",
                 empty: "Votre panier est vide 🥲",
                 notice:
                   "Les codes de réduction et frais de livraison seront appliqués lors du paiement.",
-                button: "Payer", // libellé du bouton
+                button: "Payer",
               },
-              /* ✅ Styles du drawer panier ET du bouton Payer (dans l’iframe) */
               styles: {
                 button: {
-                  "background-color": "#000000", // bouton Payer NOIR
+                  "background-color": "#000000",
                   color: "#ffffff",
                   "border-radius": "999px",
                   "font-weight": "700",
                   padding: "12px 0",
-                  ":hover": { "background-color": "#000000" }, // reste noir au survol
-                  ":focus": { "background-color": "#000000" }, // reste noir au focus
+                  ":hover": { "background-color": "#000000" },
+                  ":focus": { "background-color": "#000000" },
                 },
-                // (optionnel) teinte générale du drawer
-                cart: {
-                  "background-color": "#e8dbcd", // ton beige
-                },
-                footer: {
-                  "background-color": "#e8dbcd",
-                },
-                title: { color: "#000000" },
-                header: { color: "#000000" },
-                lineItems: { color: "#000000" },
-                subtotalText: { color: "#000000" },
-                subtotal: { color: "#000000" },
-                notice: { color: "#000000" },
-                currency: { color: "#000000" },
-                close: { color: "#000000" },
+                cart: { "background-color": "#e8dbcd" },
+                footer: { "background-color": "#e8dbcd" },
+                title: { color: "#000" },
+                header: { color: "#000" },
+                lineItems: { color: "#000" },
+                subtotalText: { color: "#000" },
+                subtotal: { color: "#000" },
+                notice: { color: "#000" },
+                currency: { color: "#000" },
+                close: { color: "#000" },
               },
             },
-            /* ✅ (facultatif) si tu crées aussi un toggle global, garde le en noir */
             toggle: {
               styles: {
                 toggle: {
@@ -470,6 +545,7 @@
             },
           },
         });
+
         ui.createComponent("toggle", {
           node: document.body.appendChild(document.createElement("div")),
           moneyFormat: "€{{amount_with_comma_separator}}",
@@ -486,12 +562,18 @@
       const modalDesc = document.getElementById("modalDesc");
       const modalBuyTarget = document.getElementById("modalBuyTarget");
 
-      grid.addEventListener("click", (e) => {
+      document.getElementById("grid").addEventListener("click", (e) => {
         const btn = e.target.closest(".btn.preview");
         if (!btn) return;
-        openQuick(items[btn.dataset.index]);
+        openQuick(items[+btn.dataset.index]);
       });
-      modalClose.onclick = () => closeQuick();
+      modalClose.addEventListener("click", closeQuick);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeQuick();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeQuick();
+      });
 
       function openQuick(p) {
         modalTitle.textContent = p.title;
@@ -502,12 +584,15 @@
         [p.image1, p.image2].filter(Boolean).forEach((url) => {
           const im = document.createElement("img");
           im.src = url;
-          im.onclick = () => (modalBig.src = url);
+          im.alt = p.title;
+          im.addEventListener("click", () => (modalBig.src = url));
           modalThumbs.appendChild(im);
         });
+
+        // mount buy button with options in modal
         modalBuyTarget.innerHTML = "";
-        if (shopifyUI) {
-          shopifyUI.createComponent("product", {
+        const mount = (ui) => {
+          ui.createComponent("product", {
             id: p.productId,
             node: modalBuyTarget,
             moneyFormat: "€{{amount_with_comma_separator}}",
@@ -522,12 +607,12 @@
                 text: { button: "Ajouter" },
                 styles: {
                   button: {
-                    "background-color": "#000000", // ✅ couleur du bouton
-                    color: "#ffffff", // ✅ texte blanc
+                    "background-color": "#000000",
+                    color: "#ffffff",
                     "font-weight": "700",
                     padding: "12px 12px",
-                    ":hover": { "background-color": "#000000" }, // ✅ au survol reste noir
-                    ":focus": { "background-color": "#000000" }, // ✅ idem focus
+                    ":hover": { "background-color": "#000000" },
+                    ":focus": { "background-color": "#000000" },
                   },
                 },
               },
@@ -535,7 +620,7 @@
                 text: { button: "Payer", total: "Total", title: "Panier" },
                 styles: {
                   button: {
-                    "background-color": "#000000", // ✅ bouton Payer en noir
+                    "background-color": "#000000",
                     color: "#ffffff",
                     ":hover": { "background-color": "#000000" },
                     ":focus": { "background-color": "#000000" },
@@ -544,12 +629,34 @@
               },
             },
           });
-        }
+        };
+        if (shopifyUI) mount(shopifyUI);
+        else initUI().then(mount);
+
         modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
       }
+
       function closeQuick() {
         modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
         modalBuyTarget.innerHTML = "";
+        document.body.classList.remove("modal-open");
+      }
+
+      function escapeHtml(s) {
+        return String(s || "").replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[m])
+        );
       }
     </script>
 
