@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="img/logo2.png" type="image/png" />
+    <title>Bijoux et accessoires – MA LOU</title>
+
+    <!-- Typos -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feuilles existantes -->
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/header.css" />
+    <link rel="stylesheet" href="style/footer.css" />
+
+    <style>
+      :root {
+        --noir: #000;
+        --beige: #e8dbcd;
+      }
+      body {
+        margin: 0;
+        background: var(--beige);
+        font-family: "Quicksand", sans-serif;
+        color: #3f3027;
+      }
+      .container {
+        max-width: 1240px;
+        margin: 40px auto 100px;
+        padding: 0 18px;
+        text-align: center;
+      }
+      .page-head {
+        margin-bottom: 40px;
+        border-left: 6px solid rgba(0, 0, 0, 0.06);
+        padding-left: 12px;
+        text-align: left;
+      }
+      .title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        margin: 0;
+      }
+      .message {
+        font-size: 16px;
+        opacity: 0.8;
+        margin-top: 20px;
+      }
+      .btn-retour {
+        margin-top: 30px;
+        display: inline-block;
+        padding: 12px 28px;
+        border-radius: 999px;
+        background: var(--noir);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.3s ease;
+      }
+      .btn-retour:hover {
+        background: #222;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">
+          livraison offerte en point relai dès 80€ d’achat
+        </div>
+        <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
+        <div class="slide">
+          livraison offerte en point relai dès 80€ d’achat
+        </div>
+        <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
+      </div>
+    </div>
+    <div id="header"></div>
+
+    <main class="container">
+      <div class="page-head">
+        <h1 class="title">Bijoux et accessoires</h1>
+      </div>
+      <p class="message">
+        Aucun bijou ni accessoire n’est disponible pour le moment.<br />
+        Revenez prochainement pour découvrir notre sélection !
+      </p>
+      <a href="index.html" class="btn-retour">Retour à l’accueil</a>
+    </main>
+
+    <div id="footer"></div>
+    <script src="script/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="img/logo2.png" type="image/png" />
+    <title>Pull et gilets – MA LOU</title>
+
+    <!-- Typos -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feuilles existantes -->
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/header.css" />
+    <link rel="stylesheet" href="style/footer.css" />
+
+    <style>
+      :root {
+        --noir: #000;
+        --beige: #e8dbcd;
+      }
+      body {
+        margin: 0;
+        background: var(--beige);
+        font-family: "Quicksand", sans-serif;
+        color: #3f3027;
+      }
+
+      .container {
+        max-width: 1240px;
+        margin: 24px auto 80px;
+        padding: 0 18px;
+      }
+      .page-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin: 6px 0 22px;
+        border-left: 6px solid rgba(0, 0, 0, 0.06);
+        padding-left: 12px;
+      }
+      .title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        margin: 0;
+      }
+      .count {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      /* grille */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      @media (min-width: 1200px) {
+        .grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 20px;
+        }
+      }
+
+      /* carte produit */
+      .card {
+        background: var(--beige);
+        display: flex;
+        flex-direction: column;
+      }
+      .img-wrap {
+        aspect-ratio: 3/4;
+        overflow: hidden;
+        position: relative;
+      }
+      .img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        inset: 0;
+        transition: opacity 0.3s ease;
+      }
+      .img-wrap img:nth-child(1) {
+        opacity: 1;
+      }
+      .img-wrap img:nth-child(2) {
+        opacity: 0;
+      }
+      .card:hover .img-wrap img:nth-child(1) {
+        opacity: 0;
+      }
+      .card:hover .img-wrap img:nth-child(2) {
+        opacity: 1;
+      }
+
+      .card h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 16px;
+        margin: 10px 0 4px;
+      }
+      .price {
+        font-weight: 700;
+        font-size: 14px;
+        margin: 0 0 10px;
+      }
+      .btn {
+        display: inline-block;
+        border: none;
+        border-radius: 999px;
+        padding: 12px 0;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+      }
+      .btn.preview {
+        background: var(--noir);
+        color: #fff;
+      }
+
+      /* modale */
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+      .modal.open {
+        display: flex;
+      }
+      .modal-card {
+        background: #fff;
+        border-radius: 12px;
+        max-width: 900px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+      .close-x {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+      .modal-body {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+      }
+      @media (min-width: 900px) {
+        .modal-body {
+          grid-template-columns: 1fr 1fr;
+          gap: 22px;
+          padding: 22px;
+        }
+      }
+      .modal-images img.big {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: contain;
+        background: #f6f3ef;
+      }
+      .thumbs {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .thumbs img {
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .modal-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        margin: 0 0 6px;
+      }
+      .modal-price {
+        font-weight: 700;
+        margin: 0 0 10px;
+      }
+      .modal-desc {
+        font-size: 14px;
+        margin: 0 0 12px;
+        white-space: pre-line; /* ✅ pour que \n s'affiche en retour à la ligne */
+      }
+
+      /* Uniformisation boutons Shopify */
+      .shopify-buy__btn {
+        background-color: var(--noir) !important;
+        border-radius: 999px !important;
+        font-weight: 700 !important;
+        color: #fff !important;
+        padding: 12px 0 !important;
+      }
+      .shopify-buy__btn:hover,
+      .shopify-buy__btn:focus {
+        background-color: var(--noir) !important;
+      }
+      .shopify-buy__cart__footer .shopify-buy__btn {
+        background-color: var(--noir) !important;
+      }
+      .shopify-buy__cart__footer .shopify-buy__btn:hover,
+      .shopify-buy__cart__footer .shopify-buy__btn:focus {
+        background-color: var(--noir) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">
+          livraison offerte en point relai dès 80€ d’achat
+        </div>
+        <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
+        <div class="slide">
+          livraison offerte en point relai dès 80€ d’achat
+        </div>
+        <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
+      </div>
+    </div>
+    <div id="header"></div>
+
+    <main class="container">
+      <div class="page-head">
+        <h1 class="title">Pull et gilets</h1>
+        <div class="count" id="count">—</div>
+      </div>
+      <div id="grid" class="grid"></div>
+    </main>
+
+    <!-- Modale Aperçu -->
+    <div id="quickModal" class="modal">
+      <div class="modal-card">
+        <button id="modalClose" class="close-x">×</button>
+        <div class="modal-body">
+          <div class="modal-images">
+            <img id="modalBig" class="big" alt="" />
+            <div id="modalThumbs" class="thumbs"></div>
+          </div>
+          <div>
+            <h3 id="modalTitle" class="modal-title"></h3>
+            <div id="modalPrice" class="modal-price"></div>
+            <p id="modalDesc" class="modal-desc"></p>
+            <div id="modalBuyTarget"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SDK Shopify -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    <script>
+      const SHOP_DOMAIN = "eb1iv0-n1.myshopify.com";
+      const STOREFRONT_TOKEN = "5de76971549ee7a5dcb338aaad5e9784";
+
+      // ⚠️ Remplis cette liste avec tes produits
+      const items = [
+        {
+          key: "gilet-perle",
+          title: "Gilet Perle",
+          priceText: "36,00 €",
+          productId: "15288838586742",
+          image1: "img/Larentree/gilet-perle-1.jpg",
+          image2: "img/Larentree/gilet-perle-2.jpg",
+          desc: "Taille unique M/L.\n- Gilet en maille écrue à manches courtes\n- Boutons dorés et poches plaquées\n- Col rond et coupe droite légèrement courte\n- Lou porte une taille M et mesure 1m71",
+        },
+        {
+          key: "gilet-nomade",
+          title: "Gilet Nomade",
+          priceText: "35,00 €",
+          productId: "15288773443958",
+          image1: "img/Larentree/gilet-nomade-1.jpg",
+          image2: "img/Larentree/gilet-nomade-2.jpg",
+          desc: "Taille unique.\n- Gilet sans manches brodé\n- Détails travaillés et finitions contrastées\n- Facile à porter sur un t-shirt ou une robe fluide\n- Disponible en kaki et écru\n- Lou porte une taille M et mesure 1m71",
+        },
+        {
+          key: "gilet-riviera",
+          title: "Gilet Riviera",
+          priceText: "36,00 €",
+          productId: "15288653316470",
+          image1: "img/Larentree/gilet-riviera-1.jpg",
+          image2: "img/Larentree/gilet-riviera-2.jpg",
+          desc: "Taille unique M/L.\n- Gilet sans manches à rayures jaune et blanc\n- Coupe droite avec boutons dorés texturés\n- Parfait à porter seul ou sur une chemise blanche\n- Lou porte une taille S et mesure 1m70",
+        },
+        {
+          key: "pull-fluffy",
+          title: "Pull Fluffy",
+          priceText: "39,99 €",
+          productId: "15288808145270",
+          image1: "img/Larentree/pull-fluffy-1.jpg",
+          image2: "img/Larentree/pull-fluffy-2.jpg",
+          desc: "Taille unique.\n- Pull sans manches ultra doux en mohair\n- Coupe légèrement raccourcie\n- À porter seul ou sur un t-shirt\n- Disponible en rose, vert pastel et jaune lumineux\n- Lou porte une taille unique et mesure 1m71",
+        },
+      ];
+
+      const grid = document.getElementById("grid");
+      document.getElementById("count").textContent = `${items.length} articles`;
+
+      items.forEach((p, i) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="img-wrap">
+            <img src="${p.image1}" alt="${p.title}">
+            <img src="${p.image2}" alt="${p.title}">
+          </div>
+          <h3>${p.title}</h3>
+          <div class="price">${p.priceText}</div>
+          <button class="btn preview" data-index="${i}">Aperçu</button>`;
+        grid.appendChild(card);
+      });
+
+      // Panier global
+      let shopifyUI = null;
+      function initUI() {
+        return new Promise((res) => {
+          if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+            const client = ShopifyBuy.buildClient({
+              domain: SHOP_DOMAIN,
+              storefrontAccessToken: STOREFRONT_TOKEN,
+            });
+            ShopifyBuy.UI.onReady(client).then((ui) => res(ui));
+          } else {
+            const s = document.createElement("script");
+            s.src =
+              "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+            s.onload = () => initUI().then(res);
+            document.body.appendChild(s);
+          }
+        });
+      }
+      initUI().then((ui) => {
+        shopifyUI = ui;
+        ui.createComponent("cart", {
+          node: document.body.appendChild(document.createElement("div")),
+          moneyFormat: "€{{amount_with_comma_separator}}",
+          options: {
+            cart: {
+              /* ✅ Texte en français */
+              text: {
+                title: "Panier",
+                total: "Total",
+                empty: "Votre panier est vide 🥲",
+                notice:
+                  "Les codes de réduction et frais de livraison seront appliqués lors du paiement.",
+                button: "Payer", // libellé du bouton
+              },
+              /* ✅ Styles du drawer panier ET du bouton Payer (dans l’iframe) */
+              styles: {
+                button: {
+                  "background-color": "#000000", // bouton Payer NOIR
+                  color: "#ffffff",
+                  "border-radius": "999px",
+                  "font-weight": "700",
+                  padding: "12px 0",
+                  ":hover": { "background-color": "#000000" }, // reste noir au survol
+                  ":focus": { "background-color": "#000000" }, // reste noir au focus
+                },
+                // (optionnel) teinte générale du drawer
+                cart: {
+                  "background-color": "#e8dbcd", // ton beige
+                },
+                footer: {
+                  "background-color": "#e8dbcd",
+                },
+                title: { color: "#000000" },
+                header: { color: "#000000" },
+                lineItems: { color: "#000000" },
+                subtotalText: { color: "#000000" },
+                subtotal: { color: "#000000" },
+                notice: { color: "#000000" },
+                currency: { color: "#000000" },
+                close: { color: "#000000" },
+              },
+            },
+            /* ✅ (facultatif) si tu crées aussi un toggle global, garde le en noir */
+            toggle: {
+              styles: {
+                toggle: {
+                  "background-color": "#000000",
+                  color: "#ffffff",
+                  ":hover": { "background-color": "#000000" },
+                  ":focus": { "background-color": "#000000" },
+                },
+              },
+            },
+          },
+        });
+        ui.createComponent("toggle", {
+          node: document.body.appendChild(document.createElement("div")),
+          moneyFormat: "€{{amount_with_comma_separator}}",
+        });
+      });
+
+      // Modale
+      const modal = document.getElementById("quickModal");
+      const modalClose = document.getElementById("modalClose");
+      const modalBig = document.getElementById("modalBig");
+      const modalThumbs = document.getElementById("modalThumbs");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalPrice = document.getElementById("modalPrice");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalBuyTarget = document.getElementById("modalBuyTarget");
+
+      grid.addEventListener("click", (e) => {
+        const btn = e.target.closest(".btn.preview");
+        if (!btn) return;
+        openQuick(items[btn.dataset.index]);
+      });
+      modalClose.onclick = () => closeQuick();
+
+      function openQuick(p) {
+        modalTitle.textContent = p.title;
+        modalPrice.textContent = p.priceText;
+        modalDesc.textContent = p.desc;
+        modalBig.src = p.image1;
+        modalThumbs.innerHTML = "";
+        [p.image1, p.image2].filter(Boolean).forEach((url) => {
+          const im = document.createElement("img");
+          im.src = url;
+          im.onclick = () => (modalBig.src = url);
+          modalThumbs.appendChild(im);
+        });
+        modalBuyTarget.innerHTML = "";
+        if (shopifyUI) {
+          shopifyUI.createComponent("product", {
+            id: p.productId,
+            node: modalBuyTarget,
+            moneyFormat: "€{{amount_with_comma_separator}}",
+            options: {
+              product: {
+                contents: {
+                  img: false,
+                  title: false,
+                  price: false,
+                  options: true,
+                },
+                text: { button: "Ajouter" },
+                styles: {
+                  button: {
+                    "background-color": "#000000", // ✅ couleur du bouton
+                    color: "#ffffff", // ✅ texte blanc
+                    "font-weight": "700",
+                    padding: "12px 12px",
+                    ":hover": { "background-color": "#000000" }, // ✅ au survol reste noir
+                    ":focus": { "background-color": "#000000" }, // ✅ idem focus
+                  },
+                },
+              },
+              cart: {
+                text: { button: "Payer", total: "Total", title: "Panier" },
+                styles: {
+                  button: {
+                    "background-color": "#000000", // ✅ bouton Payer en noir
+                    color: "#ffffff",
+                    ":hover": { "background-color": "#000000" },
+                    ":focus": { "background-color": "#000000" },
+                  },
+                },
+              },
+            },
+          });
+        }
+        modal.classList.add("open");
+      }
+      function closeQuick() {
+        modal.classList.remove("open");
+        modalBuyTarget.innerHTML = "";
+      }
+    </script>
+
+    <div id="footer"></div>
+    <script src="script/script.js"></script>
+  </body>
+</html>
