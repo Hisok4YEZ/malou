@@ -7,103 +7,67 @@
 
     <title>Ma lou</title>
 
-    <!-- Lien vers la feuille de style principale -->
+    <!-- CSS principales : on les laisse en chargement normal (évite FOUC) -->
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/header2.css" />
     <link rel="stylesheet" href="style/footer.css" />
     <link rel="stylesheet" href="style/index.css" />
+
+    <!-- ⚡ Fonts : preconnect + display=swap pour ne pas bloquer le rendu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- ✅ PRELOAD du LCP (première image du hero).
+       ATTENTION : ton script ne génère que jusqu’à 640px.
+       Donc on précharge la version JPEG d’origine pour garder une bonne qualité sur desktop. -->
+    <link rel="preload" as="image" href="img/hero1.jpg" fetchpriority="high" />
+
     <style>
+      /* Petites règles qui évitent les sauts de mise en page (CLS) et les déformations */
+
       body {
         background-color: #e8dbcd;
         color: #3f3027;
         font-family: "Quicksand", sans-serif;
       }
-      .section-texte-images {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 4rem 2rem;
-        max-width: 1200px;
-        margin: 0 auto;
+
+      /* Réserve un ratio pour les images de la grille (vignettes mode 3/4) */
+      .card {
+        display: block;
+        border-radius: 0;
+        overflow: hidden;
+        aspect-ratio: 3/4;
       }
-      .section-texte {
-        flex: 1 1 40%;
-      }
-      .section-texte h2 {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 2rem;
-        color: #a32747;
-        margin-bottom: 1.5rem;
-      }
-      .section-texte p {
-        font-size: 1.1rem;
-        line-height: 1.7;
-        margin-bottom: 1rem;
-      }
-      .section-images {
-        flex: 1 1 25%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 1rem;
-      }
-      .section-images img {
+      .card picture,
+      .card img {
         width: 100%;
-        max-width: 250px;
+        height: 100%;
+        display: block;
+      }
+      .card img {
+        object-fit: cover;
+      }
+
+      /* Hero : réserve un ratio pour limiter le CLS */
+      .hero-img {
+        width: 100%;
         height: auto;
+        display: block;
+      }
+      .hero-img--cover {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        border-radius: 0;
-        box-shadow: none;
       }
-      .section-texte-images.right-shift .section-images:first-child {
-        margin-right: 4rem;
-      }
-      .carousel-section {
-        background-color: #d8c7b3;
-        padding: 4rem 2rem;
-        overflow-x: hidden;
-      }
-      .carousel-section h2 {
-        text-align: center;
-        color: #4e3a2d;
-        font-size: 2.5rem;
-        font-family: "Cormorant Garamond", serif;
-        margin-bottom: 2rem;
-      }
-      .carousel-track {
-        display: flex;
-        gap: 2rem;
-        animation: scrollLeft 25s linear infinite;
-      }
-      .carousel-track a {
-        flex: 0 0 auto;
-      }
-      .carousel-track img {
-        height: 300px;
-        width: auto;
-        border-radius: 0;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-      }
-      .carousel-track img:hover {
-        transform: scale(1.05);
-      }
-      @keyframes scrollLeft {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-50%);
-        }
-      }
+
+      /* Carousel : rien à changer ici pour le perf au démarrage. */
     </style>
   </head>
+
   <body>
     <div class="bandeau-livraison">
       <div class="bandeau-slider">
@@ -143,19 +107,91 @@
     >
       <h2 id="t-ete99">Été 99</h2>
       <div class="grid">
-        <!-- Chaque carte = lien + image -->
-        <a href="été99.html" class="card"
-          ><img src="img/c1.jpg" alt="Été 99 - Look 1" loading="lazy"
-        /></a>
-        <a href="été99.html" class="card"
-          ><img src="img/c2.jpg" alt="Été 99 - Look 2" loading="lazy"
-        /></a>
-        <a href="été99.html" class="card"
-          ><img src="img/c3.jpg" alt="Été 99 - Look 3" loading="lazy"
-        /></a>
-        <a href="été99.html" class="card"
-          ><img src="img/c4.jpg" alt="Été 99 - Look 4" loading="lazy"
-        /></a>
+        <!-- Carte 1 -->
+        <a href="été99.html" class="card">
+          <picture>
+            <!-- WebP légers (320/480/640) : le navigateur choisit la bonne taille -->
+            <source
+              type="image/webp"
+              srcset="
+                webp/c1-320.webp 320w,
+                webp/c1-480.webp 480w,
+                webp/c1-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <!-- Fallback (JPEG/PNG d’origine) pour compatibilité -->
+            <img
+              src="img/c1.jpg"
+              alt="Été 99 - Look 1"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 2 -->
+        <a href="été99.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/c2-320.webp 320w,
+                webp/c2-480.webp 480w,
+                webp/c2-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/c2.jpg"
+              alt="Été 99 - Look 2"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 3 -->
+        <a href="été99.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/c3-320.webp 320w,
+                webp/c3-480.webp 480w,
+                webp/c3-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/c3.jpg"
+              alt="Été 99 - Look 3"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 4 -->
+        <a href="été99.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/c4-320.webp 320w,
+                webp/c4-480.webp 480w,
+                webp/c4-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/c4.jpg"
+              alt="Été 99 - Look 4"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
       </div>
     </section>
 
@@ -166,18 +202,91 @@
     >
       <h2 id="t-rentree">La rentrée</h2>
       <div class="grid">
-        <a href="larentré.html" class="card"
-          ><img src="img/d1.jpg" alt="La rentrée - Look 1" loading="lazy"
-        /></a>
-        <a href="larentré.html" class="card"
-          ><img src="img/d2.jpg" alt="La rentrée - Look 2" loading="lazy"
-        /></a>
-        <a href="larentré.html" class="card"
-          ><img src="img/d3.jpg" alt="La rentrée - Look 3" loading="lazy"
-        /></a>
-        <a href="larentré.html" class="card"
-          ><img src="img/d4.jpg" alt="La rentrée - Look 4" loading="lazy"
-        /></a>
+        <!-- Carte 1 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <!-- WebP légers générés par ton script (320/480/640) -->
+            <source
+              type="image/webp"
+              srcset="
+                webp/d1-320.webp 320w,
+                webp/d1-480.webp 480w,
+                webp/d1-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <!-- Fallback : image d'origine (JPEG/PNG) -->
+            <img
+              src="img/d1.jpg"
+              alt="La rentrée - Look 1"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 2 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/d2-320.webp 320w,
+                webp/d2-480.webp 480w,
+                webp/d2-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/d2.jpg"
+              alt="La rentrée - Look 2"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 3 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/d3-320.webp 320w,
+                webp/d3-480.webp 480w,
+                webp/d3-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/d3.jpg"
+              alt="La rentrée - Look 3"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 4 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/d4-320.webp 320w,
+                webp/d4-480.webp 480w,
+                webp/d4-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/d4.jpg"
+              alt="La rentrée - Look 4"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
       </div>
     </section>
 

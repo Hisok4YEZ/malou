@@ -96,6 +96,7 @@
       .card:hover .img-wrap img:nth-child(2) {
         opacity: 1;
       }
+
       .card h3 {
         font-family: "Cormorant Garamond", serif;
         font-size: 16px;
@@ -120,7 +121,7 @@
         color: #fff;
       }
 
-      /* -------- MODALE corrigée -------- */
+      /* ---- MODALE responsive ---- */
       .modal {
         position: fixed;
         inset: 0;
@@ -128,9 +129,50 @@
         display: none;
         align-items: center;
         justify-content: center;
+        z-index: 2000;
         padding: 16px;
+      }
+      /* ✅ Modale Aperçu toujours au-dessus */
+      .modal {
         z-index: 200000 !important;
       }
+      /* ✅ Bouton croix bien gros et cliquable */
+      .close-x {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 36px; /* taille plus grande */
+        font-weight: bold;
+        line-height: 1;
+        color: #000; /* noir bien visible */
+        background: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* petit fond clair pour contraste */
+        border-radius: 50%; /* rond */
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 200001; /* encore plus haut que la modale */
+        border: none;
+        transition: background 0.2s ease;
+      }
+      .close-x:hover {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+      }
+      /* ✅ Drawer panier Shopify toujours au-dessus */
+      .shopify-buy-frame,
+      .shopify-buy-cart-wrapper,
+      .shopify-buy__cart {
+        z-index: 200000 !important;
+      }
+
       .modal.open {
         display: flex;
       }
@@ -145,32 +187,15 @@
         overflow: hidden;
         position: relative;
       }
-      /* Croix bien visible au-dessus de tout */
       .close-x {
         position: absolute;
-        top: 15px;
-        right: 20px;
-        font-size: 36px;
-        font-weight: bold;
-        line-height: 1;
-        color: #000;
-        background: rgba(255, 255, 255, 0.8);
-        border-radius: 50%;
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 200001;
+        top: 10px;
+        right: 14px;
+        font-size: 24px;
+        background: none;
         border: none;
-        transition: background 0.2s ease;
+        cursor: pointer;
       }
-      .close-x:hover {
-        background: rgba(0, 0, 0, 0.8);
-        color: #fff;
-      }
-
       .modal-body {
         display: grid;
         grid-template-columns: 1fr;
@@ -225,20 +250,13 @@
         -webkit-overflow-scrolling: touch;
       }
 
-      /* Bloque le scroll du fond */
+      /* Bloque le scroll du fond quand la modale est ouverte */
       body.modal-open {
         overflow: hidden;
         touch-action: none;
       }
 
-      /* Panier Shopify au-dessus */
-      .shopify-buy-frame,
-      .shopify-buy-cart-wrapper,
-      .shopify-buy__cart {
-        z-index: 200000 !important;
-      }
-
-      /* Uniformisation boutons Shopify */
+      /* Boutons Shopify unify */
       .shopify-buy__btn {
         background-color: var(--noir) !important;
         border-radius: 999px !important;
@@ -253,8 +271,12 @@
       .shopify-buy__cart__footer .shopify-buy__btn {
         background-color: var(--noir) !important;
       }
+      .shopify-buy__cart__footer .shopify-buy__btn:hover,
+      .shopify-buy__cart__footer .shopify-buy__btn:focus {
+        background-color: var(--noir) !important;
+      }
 
-      /* Panier Shopify: pleine hauteur pour voir "Payer" */
+      /* ---- PANIER SHOPIFY : iframe pleine hauteur ---- */
       .shopify-buy-frame--cart {
         height: 100svh !important;
         max-height: 100svh !important;
@@ -268,6 +290,7 @@
     </style>
   </head>
   <body>
+    <!-- Bandeau livraison -->
     <div class="bandeau-livraison">
       <div class="bandeau-slider">
         <div class="slide">
@@ -280,6 +303,7 @@
         <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
       </div>
     </div>
+
     <div id="header"></div>
 
     <main class="container">
@@ -320,7 +344,6 @@
       const SHOP_DOMAIN = "eb1iv0-n1.myshopify.com";
       const STOREFRONT_TOKEN = "5de76971549ee7a5dcb338aaad5e9784";
 
-      // Produits (inchangés)
       const items = [
         {
           key: "ensemble-ritmico",
@@ -345,21 +368,7 @@
       const grid = document.getElementById("grid");
       document.getElementById("count").textContent = `${items.length} articles`;
 
-      items.forEach((p, i) => {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = `
-          <div class="img-wrap">
-            <img src="${p.image1}" alt="${escapeHtml(p.title)}">
-            <img src="${p.image2}" alt="${escapeHtml(p.title)}">
-          </div>
-          <h3>${escapeHtml(p.title)}</h3>
-          <div class="price">${p.priceText}</div>
-          <button class="btn preview" data-index="${i}">Aperçu</button>`;
-        grid.appendChild(card);
-      });
-
-      // Panier global
+      // Cart global + toggle
       let shopifyUI = null;
       function initUI() {
         return new Promise((res) => {
@@ -378,8 +387,27 @@
           }
         });
       }
+
+      // Grille produits
+      items.forEach((p, i) => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="img-wrap">
+            <img src="${p.image1}" alt="${escapeHtml(p.title)}">
+            <img src="${p.image2}" alt="${escapeHtml(p.title)}">
+          </div>
+          <h3>${escapeHtml(p.title)}</h3>
+          <div class="price">${p.priceText}</div>
+          <button class="btn preview" data-index="${i}">Aperçu</button>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Init cart/toggle
       initUI().then((ui) => {
         shopifyUI = ui;
+
         ui.createComponent("cart", {
           node: document.body.appendChild(document.createElement("div")),
           moneyFormat: "€{{amount_with_comma_separator}}",
@@ -405,14 +433,14 @@
                 },
                 cart: { "background-color": "#e8dbcd" },
                 footer: { "background-color": "#e8dbcd" },
-                title: { color: "#000000" },
-                header: { color: "#000000" },
-                lineItems: { color: "#000000" },
-                subtotalText: { color: "#000000" },
-                subtotal: { color: "#000000" },
-                notice: { color: "#000000" },
-                currency: { color: "#000000" },
-                close: { color: "#000000" },
+                title: { color: "#000" },
+                header: { color: "#000" },
+                lineItems: { color: "#000" },
+                subtotalText: { color: "#000" },
+                subtotal: { color: "#000" },
+                notice: { color: "#000" },
+                currency: { color: "#000" },
+                close: { color: "#000" },
               },
             },
             toggle: {
@@ -427,6 +455,7 @@
             },
           },
         });
+
         ui.createComponent("toggle", {
           node: document.body.appendChild(document.createElement("div")),
           moneyFormat: "€{{amount_with_comma_separator}}",
@@ -443,12 +472,11 @@
       const modalDesc = document.getElementById("modalDesc");
       const modalBuyTarget = document.getElementById("modalBuyTarget");
 
-      grid.addEventListener("click", (e) => {
+      document.getElementById("grid").addEventListener("click", (e) => {
         const btn = e.target.closest(".btn.preview");
         if (!btn) return;
-        openQuick(items[btn.dataset.index]);
+        openQuick(items[+btn.dataset.index]);
       });
-
       modalClose.addEventListener("click", closeQuick);
       modal.addEventListener("click", (e) => {
         if (e.target === modal) closeQuick();
@@ -470,6 +498,8 @@
           im.addEventListener("click", () => (modalBig.src = url));
           modalThumbs.appendChild(im);
         });
+
+        // mount buy button with options in modal
         modalBuyTarget.innerHTML = "";
         const mount = (ui) => {
           ui.createComponent("product", {
@@ -491,13 +521,20 @@
                     color: "#ffffff",
                     "font-weight": "700",
                     padding: "12px 12px",
+                    ":hover": { "background-color": "#000000" },
+                    ":focus": { "background-color": "#000000" },
                   },
                 },
               },
               cart: {
                 text: { button: "Payer", total: "Total", title: "Panier" },
                 styles: {
-                  button: { "background-color": "#000000", color: "#ffffff" },
+                  button: {
+                    "background-color": "#000000",
+                    color: "#ffffff",
+                    ":hover": { "background-color": "#000000" },
+                    ":focus": { "background-color": "#000000" },
+                  },
                 },
               },
             },
