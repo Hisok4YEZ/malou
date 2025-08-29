@@ -71,29 +71,38 @@
         display: flex;
         flex-direction: column;
       }
+
+      /* zone image */
       .img-wrap {
         aspect-ratio: 3/4;
         overflow: hidden;
         position: relative;
       }
-      .img-wrap img {
+      /* chaque <picture> superposé */
+      .img-wrap picture {
+        position: absolute;
+        inset: 0;
+        display: block;
+        transition: opacity 0.3s ease;
+      }
+      .img-wrap picture img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        position: absolute;
-        inset: 0;
-        transition: opacity 0.3s ease;
+        display: block;
       }
-      .img-wrap img:nth-child(1) {
+      /* état par défaut : face visible */
+      .img-wrap picture:nth-child(1) {
         opacity: 1;
       }
-      .img-wrap img:nth-child(2) {
+      .img-wrap picture:nth-child(2) {
         opacity: 0;
       }
-      .card:hover .img-wrap img:nth-child(1) {
+      /* survol : on inverse */
+      .card:hover .img-wrap picture:nth-child(1) {
         opacity: 0;
       }
-      .card:hover .img-wrap img:nth-child(2) {
+      .card:hover .img-wrap picture:nth-child(2) {
         opacity: 1;
       }
 
@@ -129,53 +138,13 @@
         display: none;
         align-items: center;
         justify-content: center;
-        z-index: 2000;
+        z-index: 200000 !important;
         padding: 16px;
       }
-      /* ✅ Modale Aperçu toujours au-dessus */
-      .modal {
-        z-index: 200000 !important;
-      }
-      /* ✅ Bouton croix bien gros et cliquable */
-      .close-x {
-        position: absolute;
-        top: 15px;
-        right: 20px;
-        font-size: 36px; /* taille plus grande */
-        font-weight: bold;
-        line-height: 1;
-        color: #000; /* noir bien visible */
-        background: rgba(
-          255,
-          255,
-          255,
-          0.8
-        ); /* petit fond clair pour contraste */
-        border-radius: 50%; /* rond */
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 200001; /* encore plus haut que la modale */
-        border: none;
-        transition: background 0.2s ease;
-      }
-      .close-x:hover {
-        background: rgba(0, 0, 0, 0.8);
-        color: #fff;
-      }
-      /* ✅ Drawer panier Shopify toujours au-dessus */
-      .shopify-buy-frame,
-      .shopify-buy-cart-wrapper,
-      .shopify-buy__cart {
-        z-index: 200000 !important;
-      }
-
       .modal.open {
         display: flex;
       }
+
       .modal-card {
         background: #fff;
         border-radius: 12px;
@@ -187,15 +156,32 @@
         overflow: hidden;
         position: relative;
       }
+      /* bouton croix */
       .close-x {
         position: absolute;
-        top: 10px;
-        right: 14px;
-        font-size: 24px;
-        background: none;
-        border: none;
+        top: 15px;
+        right: 20px;
+        font-size: 36px;
+        font-weight: bold;
+        line-height: 1;
+        color: #000;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+        z-index: 200001;
+        border: none;
+        transition: background 0.2s ease;
       }
+      .close-x:hover {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+      }
+
       .modal-body {
         display: grid;
         grid-template-columns: 1fr;
@@ -250,7 +236,6 @@
         -webkit-overflow-scrolling: touch;
       }
 
-      /* Bloque le scroll du fond quand la modale est ouverte */
       body.modal-open {
         overflow: hidden;
         touch-action: none;
@@ -277,6 +262,11 @@
       }
 
       /* ---- PANIER SHOPIFY : iframe pleine hauteur ---- */
+      .shopify-buy-frame,
+      .shopify-buy-cart-wrapper,
+      .shopify-buy__cart {
+        z-index: 200000 !important;
+      }
       .shopify-buy-frame--cart {
         height: 100svh !important;
         max-height: 100svh !important;
@@ -479,21 +469,109 @@
       }
 
       // Grille produits
+      function stripExt(path) {
+        return path.replace(/\.(jpe?g|png|webp)$/i, "");
+      }
+
+      // Construit un srcset WebP (-320.webp, -480.webp, -640.webp)
+      function buildWebpSrcset(originalJpgPath) {
+        const base = stripExt(originalJpgPath);
+        return `${base}-320.webp 320w, ${base}-480.webp 480w, ${base}-640.webp 640w`;
+      }
+
+      // Construit un srcset JPG (ici juste l’original)
+      function buildJpgSrcset(originalJpgPath) {
+        return `${originalJpgPath} 640w`;
+      }
+
+      // Décrit les tailles utilisées par la grille → 50% largeur en mobile, 25% en desktop
+      const SIZES_ATTR = "(min-width: 1200px) 25vw, 50vw";
+
+      // Injecte des <link preload> pour les 4 premières images principales
+      function injectPreloadsForFirstFour() {
+        const head = document.head;
+        const count = Math.min(4, items.length);
+        for (let i = 0; i < count; i++) {
+          const p = items[i];
+          const base = stripExt(p.image1);
+
+          const link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "image";
+          link.setAttribute(
+            "imagesrcset",
+            `${base}-320.webp 320w, ${base}-480.webp 480w, ${base}-640.webp 640w`
+          );
+          link.setAttribute("imagesizes", SIZES_ATTR);
+          link.setAttribute("fetchpriority", "high"); // priorité réseau
+          head.appendChild(link);
+        }
+      }
+
+      // ⚡️ Précharge direct au chargement
+      injectPreloadsForFirstFour();
+
+      /* =========================
+       * RENDU DE LA GRILLE PRODUITS
+       * ========================= */
+
+      grid.innerHTML = ""; // on vide avant de remplir
+
       items.forEach((p, i) => {
+        // Priorité haute pour les 4 premiers produits
+        const isPriority = i < 4;
+        const loadingAttr = isPriority ? "eager" : "lazy";
+        const fetchPrio = isPriority ? "high" : "low";
+
+        // Création de la carte produit
         const card = document.createElement("article");
         card.className = "card";
+
+        // HTML de la carte (images optimisées en <picture>)
         card.innerHTML = `
-          <div class="img-wrap">
-            <img src="${p.image1}" alt="${escapeHtml(p.title)}">
-            <img src="${p.image2}" alt="${escapeHtml(p.title)}">
-          </div>
-          <h3>${escapeHtml(p.title)}</h3>
-          <div class="price">${p.priceText}</div>
-          <button class="btn preview" data-index="${i}">Aperçu</button>
-        `;
+      <div class="img-wrap">
+        <!-- Image principale (affichée par défaut) -->
+        <picture>
+          <source
+            type="image/webp"
+            srcset="${buildWebpSrcset(p.image1)}"
+            sizes="${SIZES_ATTR}"
+          >
+          <img
+            src="${p.image1}"
+            srcset="${buildJpgSrcset(p.image1)}"
+            sizes="${SIZES_ATTR}"
+            alt="${escapeHtml(p.title)}"
+            loading="${loadingAttr}"
+            fetchpriority="${fetchPrio}"
+          >
+        </picture>
+
+        <!-- Image secondaire (survol) -->
+        <picture>
+          <source
+            type="image/webp"
+            srcset="${buildWebpSrcset(p.image2)}"
+            sizes="${SIZES_ATTR}"
+          >
+          <img
+            src="${p.image2}"
+            srcset="${buildJpgSrcset(p.image2)}"
+            sizes="${SIZES_ATTR}"
+            alt="${escapeHtml(p.title)}"
+            loading="lazy"
+            fetchpriority="low"
+          >
+        </picture>
+      </div>
+
+      <h3>${escapeHtml(p.title)}</h3>
+      <div class="price">${p.priceText}</div>
+      <button class="btn preview" data-index="${i}">Aperçu</button>
+    `;
+
         grid.appendChild(card);
       });
-
       // Init cart/toggle
       initUI().then((ui) => {
         shopifyUI = ui;
