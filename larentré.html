@@ -12,7 +12,7 @@
       rel="stylesheet"
     />
 
-    <!-- Feuilles existantes -->
+    <!-- Feuilles existantes (inchangées) -->
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/header.css" />
     <link rel="stylesheet" href="style/footer.css" />
@@ -52,7 +52,7 @@
         opacity: 0.7;
       }
 
-      /* grille */
+      /* Grille responsive */
       .grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -65,35 +65,43 @@
         }
       }
 
-      /* carte produit */
+      /* Carte produit */
       .card {
         background: var(--beige);
         display: flex;
         flex-direction: column;
       }
+
+      /* Zone image : on superpose 2 <picture> (face/hover) comme sur ete99.html */
       .img-wrap {
         aspect-ratio: 3/4;
         overflow: hidden;
         position: relative;
       }
-      .img-wrap img {
+      .img-wrap picture {
+        position: absolute;
+        inset: 0;
+        display: block;
+        transition: opacity 0.3s ease;
+      }
+      .img-wrap picture img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        position: absolute;
-        inset: 0;
-        transition: opacity 0.3s ease;
+        display: block;
       }
-      .img-wrap img:nth-child(1) {
+      /* État par défaut : face visible */
+      .img-wrap picture:nth-child(1) {
         opacity: 1;
       }
-      .img-wrap img:nth-child(2) {
+      .img-wrap picture:nth-child(2) {
         opacity: 0;
       }
-      .card:hover .img-wrap img:nth-child(1) {
+      /* Survol : on inverse */
+      .card:hover .img-wrap picture:nth-child(1) {
         opacity: 0;
       }
-      .card:hover .img-wrap img:nth-child(2) {
+      .card:hover .img-wrap picture:nth-child(2) {
         opacity: 1;
       }
 
@@ -121,7 +129,7 @@
         color: #fff;
       }
 
-      /* ---- MODALE responsive (fixes) ---- */
+      /* ---- MODALE responsive ---- */
       .modal {
         position: fixed;
         inset: 0;
@@ -130,11 +138,12 @@
         align-items: center;
         justify-content: center;
         padding: 16px;
-        z-index: 200000 !important; /* au-dessus du header */
+        z-index: 200000 !important; /* au-dessus du header/cart */
       }
       .modal.open {
         display: flex;
       }
+
       .modal-card {
         background: #fff;
         border-radius: 12px;
@@ -147,7 +156,7 @@
         position: relative;
       }
 
-      /* Croix visible et cliquable */
+      /* Croix fermeture */
       .close-x {
         position: absolute;
         top: 15px;
@@ -164,7 +173,7 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        z-index: 200001; /* au-dessus du contenu de la modale */
+        z-index: 200001;
         border: none;
         transition: background 0.2s ease;
       }
@@ -180,7 +189,7 @@
         padding: 16px;
         flex: 1 1 auto;
         min-height: 0;
-        overflow: auto; /* scroll si contenu long */
+        overflow: auto;
         -webkit-overflow-scrolling: touch;
       }
       @media (min-width: 900px) {
@@ -194,7 +203,7 @@
         width: 100%;
         object-fit: contain;
         background: #f6f3ef;
-        max-height: 48svh; /* évite que l’image prenne tout l’écran */
+        max-height: 48svh;
       }
       .thumbs {
         display: grid;
@@ -219,28 +228,28 @@
       .modal-desc {
         font-size: 14px;
         margin: 0 0 12px;
-        white-space: pre-line; /* pour afficher les \n */
+        white-space: pre-line;
       }
       #modalBuyTarget {
-        max-height: 40svh; /* si beaucoup d’options/variants */
+        max-height: 40svh;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
       }
 
-      /* Bloquer le scroll du fond quand la modale est ouverte */
+      /* Bloquer le scroll de fond quand modale ouverte */
       body.modal-open {
         overflow: hidden;
         touch-action: none;
       }
 
-      /* Drawer panier Shopify toujours au-dessus */
+      /* Drawer Shopify toujours au-dessus */
       .shopify-buy-frame,
       .shopify-buy-cart-wrapper,
       .shopify-buy__cart {
         z-index: 200000 !important;
       }
 
-      /* Boutons Shopify unify */
+      /* Boutons Shopify unifiés */
       .shopify-buy__btn {
         background-color: var(--noir) !important;
         border-radius: 999px !important;
@@ -260,7 +269,7 @@
         background-color: var(--noir) !important;
       }
 
-      /* Panier Shopify iframe: pleine hauteur pour voir le bouton Payer */
+      /* Panier Shopify en pleine hauteur pour voir le bouton Payer */
       .shopify-buy-frame--cart {
         height: 100svh !important;
         max-height: 100svh !important;
@@ -274,6 +283,7 @@
     </style>
   </head>
   <body>
+    <!-- Bandeau livraison (inchangé) -->
     <div class="bandeau-livraison">
       <div class="bandeau-slider">
         <div class="slide">
@@ -286,6 +296,8 @@
         <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
       </div>
     </div>
+
+    <!-- Header inclus dynamiquement (conserve) -->
     <div id="header"></div>
 
     <main class="container">
@@ -323,10 +335,17 @@
     <!-- SDK Shopify -->
     <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
     <script>
+      /* =========================
+       *    CONFIG SHOPIFY
+       * ========================= */
       const SHOP_DOMAIN = "eb1iv0-n1.myshopify.com";
       const STOREFRONT_TOKEN = "5de76971549ee7a5dcb338aaad5e9784";
 
-      // ⚠️ Produits (inchangés)
+      /* =========================
+       *    DONNÉES PRODUITS
+       * ========================= */
+      // ⚠️ On garde tes chemins JPG d'origine.
+      // Les WebP sont attendus en //webp/... avec mêmes noms + suffixes -320/-480/-640.webp
       const items = [
         {
           key: "pantalon-london",
@@ -341,7 +360,7 @@
           key: "jean-bandana",
           title: "Jean Bandana",
           priceText: "42,00 €",
-          productId: "15288935252342", // (repris d'Été 99)
+          productId: "15288935252342",
           image1: "img/ete99/jean-bandana-1.jpg",
           image2: "img/ete99/jean-bandana-2.jpg",
           desc: "- Coupe droite légèrement large, esprit vintage\n- Délavage bleu\n- Imprimé patchwork façon bandana\n- À porter avec t-shirt blanc ou top coloré\n- Lou porte une taille 36 et mesure 1m71",
@@ -359,7 +378,7 @@
           key: "ibiza-veste",
           title: "Veste Ibiza",
           priceText: "66,00 €",
-          productId: "15288702206326", // (repris d'Été 99)
+          productId: "15288702206326",
           image1: "img/ete99/ibiza-veste-1.jpg",
           image2: "img/ete99/ibiza-veste-2.jpg",
           desc: "Taille unique.\n- Veste zippée en maille multicolore à rayures\n- Coupe loose, doublure intérieure contrastée\n- À porter seule ou avec le pantalon coordonné\n- Lou porte une taille unique et mesure 1m71",
@@ -413,7 +432,7 @@
           key: "debardeur-mariniere",
           title: "Débardeur Marinière",
           priceText: "33,00 €",
-          productId: "15288823939446", // (repris d'Été 99)
+          productId: "15288823939446",
           image1: "img/ete99/debardeur-mariniere-1.jpg",
           image2: "img/ete99/debardeur-mariniere-2.jpg",
           desc: "- Rayé esprit marinière\n- Boutons dorés décoratifs sur l’épaule\n- Coupe droite légèrement raccourcie\n- Un basique revisité\n- Lou porte une taille S/M et mesure 1m71",
@@ -465,25 +484,112 @@
         },
       ];
 
+      /* =========================
+       *  AIDE IMG → WEBP SRCSET
+       * ========================= */
+
+      // Supprime l'extension (.jpg/.jpeg/.png/.webp)
+      function stripExt(path) {
+        return path.replace(/\.(jpe?g|png|webp)$/i, "");
+      }
+
+      // Transforme "img/xxx/name-1.jpg" → "webp/xxx/name-1"
+      function toWebpBase(originalJpgPath) {
+        return stripExt(originalJpgPath).replace(/^img\//i, "webp/");
+      }
+
+      // Construit le srcset WebP responsive attendu (320/480/640)
+      function buildWebpSrcset(originalJpgPath) {
+        const base = toWebpBase(originalJpgPath);
+        return `${base}-320.webp 320w, ${base}-480.webp 480w, ${base}-640.webp 640w`;
+        // Si tu as d'autres tailles dispo, ajoute-les ici (ex. 800w/1024w).
+      }
+
+      // JPG de secours (fallback). Ici on garde l’original en 640w.
+      function buildJpgSrcset(originalJpgPath) {
+        return `${originalJpgPath} 640w`;
+      }
+
+      // Tailles affichées par la grille (50% en mobile, 25% en ≥1200px)
+      const SIZES_ATTR = "(min-width: 1200px) 25vw, 50vw";
+
+      // Preload des 4 premières images (priorité réseau + sizes/srcset)
+      function injectPreloadsForFirstFour() {
+        const head = document.head;
+        const count = Math.min(4, items.length);
+        for (let i = 0; i < count; i++) {
+          const p = items[i];
+          const link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "image";
+          link.setAttribute("imagesrcset", buildWebpSrcset(p.image1));
+          link.setAttribute("imagesizes", SIZES_ATTR);
+          link.setAttribute("fetchpriority", "high");
+          head.appendChild(link);
+        }
+      }
+      injectPreloadsForFirstFour(); // ⚡️ au chargement
+
+      /* =========================
+       *    RENDU GRILLE PRODUITS
+       * ========================= */
       const grid = document.getElementById("grid");
       document.getElementById("count").textContent = `${items.length} articles`;
+      grid.innerHTML = "";
 
-      // Grille produits
       items.forEach((p, i) => {
+        // Comme sur ete99.html : priorité haute pour les 4 premiers
+        const isPriority = i < 4;
+        const loadingAttr = isPriority ? "eager" : "lazy";
+        const fetchPrio = isPriority ? "high" : "low";
+
         const card = document.createElement("article");
         card.className = "card";
+
+        // On génère 2 <picture> superposés (face/hover) avec WebP + fallback JPG
         card.innerHTML = `
           <div class="img-wrap">
-            <img src="${p.image1}" alt="${escapeHtml(p.title)}">
-            <img src="${p.image2}" alt="${escapeHtml(p.title)}">
+            <!-- Face (par défaut visible) -->
+            <picture>
+              <source
+                type="image/webp"
+                srcset="${buildWebpSrcset(p.image1)}"
+                sizes="${SIZES_ATTR}">
+              <img
+                src="${p.image1}"
+                srcset="${buildJpgSrcset(p.image1)}"
+                sizes="${SIZES_ATTR}"
+                alt="${escapeHtml(p.title)}"
+                loading="${loadingAttr}"
+                fetchpriority="${fetchPrio}">
+            </picture>
+
+            <!-- Hover -->
+            <picture>
+              <source
+                type="image/webp"
+                srcset="${buildWebpSrcset(p.image2)}"
+                sizes="${SIZES_ATTR}">
+              <img
+                src="${p.image2}"
+                srcset="${buildJpgSrcset(p.image2)}"
+                sizes="${SIZES_ATTR}"
+                alt="${escapeHtml(p.title)}"
+                loading="lazy"
+                fetchpriority="low">
+            </picture>
           </div>
+
           <h3>${escapeHtml(p.title)}</h3>
           <div class="price">${p.priceText}</div>
-          <button class="btn preview" data-index="${i}">Aperçu</button>`;
+          <button class="btn preview" data-index="${i}">Aperçu</button>
+        `;
         grid.appendChild(card);
       });
 
-      // Panier global
+      /* =========================
+       *    PANIER GLOBAL
+       * ========================= */
       let shopifyUI = null;
       function initUI() {
         return new Promise((res) => {
@@ -502,6 +608,7 @@
           }
         });
       }
+
       initUI().then((ui) => {
         shopifyUI = ui;
         ui.createComponent("cart", {
@@ -551,13 +658,16 @@
             },
           },
         });
+
         ui.createComponent("toggle", {
           node: document.body.appendChild(document.createElement("div")),
           moneyFormat: "€{{amount_with_comma_separator}}",
         });
       });
 
-      // Modale
+      /* =========================
+       *          MODALE
+       * ========================= */
       const modal = document.getElementById("quickModal");
       const modalClose = document.getElementById("modalClose");
       const modalBig = document.getElementById("modalBig");
@@ -570,7 +680,7 @@
       grid.addEventListener("click", (e) => {
         const btn = e.target.closest(".btn.preview");
         if (!btn) return;
-        openQuick(items[btn.dataset.index]);
+        openQuick(items[+btn.dataset.index]);
       });
       modalClose.addEventListener("click", closeQuick);
       modal.addEventListener("click", (e) => {
@@ -584,6 +694,8 @@
         modalTitle.textContent = p.title;
         modalPrice.textContent = p.priceText;
         modalDesc.textContent = p.desc;
+
+        // Affichage modale : on garde les JPG (comme sur ete99.html)
         modalBig.src = p.image1;
         modalThumbs.innerHTML = "";
         [p.image1, p.image2].filter(Boolean).forEach((url) => {
@@ -650,6 +762,9 @@
         document.body.classList.remove("modal-open");
       }
 
+      /* =========================
+       *   UTIL: échappement HTML
+       * ========================= */
       function escapeHtml(s) {
         return String(s || "").replace(
           /[&<>"']/g,
@@ -665,6 +780,7 @@
       }
     </script>
 
+    <!-- Footer inclus dynamiquement (conserve) -->
     <div id="footer"></div>
     <script src="script/script.js"></script>
   </body>
