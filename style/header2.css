@@ -874,11 +874,18 @@
 }
 
 /* --- Séparateur avant "Contact" dans le menu mobile --- */
+/* --- Trait entre chaque lien principal du menu mobile --- */
 @media (max-width: 768px) {
-    .mp-drawer-nav>ul>li:last-child {
+    .mp-drawer-nav>ul>li {
         border-top: 1px solid rgba(78, 58, 45, 0.12);
-        /* fine ligne marron clair */
-        margin-top: 6px;
         padding-top: 6px;
+        margin-top: 6px;
+    }
+
+    /* On évite le trait avant le premier (Accueil) */
+    .mp-drawer-nav>ul>li:first-child {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
     }
 }

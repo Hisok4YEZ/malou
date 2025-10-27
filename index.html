@@ -52,16 +52,45 @@
         object-fit: cover;
       }
 
-      /* Hero : réserve un ratio pour limiter le CLS */
+      .hero-img-wrapper {
+        width: 100%;
+        height: 100vh; /* prend toute la hauteur de l’écran */
+        overflow: hidden; /* cache tout ce qui dépasse */
+        position: relative;
+      }
+
       .hero-img {
         width: 100%;
-        height: auto;
-        display: block;
-      }
-      .hero-img--cover {
-        width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover; /* couvre tout sans déformation */
+        object-position: top center; /* cadre sur le haut */
+        display: block;
+        transition: transform 0.3s ease;
+      }
+
+      /* === Responsive mobile === */
+      /* === Responsive mobile === */
+      @media (max-width: 768px) {
+        .hero-img--2 {
+          display: none !important; /* cache totalement la 2e image */
+        }
+
+        .hero-img-wrapper {
+          height: 100vh; /* garde l’image sur toute la hauteur */
+          overflow: hidden;
+        }
+
+        .hero-img {
+          /* décale l’image vers le bas de 81px */
+          transform: translate(15px, 50px) scale(1.1);
+
+          /* ✅ centrage parfait sur mobile */
+          object-position: center center;
+
+          /* pour s'assurer qu'elle remplit bien l’écran sans bord blanc */
+          width: 100%;
+          height: 100%;
+        }
       }
 
       /* Carousel : rien à changer ici pour le perf au démarrage. */
@@ -88,19 +117,201 @@
     <!-- Section HÉRO avec image pleine largeur/hauteur -->
     <section class="hero reveal">
       <div class="hero-img-wrapper">
-        <img src="img/hero1.jpg" alt="Image 1" class="hero-img" />
-        <img src="img/hero2.jpg" alt="Image 2" class="hero-img" />
+        <img src="img/hero1.jpg" alt="Image 1" class="hero-img hero-img--1" />
+        <img src="img/hero2.jpg" alt="Image 2" class="hero-img hero-img--2" />
       </div>
 
       <div class="hero-text">
-        <h1>Été 99</h1>
-        <a href="été99.html" class="hero-btn">Shop</a>
+        <h1></h1>
+        <a href="cafe-creme.html" class="hero-btn">Shop</a>
       </div>
     </section>
 
-    <!-- ===== Carousel Nouvelle Collection (sans scrollbar) ===== -->
-    <!-- ===== SECTION ÉTÉ 99 ===== -->
-    <!-- ===== SECTION ÉTÉ 99 (pattern A) ===== -->
+    <section
+      class="collection-grid pattern-a reveal-grid"
+      aria-labelledby="t-cafecreme"
+    >
+      <h2 id="t-cafecreme">CAFÉ CRÈME</h2>
+      <div class="grid">
+        <!-- Carte 1 -->
+        <a href="cafe-creme.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                img/cafecreme/veste-ange-kaki-2-320.webp 320w,
+                img/cafecreme/veste-ange-kaki-2-480.webp 480w,
+                img/cafecreme/veste-ange-kaki-2-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/cafecreme/veste-ange-kaki-2.jpg"
+              alt="CAFÉ CRÈME — Veste Ange (kaki)"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 2 -->
+        <a href="cafe-creme.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                img/cafecreme/pantalon-shiny-1-320.webp 320w,
+                img/cafecreme/pantalon-shiny-1-480.webp 480w,
+                img/cafecreme/pantalon-shiny-1-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/cafecreme/pantalon-shiny-1.jpg"
+              alt="CAFÉ CRÈME — Pantalon Shiny"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 3 -->
+        <a href="cafe-creme.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                img/cafecreme/robe-pao-1-320.webp 320w,
+                img/cafecreme/robe-pao-1-480.webp 480w,
+                img/cafecreme/robe-pao-1-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/cafecreme/robe-pao-1.jpg"
+              alt="CAFÉ CRÈME — Robe Pao"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 4 -->
+        <a href="cafe-creme.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                img/cafecreme/manteau-teddy-1-320.webp 320w,
+                img/cafecreme/manteau-teddy-1-480.webp 480w,
+                img/cafecreme/manteau-teddy-1-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/cafecreme/manteau-teddy-1.jpg"
+              alt="CAFÉ CRÈME — Manteau Teddy"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+      </div>
+    </section>
+    <section
+      class="collection-grid pattern-b reveal-grid"
+      aria-labelledby="t-rentree"
+    >
+      <h2 id="t-rentree">La rentrée</h2>
+      <div class="grid">
+        <!-- Carte 1 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <!-- WebP légers générés par ton script (320/480/640) -->
+            <source
+              type="image/webp"
+              srcset="
+                webp/d1-320.webp 320w,
+                webp/d1-480.webp 480w,
+                webp/d1-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <!-- Fallback : image d'origine (JPEG/PNG) -->
+            <img
+              src="img/d1.jpg"
+              alt="La rentrée - Look 1"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 2 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/fluffy-320.webp 320w,
+                webp/fluffy-480.webp 480w,
+                webp/fluffy-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/fluffy.jpg"
+              alt="La rentrée - Look 2"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 3 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/d3-320.webp 320w,
+                webp/d3-480.webp 480w,
+                webp/d3-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/d3.jpg"
+              alt="La rentrée - Look 3"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+
+        <!-- Carte 4 -->
+        <a href="larentré.html" class="card">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="
+                webp/Larentree/blouse-jaipur-2-320.webp 320w,
+                webp/Larentree/blouse-jaipur-2-480.webp 480w,
+                webp/Larentree/blouse-jaipur-2-640.webp 640w
+              "
+              sizes="(max-width: 768px) 50vw, 280px"
+            />
+            <img
+              src="img/Larentree/blouse-jaipur-2.jpg"
+              alt="La rentrée - Look 4"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </a>
+      </div>
+    </section>
+
     <section
       class="collection-grid pattern-a reveal-grid"
       aria-labelledby="t-ete99"
@@ -114,9 +325,9 @@
             <source
               type="image/webp"
               srcset="
-                webp/c1-320.webp 320w,
-                webp/c1-480.webp 480w,
-                webp/c1-640.webp 640w
+                webp/kimono-320.webp,
+                webp/kimono-480.webp,
+                webp/kimono-640.webp
               "
               sizes="(max-width: 768px) 50vw, 280px"
             />
@@ -196,99 +407,6 @@
     </section>
 
     <!-- ===== SECTION LA RENTRÉE (pattern B = inverse) ===== -->
-    <section
-      class="collection-grid pattern-b reveal-grid"
-      aria-labelledby="t-rentree"
-    >
-      <h2 id="t-rentree">La rentrée</h2>
-      <div class="grid">
-        <!-- Carte 1 -->
-        <a href="larentré.html" class="card">
-          <picture>
-            <!-- WebP légers générés par ton script (320/480/640) -->
-            <source
-              type="image/webp"
-              srcset="
-                webp/d1-320.webp 320w,
-                webp/d1-480.webp 480w,
-                webp/d1-640.webp 640w
-              "
-              sizes="(max-width: 768px) 50vw, 280px"
-            />
-            <!-- Fallback : image d'origine (JPEG/PNG) -->
-            <img
-              src="img/d1.jpg"
-              alt="La rentrée - Look 1"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-        </a>
-
-        <!-- Carte 2 -->
-        <a href="larentré.html" class="card">
-          <picture>
-            <source
-              type="image/webp"
-              srcset="
-                webp/d2-320.webp 320w,
-                webp/d2-480.webp 480w,
-                webp/d2-640.webp 640w
-              "
-              sizes="(max-width: 768px) 50vw, 280px"
-            />
-            <img
-              src="img/d2.jpg"
-              alt="La rentrée - Look 2"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-        </a>
-
-        <!-- Carte 3 -->
-        <a href="larentré.html" class="card">
-          <picture>
-            <source
-              type="image/webp"
-              srcset="
-                webp/d3-320.webp 320w,
-                webp/d3-480.webp 480w,
-                webp/d3-640.webp 640w
-              "
-              sizes="(max-width: 768px) 50vw, 280px"
-            />
-            <img
-              src="img/d3.jpg"
-              alt="La rentrée - Look 3"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-        </a>
-
-        <!-- Carte 4 -->
-        <a href="larentré.html" class="card">
-          <picture>
-            <source
-              type="image/webp"
-              srcset="
-                webp/d4-320.webp 320w,
-                webp/d4-480.webp 480w,
-                webp/d4-640.webp 640w
-              "
-              sizes="(max-width: 768px) 50vw, 280px"
-            />
-            <img
-              src="img/d4.jpg"
-              alt="La rentrée - Look 4"
-              loading="lazy"
-              decoding="async"
-            />
-          </picture>
-        </a>
-      </div>
-    </section>
 
     <style>
       /* ===== DA site ===== */

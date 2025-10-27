@@ -116,9 +116,43 @@
         cursor: pointer;
         width: 100%;
       }
+      /* --- Bouton "Aperçu" : version outline rose, fond transparent --- */
+      /* Remplace intégralement l'ancienne règle .btn.preview */
       .btn.preview {
-        background: var(--noir);
-        color: #fff;
+        /* fond transparent au lieu du fond noir */
+        background: transparent;
+
+        /* couleur du texte = couleur du contour.
+     Mets ici EXACTEMENT le rose de ton logo si besoin */
+        color: #e43d7a; /* ← remplace par le hex de ton logo si différent */
+
+        /* contour visible (outline) */
+        border: 2px solid currentColor;
+
+        /* coins arrondis déjà hérités de .btn (999px) */
+        /* padding/width hérités de .btn */
+
+        /* transitions douces pour hover/focus */
+        transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      /* Effet au survol/focus : légère coloration du fond sans remplir complètement */
+      .btn.preview:hover,
+      .btn.preview:focus {
+        /* léger voile rose très transparent pour feedback visuel */
+        background: rgba(
+          228,
+          61,
+          122,
+          0.07
+        ); /* même teinte que color, très léger */
+        box-shadow: 0 0 0 2px rgba(228, 61, 122, 0.15) inset; /* subtil renfort du contour */
+        outline: none; /* évite l’outline bleu par défaut */
+      }
+
+      /* État actif/click : un peu plus marqué mais toujours “transparent” */
+      .btn.preview:active {
+        background: rgba(228, 61, 122, 0.12);
       }
 
       /* -------- MODALE (fixes) -------- */
