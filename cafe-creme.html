@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="img/logo2.png" type="image/png" />
+    <title>CAFÉ CRÈME – MA LOU</title>
+
+    <!-- Typos -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feuilles existantes -->
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/header.css" />
+    <link rel="stylesheet" href="style/footer.css" />
+
+    <style>
+      :root {
+        --noir: #000;
+        --beige: #e8dbcd;
+        --rose: #e43d7a; /* rose du bouton aperçu */
+      }
+      body {
+        margin: 0;
+        background: var(--beige);
+        font-family: "Quicksand", sans-serif;
+        color: #3f3027;
+      }
+
+      .container {
+        max-width: 1240px;
+        margin: 24px auto 80px;
+        padding: 0 18px;
+      }
+      .page-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin: 6px 0 22px;
+        border-left: 6px solid rgba(0, 0, 0, 0.06);
+        padding-left: 12px;
+      }
+      .title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        margin: 0;
+      }
+      .subtitle {
+        margin: 4px 0 0;
+        font-size: 14px;
+        opacity: 0.75;
+      }
+      .count {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      /* grille */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      @media (min-width: 1200px) {
+        .grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 20px;
+        }
+      }
+
+      /* carte produit */
+      .card {
+        background: var(--beige);
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* zone image */
+      .img-wrap {
+        aspect-ratio: 3/4;
+        overflow: hidden;
+        position: relative;
+      }
+      .img-wrap picture {
+        position: absolute;
+        inset: 0;
+        display: block;
+        transition: opacity 0.3s ease;
+      }
+      .img-wrap picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .img-wrap picture:nth-child(1) {
+        opacity: 1;
+      }
+      .img-wrap picture:nth-child(2) {
+        opacity: 0;
+      }
+      .card:hover .img-wrap picture:nth-child(1) {
+        opacity: 0;
+      }
+      .card:hover .img-wrap picture:nth-child(2) {
+        opacity: 1;
+      }
+
+      .card h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 16px;
+        margin: 10px 0 4px;
+      }
+      .price {
+        font-weight: 700;
+        font-size: 14px;
+        margin: 0 0 10px;
+      }
+      .btn {
+        display: inline-block;
+        border: none;
+        border-radius: 999px;
+        padding: 12px 0;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+      }
+      /* Bouton "Aperçu" outline rose + fond transparent */
+      .btn.preview {
+        background: transparent;
+        color: var(--rose);
+        border: 2px solid currentColor;
+        transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .btn.preview:hover,
+      .btn.preview:focus {
+        background: rgba(228, 61, 122, 0.07);
+        box-shadow: 0 0 0 2px rgba(228, 61, 122, 0.15) inset;
+        outline: none;
+      }
+      .btn.preview:active {
+        background: rgba(228, 61, 122, 0.12);
+      }
+
+      /* ---- MODALE ---- */
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 200000 !important;
+        padding: 16px;
+      }
+      .modal.open {
+        display: flex;
+      }
+
+      .modal-card {
+        background: #fff;
+        border-radius: 12px;
+        max-width: min(900px, 96vw);
+        max-height: 92svh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+      .close-x {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 36px;
+        font-weight: bold;
+        line-height: 1;
+        color: #000;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 200001;
+        border: none;
+        transition: background 0.2s ease;
+      }
+      .close-x:hover {
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+      }
+
+      .modal-body {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px;
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      @media (min-width: 900px) {
+        .modal-body {
+          grid-template-columns: 1fr 1fr;
+          gap: 22px;
+          padding: 22px;
+        }
+      }
+      .modal-images img.big {
+        width: 100%;
+        object-fit: contain;
+        background: #f6f3ef;
+        max-height: 48svh;
+      }
+      .thumbs {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .thumbs img {
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .modal-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        margin: 0 0 6px;
+      }
+      .modal-price {
+        font-weight: 700;
+        margin: 0 0 10px;
+      }
+      .modal-desc {
+        font-size: 14px;
+        margin: 0 0 12px;
+        white-space: pre-line;
+      }
+      #modalBuyTarget {
+        max-height: 40svh;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .soon {
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 2px dashed #bbb;
+        font-weight: 700;
+      }
+
+      body.modal-open {
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      /* Boutons Shopify unify */
+      .shopify-buy__btn {
+        background-color: var(--noir) !important;
+        border-radius: 999px !important;
+        font-weight: 700 !important;
+        color: #fff !important;
+        padding: 12px 0 !important;
+      }
+      .shopify-buy__btn:hover,
+      .shopify-buy__btn:focus {
+        background-color: var(--noir) !important;
+      }
+
+      /* Panier plein écran mobile */
+      .shopify-buy-frame,
+      .shopify-buy-cart-wrapper,
+      .shopify-buy__cart {
+        z-index: 200000 !important;
+      }
+      .shopify-buy-frame--cart {
+        height: 100svh !important;
+        max-height: 100svh !important;
+      }
+      @supports not (height: 100svh) {
+        .shopify-buy-frame--cart {
+          height: 100vh !important;
+          max-height: 100vh !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Bandeau livraison (identique au site) -->
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">
+          livraison offerte en point relai dès 80€ d’achat
+        </div>
+        <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
+        <div class="slide">
+          livraison offerte en point relai dès 80€ d’achat
+        </div>
+        <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
+      </div>
+    </div>
+
+    <div id="header"></div>
+
+    <main class="container">
+      <div class="page-head">
+        <div>
+          <h1 class="title">CAFÉ CRÈME</h1>
+        </div>
+        <div class="count" id="count">—</div>
+      </div>
+      <div id="grid" class="grid"></div>
+    </main>
+
+    <!-- Modale Aperçu -->
+    <div id="quickModal" class="modal" aria-hidden="true">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button id="modalClose" class="close-x" aria-label="Fermer">×</button>
+        <div class="modal-body">
+          <div class="modal-images">
+            <img id="modalBig" class="big" alt="" />
+            <div id="modalThumbs" class="thumbs"></div>
+          </div>
+          <div>
+            <h3 id="modalTitle" class="modal-title"></h3>
+            <div id="modalPrice" class="modal-price"></div>
+            <p id="modalDesc" class="modal-desc"></p>
+            <div id="modalBuyTarget"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SDK Shopify -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    <script>
+      /* ==========
+         CONFIG
+         ========== */
+      const SHOP_DOMAIN = "eb1iv0-n1.myshopify.com";
+      const STOREFRONT_TOKEN = "5de76971549ee7a5dcb338aaad5e9784";
+
+      /* ==========
+         DONNÉES PRODUITS — Café Crème (images à adapter si besoin)
+         image1/image2 : mets les bons chemins (webp/jpg); garde les noms cohérents pour le srcset auto.
+         ========== */
+      const items = [
+        {
+          key: "veste-shiny",
+          title: "Veste Shiny",
+          priceText: "56,99 €",
+          productId: "15409198956918",
+          image1: "img/cafecreme/veste-shiny-1.jpg",
+          image2: "img/cafecreme/veste-shiny-2.jpg",
+          desc: "• Veste blazer grise à fines rayures blanches, ultra chic\n• Manches entièrement recouvertes de sequins\n• Coupe droite légèrement oversize\n• Fermeture par un bouton ton sur ton\n• Deux poches passepoilées avec rabat sur le devant\n• À porter en total look avec le pantalon assorti ou pour twister un look basique",
+        },
+        {
+          key: "pantalon-shiny",
+          title: "Pantalon Shiny",
+          priceText: "49,99 €",
+          productId: "15409199284598",
+          image1: "img/cafecreme/pantalon-shiny-1.jpg",
+          image2: "img/cafecreme/pantalon-shiny-2.jpg",
+          desc: "• Pantalon tailleur à rayures fines blanches sur fond gris anthracite\n• Coupe droite fluide, légèrement ample pour une silhouette allongée\n• Taille mi-haute avec fermeture zippée et bouton\n• Deux poches discrètes sur les côtés\n• À porter en total look avec la veste Shiny ou avec un pull basique pour casser le côté chic\n• Longueur parfaite pour porter avec des talons ou des sneakers\n• Charlotte mesure 1m72 et porte une taille S",
+        },
+        {
+          key: "veste-peonia",
+          title: "Veste Peonia",
+          priceText: "64,99 €",
+          productId: "15409199448438",
+          image1: "img/cafecreme/veste-peonia-1.jpg",
+          image2: "img/cafecreme/veste-peonia-2.jpg",
+          desc: "• Coupe kimono droite, ceinturée à la taille pour une silhouette féminine\n• Tissu 100 % coton aux motifs floraux\n• Doublure intérieure pour un confort optimal\n• Manches longues légèrement évasées pour un effet bohème chic\n• Ceinture réversible en coton à rayures pour jouer avec les styles\n• À porter aussi bien ouverte pour un look casual que ceinturée pour un effet plus habillé",
+        },
+        {
+          key: "veste-ange-beige",
+          title: "Veste Ange (beige)",
+          priceText: "64,99 €",
+          productId: "15409199645046",
+          image1: "img/cafecreme/veste-ange-beige-1.jpg",
+          image2: "img/cafecreme/veste-ange-beige-2.jpg",
+          desc: "• Kimono matelassé esprit vintage\n• Broderies traditionnelles sur toute la veste\n• Coton épais et souple\n• Lien à nouer à la taille pour une silhouette ajustée\n• Finitions contrastées\n• Doublée pour plus de confort\n• Longueur idéale pour un style chic ou décontracté\n• À porter aussi bien ouverte qu’avec la ceinture nouée pour structurer la silhouette.",
+        },
+        {
+          key: "veste-ange-noir",
+          title: "Veste Ange (noir)",
+          priceText: "64,99 €",
+          productId: "15409200234870",
+          image1: "img/cafecreme/veste-ange-noir-1.jpg",
+          image2: "img/cafecreme/veste-ange-noir-2.jpg",
+          desc: "• Kimono matelassé esprit vintage\n• Broderies traditionnelles sur toute la veste\n• Coton épais et souple\n• Lien à nouer à la taille pour une silhouette ajustée\n• Finitions contrastées\n• Doublée pour plus de confort\n• Longueur idéale pour un style chic ou décontracté\n• À porter aussi bien ouverte qu’avec la ceinture nouée pour structurer la silhouette.",
+        },
+        {
+          key: "veste-ange-kaki",
+          title: "Veste Ange (kaki)",
+          priceText: "64,99 €",
+          productId: "15409200497014",
+          image1: "img/cafecreme/veste-ange-kaki-1.jpg",
+          image2: "img/cafecreme/veste-ange-kaki-2.jpg",
+          desc: "• Kimono matelassé esprit vintage\n• Broderies traditionnelles sur toute la veste\n• Coton épais et souple\n• Lien à nouer à la taille pour une silhouette ajustée\n• Finitions contrastées\n• Doublée pour plus de confort\n• Longueur idéale pour un style chic ou décontracté\n• À porter aussi bien ouverte qu’avec la ceinture nouée pour structurer la silhouette.",
+        },
+        {
+          key: "pull-browny",
+          title: "Pull Browny",
+          priceText: "33,00 €",
+          productId: "15409200955766",
+          image1: "img/cafecreme/pull-browny-1.jpg",
+          image2: "img/cafecreme/pull-browny-2.jpg",
+          desc: "• Pull sans manches façon gilet\n• Tricot marron chiné, tout doux et confortable\n• Détails de boutons dorés sur les côtés pour une touche élégante\n• Coupe droite légèrement oversize, parfaite à superposer sur une chemise\n• Idéal pour une silhouette preppy et tendance cet automne\n• charlotte mesure 1m72 et porte une taille unique",
+        },
+        {
+          key: "robe-pao",
+          title: "Robe Pao",
+          priceText: "39,99 €",
+          productId: "15409201119606",
+          image1: "img/cafecreme/robe-pao-1.jpg",
+          image2: "img/cafecreme/robe-pao-2.jpg",
+          desc: "• Robe courte en denim imprimé léopard beige\n• Coupe ajustée qui épouse parfaitement la silhouette\n• Fermeture zippée au dos pour un enfilage facile\n• À porter seule ou avec une veste pour un look casual\n• Charlotte mesure 1m72 et porte une taille 36",
+        },
+        {
+          key: "chemisier-honey",
+          title: "Chemisier Honey",
+          priceText: "34,99 €",
+          productId: "15409201217910",
+          image1: "img/cafecreme/chemisier-honey-1.jpg",
+          image2: "img/cafecreme/chemisier-honey-2.jpg",
+          desc: "• Chemisier fluide et légèrement satiné\n• Grand col à volants pour une touche romantique\n• Nœud lavallière élégant à nouer selon l’envie\n• Manches longues avec poignets plissés effet trompette\n• Tissu légèrement transparent, à porter avec un top nude si besoin\n• Charlotte mesure 1m72 et porte une taille unique (convient du 34 au 40)",
+        },
+        {
+          key: "pull-frangy-taupe",
+          title: "Pull Frangy (taupe)",
+          priceText: "37,99 €",
+          productId: "15409132994934",
+          image1: "img/cafecreme/pull-frangy-taupe-1.jpg",
+          image2: "img/cafecreme/pull-frangy-taupe-2.jpg",
+          desc: "• Coupe ample et confortable\n• Col montant pour un look élégant et cocooning\n• Finitions frangées sur le bas et manches longues à bord-côte\n• Le pull parfait pour un style décontracté-chic au quotidien\n• Lou porte une taille unique et mesure 1m71– convient du 34 au 40",
+        },
+        {
+          key: "pull-frangy-beige",
+          title: "Pull Frangy (beige)",
+          priceText: "37,99 €",
+          productId: "15409134993782",
+          image1: "img/cafecreme/pull-frangy-beige-1.jpg",
+          image2: "img/cafecreme/pull-frangy-beige-2.jpg",
+          desc: "• Coupe ample et confortable\n• Col montant pour un look élégant et cocooning\n• Finitions frangées sur le bas et manches longues à bord-côte\n• Le pull parfait pour un style décontracté-chic au quotidien\n• Lou porte une taille unique et mesure 1m71– convient du 34 au 40",
+        },
+        {
+          key: "jean-stone-grey",
+          title: "Jean Stone Grey",
+          priceText: "37,50 €",
+          productId: "15409146200438",
+          image1: "img/cafecreme/jean-stone-grey-1.jpg",
+          image2: "img/cafecreme/jean-stone-grey-2.jpg",
+          desc: "• Jean droit taille haute\n• Coloris gris foncé légèrement délavé, facile à associer\n• Coupe droite et ajustée : il n’est pas trop large, juste ce qu’il faut pour allonger la jambe\n• Un indispensable du vestiaire d’automne, à porter avec tout\n• Lou mesure 1m71 et porte une taille 36 (taille dispo du 34 au 42)",
+        },
+        {
+          key: "jean-le-bleu",
+          title: "Jean Le Bleu",
+          priceText: "39,99 €",
+          productId:
+            "15409149018486" /* pas d'ID fourni → bouton 'Bientôt' en modale */,
+          image1: "img/cafecreme/jean-le-bleu-1.jpg",
+          image2: "img/cafecreme/jean-le-bleu-2.jpg",
+          desc: "• Coupe large et taille haute\n• Toile denim foncé épaisse et structurée\n• Ourlet surpiqué apparent pour une touche rétro\n• Un basique revisité qui allonge la silhouette et structure la tenue\n• Lou mesure 1m71 et porte une taille 36 (disponible du 34 au 42)",
+        },
+        {
+          key: "pull-fluffy-taupe",
+          title: "Pull Fluffy (taupe)",
+          priceText: "41,00 €",
+          productId: "15409176248694",
+          image1: "img/cafecreme/pull-fluffy-taupe-1.jpg",
+          image2: "img/cafecreme/pull-fluffy-taupe-2.jpg",
+          desc: "• Tricoté dans un mélange luxueux de mohair tout doux et léger\n• Col rond, coupe légèrement loose, parfait à glisser dans un jean taille haute\n• Finitions travaillées et épaules tombantes pour un look décontracté mais chic\n• Un essentiel cocooning à porter seul ou superposé sur une chemise",
+        },
+        {
+          key: "pull-fluffy-chocolat",
+          title: "Pull Fluffy (chocolat)",
+          priceText: "41,00 €",
+          productId: "15409186177398",
+          image1: "img/cafecreme/pull-fluffy-chocolat-1.jpg",
+          image2: "img/cafecreme/pull-fluffy-chocolat-2.jpg",
+          desc: "• Tricoté dans un mélange luxueux de mohair tout doux et léger\n• Col rond, coupe légèrement loose, parfait à glisser dans un jean taille haute\n• Finitions travaillées et épaules tombantes pour un look décontracté mais chic\n• Un essentiel cocooning à porter seul ou superposé sur une chemise",
+        },
+        {
+          key: "pull-fluffy-ecru",
+          title: "Pull Fluffy (écru)",
+          priceText: "41,00 €",
+          productId: "15409186799990",
+          image1: "img/cafecreme/pull-fluffy-ecru-1.jpg",
+          image2: "img/cafecreme/pull-fluffy-ecru-2.jpg",
+          desc: "• Tricoté dans un mélange luxueux de mohair tout doux et léger\n• Une coupe sans manches ultra actuelle\n• Col rond, coupe légèrement loose, parfait à glisser dans un jean taille haute\n• Finitions travaillées et épaules tombantes pour un look décontracté mais chic\n• Un essentiel cocooning à porter seul ou superposé sur une chemise",
+        },
+        {
+          key: "veste-jeanne",
+          title: "Veste Jeanne",
+          priceText: "72,00 €",
+          productId: "15409186931062",
+          image1: "img/cafecreme/veste-jeanne-1.jpg",
+          image2: "img/cafecreme/veste-jeanne-2.jpg",
+          desc: "• Veste de costume à la coupe droite\n• Matière chaude contenant 50% de laine, idéale pour l’automne/hiver\n• Tissu moucheté chocolat parsemé de petits sequins dorés discrets pour une touche subtile de lumière\n• Col tailleur classique et épaule légèrement structurée\n• Deux poches à rabat à l’avant, fermeture boutonnée\n• Entièrement doublée pour un confort optimal\n• Lou mesure 1m71 et porte une taille S/M",
+        },
+        {
+          key: "pantalon-jeanne",
+          title: "Pantalon Jeanne",
+          priceText: "49,99 €",
+          productId: "15409187750262",
+          image1: "img/cafecreme/pantalon-jeanne-1.jpg",
+          image2: "img/cafecreme/pantalon-jeanne-2.jpg",
+          desc: "• Pantalon de tailleur à la coupe droite et élégante\n• Matière chaude contenant 50% de laine, idéale pour l’automne/hiver\n• Présence de petits sequins dorés discrets pour un effet chic et lumineux\n• Taille haute, zip et fermeture à crochet invisible à l’avant\n• Passants pour ceinture\n• Pinces à l’avant pour une coupe structurée\n• Longueur idéale pour porter avec talons ou bottines",
+        },
+        {
+          key: "veste-romy",
+          title: "Veste Romy",
+          priceText: "61,99 €",
+          productId: "15409188536694",
+          image1: "img/cafecreme/veste-romy-1.jpg",
+          image2: "img/cafecreme/veste-romy-2.jpg",
+          desc: "• Veste blazer à la coupe droite et légèrement over size\n• Coloris taupe avec de fines rayures discrètes pour un effet tailleur chic\n• Fermeture à un bouton sur le devant\n• Deux poches à rabat à l’avant + une fausse poche poitrine\n• Tissu fluide et doux au toucher, très agréable à porter\n• Intérieur doublé pour une belle tenue\n• Épaulettes intégrées pour une silhouette structurée\n• Lou mesure 1m71 et porte une taille S/M",
+        },
+        {
+          key: "pantalon-romy",
+          title: "Pantalon Romy",
+          priceText: "47,99 €",
+          productId: "15409193484662",
+          image1: "img/cafecreme/pantalon-romy-1.jpg",
+          image2: "img/cafecreme/pantalon-romy-2.jpg",
+          desc: "• Pantalon de tailleur à la coupe droite et fluide\n• Coloris taupe à fines rayures claires\n• Taille haute pour un effet allongeant sur la silhouette\n• Pinces à l’avant pour une coupe structurée et élégante\n• Fermeture par zip + agrafe discrète\n• Matière douce et fluide, très agréable à porter",
+        },
+        {
+          key: "manteau-teddy",
+          title: "Manteau Teddy",
+          priceText: "119,99 €",
+          productId: "15409198399862",
+          image1: "img/cafecreme/manteau-teddy-1.jpg",
+          image2: "img/cafecreme/manteau-teddy-2.jpg",
+          desc: "Le manteau cocooning par excellence pour affronter l’hiver avec style. On adore sa coupe droite un brin oversize, ultra confort, et sa matière effet “teddy” toute douce. Parfait pour twister un look simple ou accompagner vos plus belles tenues d’hiver.\n• Fermeture boutonnée devant\n• Col montant modulable\n• Coupe droite légèrement ample\n• Poches plaquées latérales\n• Doublé pour plus de confort\n• Matière effet mouton bouclé toute douce",
+        },
+        {
+          key: "veste-blush",
+          title: "Veste Blush",
+          priceText: "109,99 €",
+          productId: "15409198760310",
+          image1: "img/cafecreme/veste-blush-1.jpg",
+          image2: "img/cafecreme/veste-blush-2.jpg",
+          desc: "• Veste courte effet fausse fourrure, toute douce et ultra cocooning\n• Coloris brun noisette chaleureux et facile à associer\n• Coupe droite avec épaules légèrement tombantes pour un effet loose et tendance\n• Fermeture zippée\n• Deux grandes poches à rabat sur la poitrine\n• Capuche large et doublée pour un look comfy assuré\n• Matière douce, chaude et réconfortante\n• Taille normalement — prends ta taille habituelle\n• Lou mesure 1m71 et porte une taille M",
+        },
+      ];
+
+      const grid = document.getElementById("grid");
+      document.getElementById("count").textContent = `${items.length} articles`;
+
+      /* =========================
+         Shopify UI (cart + toggle)
+         ========================= */
+      let shopifyUI = null;
+      function initUI() {
+        return new Promise((res) => {
+          if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+            const client = ShopifyBuy.buildClient({
+              domain: SHOP_DOMAIN,
+              storefrontAccessToken: STOREFRONT_TOKEN,
+            });
+            ShopifyBuy.UI.onReady(client).then((ui) => res(ui));
+          } else {
+            const s = document.createElement("script");
+            s.src =
+              "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+            s.onload = () => initUI().then(res);
+            document.body.appendChild(s);
+          }
+        });
+      }
+
+      /* =========================
+         Images responsives helpers
+         ========================= */
+      function stripExt(path) {
+        return path.replace(/\.(jpe?g|png|webp)$/i, "");
+      }
+      function buildWebpSrcset(originalJpgPath) {
+        const base = stripExt(originalJpgPath);
+        return `${base}-320.webp 320w, ${base}-480.webp 480w, ${base}-640.webp 640w`;
+      }
+      function buildJpgSrcset(originalJpgPath) {
+        return `${originalJpgPath} 640w`;
+      }
+      const SIZES_ATTR = "(min-width: 1200px) 25vw, 50vw";
+
+      // Preload des 4 premières images principales (perf)
+      function injectPreloadsForFirstFour() {
+        const head = document.head;
+        const count = Math.min(4, items.length);
+        for (let i = 0; i < count; i++) {
+          const p = items[i];
+          const base = stripExt(p.image1);
+          const link = document.createElement("link");
+          link.rel = "preload";
+          link.as = "image";
+          link.setAttribute(
+            "imagesrcset",
+            `${base}-320.webp 320w, ${base}-480.webp 480w, ${base}-640.webp 640w`
+          );
+          link.setAttribute("imagesizes", SIZES_ATTR);
+          link.setAttribute("fetchpriority", "high");
+          head.appendChild(link);
+        }
+      }
+      injectPreloadsForFirstFour();
+
+      /* =========================
+         Rendu grille
+         ========================= */
+      grid.innerHTML = "";
+      items.forEach((p, i) => {
+        const isPriority = i < 4;
+        const loadingAttr = isPriority ? "eager" : "lazy";
+        const fetchPrio = isPriority ? "high" : "low";
+
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="img-wrap">
+            <picture>
+              <source type="image/webp" srcset="${buildWebpSrcset(
+                p.image1
+              )}" sizes="${SIZES_ATTR}">
+              <img
+                src="${p.image1}"
+                srcset="${buildJpgSrcset(p.image1)}"
+                sizes="${SIZES_ATTR}"
+                alt="${escapeHtml(p.title)}"
+                loading="${loadingAttr}"
+                fetchpriority="${fetchPrio}">
+            </picture>
+            <picture>
+              <source type="image/webp" srcset="${buildWebpSrcset(
+                p.image2
+              )}" sizes="${SIZES_ATTR}">
+              <img
+                src="${p.image2}"
+                srcset="${buildJpgSrcset(p.image2)}"
+                sizes="${SIZES_ATTR}"
+                alt="${escapeHtml(p.title)}"
+                loading="lazy"
+                fetchpriority="low">
+            </picture>
+          </div>
+          <h3>${escapeHtml(p.title)}</h3>
+          <div class="price">${p.priceText}</div>
+          <button class="btn preview" data-index="${i}">Aperçu</button>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Init panier + toggle
+      initUI().then((ui) => {
+        shopifyUI = ui;
+
+        ui.createComponent("cart", {
+          node: document.body.appendChild(document.createElement("div")),
+          moneyFormat: "€{{amount_with_comma_separator}}",
+          options: {
+            cart: {
+              text: {
+                title: "Panier",
+                total: "Total",
+                empty: "Votre panier est vide 🥲",
+                notice:
+                  "Les codes de réduction et frais de livraison seront appliqués lors du paiement.",
+                button: "Payer",
+              },
+              styles: {
+                button: {
+                  "background-color": "#000000",
+                  color: "#ffffff",
+                  "border-radius": "999px",
+                  "font-weight": "700",
+                  padding: "12px 0",
+                  ":hover": { "background-color": "#000000" },
+                  ":focus": { "background-color": "#000000" },
+                },
+                cart: { "background-color": "#e8dbcd" },
+                footer: { "background-color": "#e8dbcd" },
+                title: { color: "#000" },
+                header: { color: "#000" },
+                lineItems: { color: "#000" },
+                subtotalText: { color: "#000" },
+                subtotal: { color: "#000" },
+                notice: { color: "#000" },
+                currency: { color: "#000" },
+                close: { color: "#000" },
+              },
+            },
+            toggle: {
+              styles: {
+                toggle: {
+                  "background-color": "#000000",
+                  color: "#ffffff",
+                  ":hover": { "background-color": "#000000" },
+                  ":focus": { "background-color": "#000000" },
+                },
+              },
+            },
+          },
+        });
+
+        ui.createComponent("toggle", {
+          node: document.body.appendChild(document.createElement("div")),
+          moneyFormat: "€{{amount_with_comma_separator}}",
+        });
+      });
+
+      /* =========================
+         Modale Aperçu
+         ========================= */
+      const modal = document.getElementById("quickModal");
+      const modalClose = document.getElementById("modalClose");
+      const modalBig = document.getElementById("modalBig");
+      const modalThumbs = document.getElementById("modalThumbs");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalPrice = document.getElementById("modalPrice");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalBuyTarget = document.getElementById("modalBuyTarget");
+
+      document.getElementById("grid").addEventListener("click", (e) => {
+        const btn = e.target.closest(".btn.preview");
+        if (!btn) return;
+        openQuick(items[+btn.dataset.index]);
+      });
+      modalClose.addEventListener("click", closeQuick);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeQuick();
+      });
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeQuick();
+      });
+
+      function openQuick(p) {
+        modalTitle.textContent = p.title;
+        modalPrice.textContent = p.priceText;
+        modalDesc.textContent = p.desc;
+        modalBig.src = p.image1;
+        modalThumbs.innerHTML = "";
+        [p.image1, p.image2].filter(Boolean).forEach((url) => {
+          const im = document.createElement("img");
+          im.src = url;
+          im.alt = p.title;
+          im.addEventListener("click", () => (modalBig.src = url));
+          modalThumbs.appendChild(im);
+        });
+
+        // Mount Shopify buy button si productId dispo, sinon message "Bientôt"
+        modalBuyTarget.innerHTML = "";
+        const mount = (ui) => {
+          if (p.productId && String(p.productId).trim() !== "") {
+            ui.createComponent("product", {
+              id: p.productId,
+              node: modalBuyTarget,
+              moneyFormat: "€{{amount_with_comma_separator}}",
+              options: {
+                product: {
+                  contents: {
+                    img: false,
+                    title: false,
+                    price: false,
+                    options: true,
+                  },
+                  text: { button: "Ajouter" },
+                  styles: {
+                    button: {
+                      "background-color": "#000000",
+                      color: "#ffffff",
+                      "font-weight": "700",
+                      padding: "12px 12px",
+                      ":hover": { "background-color": "#000000" },
+                      ":focus": { "background-color": "#000000" },
+                    },
+                  },
+                },
+                cart: {
+                  text: { button: "Payer", total: "Total", title: "Panier" },
+                  styles: {
+                    button: {
+                      "background-color": "#000000",
+                      color: "#ffffff",
+                      ":hover": { "background-color": "#000000" },
+                      ":focus": { "background-color": "#000000" },
+                    },
+                  },
+                },
+              },
+            });
+          } else {
+            const span = document.createElement("span");
+            span.className = "soon";
+            span.textContent = "Bientôt disponible";
+            modalBuyTarget.appendChild(span);
+          }
+        };
+        if (shopifyUI) mount(shopifyUI);
+        else initUI().then(mount);
+
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+      }
+
+      function closeQuick() {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        modalBuyTarget.innerHTML = "";
+        document.body.classList.remove("modal-open");
+      }
+
+      function escapeHtml(s) {
+        return String(s || "").replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[m])
+        );
+      }
+    </script>
+
+    <div id="footer"></div>
+    <script src="script/script.js"></script>
+  </body>
+</html>

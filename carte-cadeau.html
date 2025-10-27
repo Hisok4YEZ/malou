@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="img/logo2.png" type="image/png" />
+    <title>Carte Cadeau – MA LOU</title>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feuilles globales -->
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="style/header.css" />
+    <link rel="stylesheet" href="style/footer.css" />
+
+    <style>
+      :root {
+        --rose: #e43d7a;
+        --beige: #e8dbcd;
+        --noir: #000;
+        --texte: #3f3027;
+      }
+
+      body {
+        margin: 0;
+        background: var(--beige);
+        font-family: "Quicksand", sans-serif;
+        color: var(--texte);
+      }
+
+      .container {
+        max-width: 1240px;
+        margin: 24px auto 80px;
+        padding: 0 18px;
+      }
+      .page-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin: 6px 0 22px;
+        border-left: 6px solid rgba(0, 0, 0, 0.06);
+        padding-left: 12px;
+      }
+      .title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        margin: 0;
+      }
+
+      /* Grille */
+      .gift-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      @media (min-width: 1000px) {
+        .gift-grid {
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          gap: 50px;
+        }
+      }
+
+      /* Image PNG sans fond */
+      .gift-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+      }
+      .gift-img img {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      /* Bloc texte */
+      .gift-info h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        margin: 0 0 10px;
+      }
+      .gift-info p {
+        font-size: 14px;
+        line-height: 1.6;
+        margin: 0 0 18px;
+      }
+
+      /* Bouton “Offrir cette carte” */
+      .btn {
+        display: inline-block;
+        border: none;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+        text-align: center;
+      }
+      .btn.gift {
+        width: 100%;
+        max-width: 320px; /* bouton plus long */
+        padding: 14px 0;
+        background: transparent;
+        color: var(--rose);
+        border: 2px solid currentColor;
+        transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .btn.gift:hover,
+      .btn.gift:focus {
+        background: rgba(228, 61, 122, 0.07);
+        box-shadow: 0 0 0 2px rgba(228, 61, 122, 0.15) inset;
+        outline: none;
+      }
+      .btn.gift:active {
+        background: rgba(228, 61, 122, 0.12);
+      }
+
+      /* Panier Shopify (mêmes styles que les autres pages) */
+      .shopify-buy__cart,
+      .shopify-buy__cart__footer {
+        background: var(--beige) !important;
+      }
+      .shopify-buy__cart__title,
+      .shopify-buy__cart__subtotal,
+      .shopify-buy__cart__notice,
+      .shopify-buy__cart-item__title {
+        color: var(--texte) !important;
+      }
+      .shopify-buy__cart__footer .shopify-buy__btn {
+        background: var(--noir) !important;
+        color: #fff !important;
+        border-radius: 999px !important;
+        font-weight: 700 !important;
+        padding: 12px 0 !important;
+      }
+      .shopify-buy__cart__footer .shopify-buy__btn:hover {
+        background: #222 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Bandeau -->
+    <div class="bandeau-livraison">
+      <div class="bandeau-slider">
+        <div class="slide">
+          livraison offerte en point relai dès 80€ d’achat
+        </div>
+        <div class="slide">Livraison offerte à domicile dès 100€ d’achat</div>
+      </div>
+    </div>
+
+    <div id="header"></div>
+
+    <main class="container">
+      <div class="page-head">
+        <h1 class="title">Carte Cadeau</h1>
+      </div>
+
+      <section class="gift-grid">
+        <div class="gift-img">
+          <img src="img/giftcard.png" alt="Carte cadeau MA LOU" />
+        </div>
+
+        <div class="gift-info">
+          <h2>Offrez la liberté de choisir</h2>
+          <p>
+            La carte cadeau MA LOU est le présent parfait pour celles et ceux
+            qui aiment choisir.<br />
+            — Montants disponibles : 10 €, 25 €, 50 €, 100 €<br />
+            — Envoi immédiat par e-mail<br />
+            — Valable sur toute la boutique
+          </p>
+
+          <div id="giftBuy"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <!-- Shopify SDK -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+    <script>
+      const SHOP_DOMAIN = "eb1iv0-n1.myshopify.com";
+      const STOREFRONT_TOKEN = "5de76971549ee7a5dcb338aaad5e9784";
+      const PRODUCT_ID = "15373478887798";
+
+      function initUI() {
+        return new Promise((res) => {
+          if (window.ShopifyBuy && window.ShopifyBuy.UI) {
+            const client = ShopifyBuy.buildClient({
+              domain: SHOP_DOMAIN,
+              storefrontAccessToken: STOREFRONT_TOKEN,
+            });
+            ShopifyBuy.UI.onReady(client).then((ui) => res(ui));
+          } else {
+            const s = document.createElement("script");
+            s.src =
+              "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
+            s.onload = () => initUI().then(res);
+            document.body.appendChild(s);
+          }
+        });
+      }
+
+      initUI().then((ui) => {
+        ui.createComponent("product", {
+          id: PRODUCT_ID,
+          node: document.getElementById("giftBuy"),
+          moneyFormat: "€{{amount_with_comma_separator}}",
+          options: {
+            product: {
+              contents: {
+                img: false,
+                title: false,
+                price: false,
+                options: true, // ✅ réactivation du sélecteur Shopify par défaut
+              },
+              text: { button: "Offrir cette carte" },
+              styles: {
+                button: {
+                  "background-color": "transparent",
+                  color: "#e43d7a",
+                  border: "2px solid #e43d7a",
+                  "border-radius": "999px",
+                  "font-weight": "700",
+                  padding: "14px 0",
+                  width: "100%",
+                  transition:
+                    "background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease",
+                  ":hover": {
+                    "background-color": "rgba(228, 61, 122, 0.07)",
+                    "box-shadow": "0 0 0 2px rgba(228, 61, 122, 0.15) inset",
+                    color: "#e43d7a",
+                  },
+                  ":focus": {
+                    "background-color": "rgba(228, 61, 122, 0.07)",
+                    "box-shadow": "0 0 0 2px rgba(228, 61, 122, 0.15) inset",
+                    color: "#e43d7a",
+                  },
+                  ":active": {
+                    "background-color": "rgba(228, 61, 122, 0.12)",
+                    color: "#e43d7a",
+                  },
+                },
+                buttonHover: {
+                  background: "rgba(228, 61, 122, 0.07)",
+                  "box-shadow": "0 0 0 2px rgba(228, 61, 122, 0.15) inset",
+                  color: "#e43d7a",
+                },
+                buttonFocus: {
+                  background: "rgba(228, 61, 122, 0.07)",
+                  "box-shadow": "0 0 0 2px rgba(228, 61, 122, 0.15) inset",
+                  color: "#e43d7a",
+                },
+                buttonActive: {
+                  background: "rgba(228, 61, 122, 0.12)",
+                  color: "#e43d7a",
+                },
+              },
+            },
+            cart: {
+              text: {
+                title: "Panier",
+                total: "Total",
+                empty: "Votre panier est vide 🥲",
+                notice:
+                  "Les codes de réduction et frais de livraison seront appliqués lors du paiement.",
+                button: "Payer",
+              },
+              styles: {
+                cart: { "background-color": "#e8dbcd" },
+                footer: { "background-color": "#e8dbcd" },
+                title: { color: "#000" },
+                header: { color: "#000" },
+                lineItems: { color: "#000" },
+                subtotalText: { color: "#000" },
+                subtotal: { color: "#000" },
+                notice: { color: "#000" },
+                currency: { color: "#000" },
+                close: { color: "#000" },
+                button: {
+                  "background-color": "#000000",
+                  color: "#ffffff",
+                  "border-radius": "999px",
+                  "font-weight": "700",
+                  padding: "12px 0",
+                },
+                buttonHover: { "background-color": "#000000" },
+              },
+            },
+            toggle: {
+              styles: {
+                toggle: {
+                  "background-color": "#000000",
+                  color: "#ffffff",
+                  "border-radius": "999px",
+                  "font-weight": "700",
+                },
+                count: { "background-color": "#3f3027" },
+              },
+            },
+          },
+        });
+        ui.createComponent("cart", {
+          node: document.body.appendChild(document.createElement("div")),
+          moneyFormat: "€{{amount_with_comma_separator}}",
+          options: {
+            cart: {
+              text: {
+                title: "Panier",
+                total: "Total",
+                empty: "Votre panier est vide 🥲",
+                notice:
+                  "Les codes de réduction et frais de livraison seront appliqués lors du paiement.",
+                button: "Payer",
+              },
+              styles: {
+                button: {
+                  "background-color": "#000000",
+                  color: "#ffffff",
+                  "border-radius": "999px",
+                  "font-weight": "700",
+                  padding: "12px 0",
+                  ":hover": { "background-color": "#000000" },
+                  ":focus": { "background-color": "#000000" },
+                },
+                cart: { "background-color": "#e8dbcd" },
+                footer: { "background-color": "#e8dbcd" },
+                title: { color: "#000" },
+                header: { color: "#000" },
+                lineItems: { color: "#000" },
+                subtotalText: { color: "#000" },
+                subtotal: { color: "#000" },
+                notice: { color: "#000" },
+                currency: { color: "#000" },
+                close: { color: "#000" },
+              },
+            },
+            toggle: {
+              styles: {
+                toggle: {
+                  "background-color": "#000000",
+                  color: "#ffffff",
+                  ":hover": { "background-color": "#000000" },
+                  ":focus": { "background-color": "#000000" },
+                },
+              },
+            },
+          },
+        });
+      });
+    </script>
+
+    <script src="script/script.js"></script>
+  </body>
+</html>
